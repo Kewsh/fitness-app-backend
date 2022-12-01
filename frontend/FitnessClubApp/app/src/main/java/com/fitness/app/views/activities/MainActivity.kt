@@ -1,5 +1,6 @@
 package com.fitness.app.views.activities
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
@@ -20,8 +21,14 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.nextSlideButton.setOnClickListener {
-        val currPos: Int = binding.slider.currentItem
-        if ((currPos + 1) != binding.slider.adapter?.count) binding.slider.currentItem = currPos + 1
+            val currPos: Int = binding.slider.currentItem
+            if ((currPos + 1) != binding.slider.adapter?.count) {
+                binding.slider.currentItem = currPos + 1
+            }
+            if (currPos == 4) {
+                val intent = Intent(this, GetStartedActivity::class.java)
+                startActivity(intent)
+            }
         }
 
         sliderAdapter = SliderAdapter(this)
