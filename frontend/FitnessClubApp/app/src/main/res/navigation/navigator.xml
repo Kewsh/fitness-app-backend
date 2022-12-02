@@ -11,6 +11,30 @@
         android:label="fragment_note_home"
         tools:layout="@layout/fragment_login">
 
+        <action
+            android:id="@+id/action_loginFragment_to_athleteSignUpFragment"
+            app:destination="@id/athleteSignUpFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_clubSignUpFragment"
+            app:destination="@id/clubSignUpFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/athleteSignUpFragment"
+        android:name="com.fitness.app.views.fragments.AthleteSignUpFragment"
+        android:label="AthleteSignUpFragment"
+        tools:layout="@layout/fragment_athlete_sign_up">
+        <action
+            android:id="@+id/action_athleteSignUpFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/clubSignUpFragment"
+        android:name="com.fitness.app.views.fragments.ClubSignUpFragment"
+        android:label="ClubSignUpFragment"
+        tools:layout="@layout/fragment_club_sign_up">
+        <action
+            android:id="@+id/action_clubSignUpFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
     </fragment>
 
 </navigation>

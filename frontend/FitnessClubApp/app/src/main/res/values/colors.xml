@@ -6,8 +6,12 @@
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
+    <color name="black_80">#50000000</color>
+    <color name="black_60">#3C000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="slider_background">#D5F2D9</color>
     <color name="primary_color">#384039</color>
     <color name="btn_color">#39683F</color>
+    <color name="light_blue">#449DDE</color>
+
 </resources>

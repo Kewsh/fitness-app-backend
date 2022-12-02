@@ -1,11 +1,14 @@
 package com.fitness.app.util
 
 import android.graphics.Color
+import android.graphics.Typeface
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
+import android.text.style.StyleSpan
 import android.view.View
 import android.widget.TextView
+import androidx.core.text.set
 import com.fitness.app.R
 
 fun constructLoginPageTitle(v: View) {
@@ -31,13 +34,13 @@ fun constructLoginPageTitle(v: View) {
     textView.append(word2)
 
     val word3: Spannable = SpannableString(" Terms & Conditions ")
-
     word3.setSpan(
-        ForegroundColorSpan(Color.BLUE),
+        ForegroundColorSpan(v.resources.getColor(R.color.light_blue)),
         0,
         word3.length,
         Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
     )
+    word3.setSpan(StyleSpan(Typeface.BOLD),0,word3.length,Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
     textView.append(word3)
 
     val word4: Spannable = SpannableString("and")
@@ -52,12 +55,12 @@ fun constructLoginPageTitle(v: View) {
 
 
     val word5: Spannable = SpannableString(" Privacy Policy")
-
     word5.setSpan(
-        ForegroundColorSpan(Color.BLUE),
+        ForegroundColorSpan(v.resources.getColor(R.color.light_blue)),
         0,
         word5.length,
         Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
     )
+    word5.setSpan(StyleSpan(Typeface.BOLD),0,word5.length,Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
     textView.append(word5)
 }

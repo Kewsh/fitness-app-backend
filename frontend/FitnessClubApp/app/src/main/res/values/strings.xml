@@ -6,4 +6,14 @@
     <string name="email_address">Email Address</string>
     <string name="password">Password</string>
     <string name="login_with_google">Login with Google</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="sign_up_your_club">Sign up your club</string>
+    <string name="join_our_family_by_signing_up_your_club">Join our family by signing up your club</string>
+    <string name="club_name">Club Name</string>
+    <string name="manager_name_s">Manager Name(s)</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="website">Website</string>
+    <string name="address">Address</string>
+    <string name="description">Description</string>
 </resources>

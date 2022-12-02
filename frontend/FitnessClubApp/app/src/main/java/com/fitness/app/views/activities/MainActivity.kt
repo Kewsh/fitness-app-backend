@@ -1,6 +1,7 @@
 package com.fitness.app.views.activities
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
@@ -19,6 +20,8 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.hide()
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        window.statusBarColor = resources.getColor(R.color.slider_background)
 
         binding.nextSlideButton.setOnClickListener {
             val currPos: Int = binding.slider.currentItem
