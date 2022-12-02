@@ -16,4 +16,7 @@
     <string name="website">Website</string>
     <string name="address">Address</string>
     <string name="description">Description</string>
+    <string name="forgot_password">Forgot password</string>
+    <string name="send_reset_link">Send Reset Link</string>
+    <string name="forgot_password_question">Forgot password?</string>
 </resources>

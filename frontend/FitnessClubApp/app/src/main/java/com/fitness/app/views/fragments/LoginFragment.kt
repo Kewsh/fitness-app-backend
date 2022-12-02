@@ -29,20 +29,20 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         savedInstanceState: Bundle?
     ): View? {
 
-        // Inflate the layout for this fragment
-        val v = inflater.inflate(R.layout.fragment_login, container, false)
-
-        constructLoginPageTitle(v)
-
-        return v
-
+        return inflater.inflate(R.layout.fragment_login, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        constructLoginPageTitle(view)
+
         binding = FragmentLoginBinding.bind(view)
         navigator = Navigation.findNavController(view)
+
+        binding.forgotPasswordButton.setOnClickListener {
+            navigator.navigate(LoginFragmentDirections.actionLoginFragmentToForgotPasswordFragment())
+        }
 
         binding.clubSignUpButton.setOnClickListener{
             navigator.navigate(LoginFragmentDirections.actionLoginFragmentToClubSignUpFragment())
