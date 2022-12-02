@@ -8,11 +8,13 @@ import android.view.ViewGroup
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.fitness.app.R
-import com.fitness.app.databinding.FragmentForgotPasswordBinding
+import com.fitness.app.databinding.FragmentClubSignUpBinding
+import com.fitness.app.databinding.FragmentForgotPasswordEmailSentBinding
 import com.fitness.app.databinding.FragmentLoginBinding
+import com.fitness.app.util.constructDidReceiveEmail
 
-class ForgotPasswordFragment : Fragment(R.layout.fragment_forgot_password) {
-    lateinit var binding: FragmentForgotPasswordBinding
+class ForgotPasswordEmailSentFragment : Fragment(R.layout.fragment_forgot_password_email_sent) {
+    lateinit var binding: FragmentForgotPasswordEmailSentBinding
     lateinit var navigator: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,21 +27,20 @@ class ForgotPasswordFragment : Fragment(R.layout.fragment_forgot_password) {
         savedInstanceState: Bundle?
     ): View? {
 
-        return inflater.inflate(R.layout.fragment_forgot_password, container, false)
+        return inflater.inflate(R.layout.fragment_forgot_password_email_sent, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding = FragmentForgotPasswordBinding.bind(view)
+        constructDidReceiveEmail(view)
+
+        binding = FragmentForgotPasswordEmailSentBinding.bind(view)
         navigator = Navigation.findNavController(view)
+
 
         binding.backButton.setOnClickListener {
             navigator.popBackStack()
-        }
-
-        binding.sendResetLinkButton.setOnClickListener {
-            navigator.navigate(ForgotPasswordFragmentDirections.actionForgotPasswordFragmentToForgotPasswordEmailSentFragment())
         }
     }
 }

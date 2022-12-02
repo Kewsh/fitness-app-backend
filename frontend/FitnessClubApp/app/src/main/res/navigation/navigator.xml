@@ -47,6 +47,18 @@
         <action
             android:id="@+id/action_forgotPasswordFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_forgotPasswordFragment_to_forgotPasswordEmailSentFragment"
+            app:destination="@id/forgotPasswordEmailSentFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/forgotPasswordEmailSentFragment"
+        android:name="com.fitness.app.views.fragments.ForgotPasswordEmailSentFragment"
+        android:label="ForgotPasswordEmailSentFragment"
+        tools:layout="@layout/fragment_forgot_password_email_sent">
+        <action
+            android:id="@+id/action_forgotPasswordEmailSentFragment_to_forgotPasswordFragment"
+            app:destination="@id/forgotPasswordFragment" />
     </fragment>
 
 </navigation>

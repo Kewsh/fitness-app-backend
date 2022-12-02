@@ -1,6 +1,5 @@
 package com.fitness.app.views.fragments
 
-import android.graphics.Color
 import com.fitness.app.R
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,8 +10,6 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.fitness.app.databinding.FragmentLoginBinding
 import com.fitness.app.util.constructLoginPageTitle
-import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.transition.MaterialContainerTransform
 
 
 class LoginFragment : Fragment(R.layout.fragment_login) {
