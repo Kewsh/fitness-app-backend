@@ -9,7 +9,7 @@ module.exports = (sequelize) => {
         rate: {
             type: DataTypes.INTEGER,
             validate: {
-                max: 500,
+                max: 50,
                 min: 0,
             },
         },
