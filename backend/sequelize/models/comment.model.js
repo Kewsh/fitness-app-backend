@@ -15,8 +15,14 @@ module.exports = (sequelize) => {
         },
     }, {
         hooks: {
-            beforeCreate: ({programId, eventId, dietId, recipeReviewId}) => {
-                // make sure only one of the IDs is defined
+            beforeCreate: ({userId, programId, eventId, dietId, recipeReviewId}) => {
+                // at the time of creation, the comment must belong to some user
+                // later, however, the comment can belong to a ghost (deleted user)
+                if (!userId) {
+                    throw new Error('Comment must belong to some user');
+                }
+
+                // see if comment belongs to only one thing (program, diet, etc)
                 if ([
                         programId ? 1 : 0,
                         eventId ? 1 : 0,
