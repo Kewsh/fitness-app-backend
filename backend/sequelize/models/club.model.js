@@ -8,14 +8,14 @@ const clubSchema = (sequelize) => {
             allowNull: false,
             unique: true,
             validate: {
-                isAlpha: true,
+                is: /^[a-zA-Z\s]*$/,
             },
         },
         manager: {
             type: DataTypes.STRING,
             allowNull: false,
             validate: {
-                isAlpha: true,
+                is: /^[a-zA-Z\s]*$/,
             },
         },
         description: {

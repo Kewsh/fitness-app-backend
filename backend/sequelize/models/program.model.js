@@ -15,7 +15,7 @@ module.exports = (sequelize) => {
         coachName: {
             type: DataTypes.STRING,
             validate: {
-                isAlpha: true,
+                is: /^[a-zA-Z\s]*$/,
             }
         },
         price: {

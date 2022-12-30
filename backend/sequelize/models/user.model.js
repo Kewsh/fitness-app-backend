@@ -7,14 +7,14 @@ const userSchema = (sequelize) => {
             type: DataTypes.STRING,
             allowNull: false,
             validate: {
-                isAlpha: true,
+                is: /^[a-zA-Z\s]*$/,
             },
         },
         lastName: {
             type: DataTypes.STRING,
             allowNull: false,
             validate: {
-                isAlpha: true,
+                is: /^[a-zA-Z\s]*$/,
             },
         },
         email: {

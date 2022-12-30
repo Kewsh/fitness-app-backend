@@ -7,7 +7,7 @@ module.exports = (sequelize) => {
             allowNull: false,
             unique: true,
             validate: {
-                isAlpha: true,
+                is: /^[a-zA-Z\s]*$/,
             },
         },
         picPath: {
