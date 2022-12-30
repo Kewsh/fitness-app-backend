@@ -2,11 +2,6 @@ const { DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
     sequelize.define('comment', {
-        id: {
-            type: DataTypes.INTEGER,
-            autoIncrementIdentity: true,
-            primaryKey: true,
-        },
         text: {
             type: DataTypes.STRING(1024),
             allowNull: false,

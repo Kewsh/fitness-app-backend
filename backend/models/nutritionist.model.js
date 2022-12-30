@@ -2,11 +2,6 @@ const { DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
     sequelize.define('nutritionist', {
-        id: {
-            type: DataTypes.INTEGER,
-            autoIncrementIdentity: true,
-            primaryKey: true,
-        },
         fullName: {
             type: DataTypes.STRING,
             allowNull: false,

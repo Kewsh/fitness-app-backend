@@ -3,11 +3,6 @@ const bcrypt = require('bcrypt');
 
 const clubSchema = (sequelize) => {
     sequelize.define('club', {
-        id: {
-            type: DataTypes.INTEGER,
-            autoIncrementIdentity: true,
-            primaryKey: true,
-        },
         name: {
             type: DataTypes.STRING,
             allowNull: false,

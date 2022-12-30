@@ -2,11 +2,6 @@ const { DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
     sequelize.define('event', {
-        id: {
-            type: DataTypes.INTEGER,
-            autoIncrementIdentity: true,
-            primaryKey: true,
-        },
         title: {
             type: DataTypes.STRING,
             allowNull: false,
