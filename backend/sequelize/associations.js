@@ -147,4 +147,12 @@ module.exports = (sequelize) => {
         },
     });
     comment.belongsTo(recipeReview);
+
+    user.hasMany(comment, {
+        onDelete: 'SET NULL',
+        foreignKey: {
+            name: 'userId',
+        },
+    });
+    comment.belongsTo(user);
 }
