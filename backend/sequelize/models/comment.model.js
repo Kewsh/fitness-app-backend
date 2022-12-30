@@ -13,15 +13,17 @@ module.exports = (sequelize) => {
                 min: 0,
             },
         },
-        on: {
-            type: DataTypes.STRING,
-            allowNull: false,
-            values: [
-                'PROGRAM',
-                'DIET',
-                'RECIPE',
-                'EVENT',
-            ],
+    }, {
+        hooks: {
+            beforeCreate: comment => {
+                if (!comment.programId &&
+                    !comment.eventId &&
+                    !comment.dietId &&
+                    !comment.recipeReviewId)
+                {
+                    throw new Error('Comment must belong to either a program, event, diet, or recipe review');
+                }
+            },
         },
     });
 }
