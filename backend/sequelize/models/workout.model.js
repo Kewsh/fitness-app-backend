@@ -57,16 +57,16 @@ module.exports = (sequelize) => {
         },
     }, {
         hooks: {
-            beforeCreate: user => {
-                if ((!user.reps && !user.setTimeInSeconds) ||
-                    (user.reps && user.setTimeInSeconds))
+            beforeCreate: workout => {
+                if ((!workout.reps && !workout.setTimeInSeconds) ||
+                    (workout.reps && workout.setTimeInSeconds))
                 {
                     throw new Error("Workout must have either reps or set time");
                 }
             },
-            beforeUpdate: user => {
-                if ((!user.reps && !user.setTimeInSeconds) ||
-                    (user.reps && user.setTimeInSeconds))
+            beforeUpdate: workout => {
+                if ((!workout.reps && !workout.setTimeInSeconds) ||
+                    (workout.reps && workout.setTimeInSeconds))
                 {
                     throw new Error("Workout must have either reps or set time");
                 }
