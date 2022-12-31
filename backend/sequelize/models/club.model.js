@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 const bcrypt = require('bcrypt');
 
-const clubSchema = (sequelize) => {
+module.exports = (sequelize) => {
     sequelize.define('club', {
         name: {
             type: DataTypes.STRING,
@@ -75,8 +75,3 @@ const clubSchema = (sequelize) => {
         }
     });
 }
-
-clubSchema.prototype.isPasswordValid =
-    async (password, hash) => await bcrypt.compare(password, hash);
-
-module.exports = clubSchema;

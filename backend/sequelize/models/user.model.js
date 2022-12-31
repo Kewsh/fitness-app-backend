@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 const bcrypt = require('bcrypt');
 
-const userSchema = (sequelize) => {
+module.exports = (sequelize) => {
     sequelize.define('user', {
         firstName: {
             type: DataTypes.STRING,
@@ -81,8 +81,3 @@ const userSchema = (sequelize) => {
         }
     });
 }
-
-userSchema.prototype.isPasswordValid =
-    async (password, hash) => await bcrypt.compare(password, hash);
-
-module.exports = userSchema;

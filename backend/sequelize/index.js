@@ -1,5 +1,5 @@
 const { Sequelize } = require('sequelize');
-const applyAssociations = require('./associations');
+const applyExtraSetup = require('./extra-setup');
 
 const sequelize = new Sequelize('postgres://postgres:123456@localhost:5433/postgres');
 
@@ -23,6 +23,6 @@ for (const modelDefiner of modelDefiners) {
     modelDefiner(sequelize);
 }
 
-applyAssociations(sequelize);
+applyExtraSetup(sequelize);
 
 module.exports = sequelize;

@@ -1,3 +1,5 @@
+const bcrypt = require('bcrypt');
+
 module.exports = (sequelize) => {
     const {
         club,
@@ -15,7 +17,15 @@ module.exports = (sequelize) => {
         workout,
     } = sequelize.models;
 
-    // apply associations in pairs
+    // set up instance methods
+    user.prototype.isPasswordValid =
+        async (password, hash) => await bcrypt.compare(password, hash);
+
+    club.prototype.isPasswordValid =
+        async (password, hash) => await bcrypt.compare(password, hash);
+
+
+    // set up associations in pairs
     club.hasMany(socialMedia, {
         onDelete: 'CASCADE',
         foreignKey: {
