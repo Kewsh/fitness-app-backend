@@ -32,17 +32,23 @@ module.exports = (sequelize) => {
         profilePicPath: {
             type: DataTypes.STRING,
         },
-        weightInDg: {
-            type: DataTypes.INTEGER,
-            validate: {
-                min: 100,
-            },
-        },
         programEnrolmentDate: {
             type: DataTypes.DATEONLY,         
         },
         dietPickDate: {
             type: DataTypes.DATEONLY,
+        },
+        currentWeightInDg: {
+            type: DataTypes.INTEGER,
+            validate: {
+                min: 100,
+            },
+        },
+        startWeightInDg: {
+            type: DataTypes.INTEGER,
+            validate: {
+                min: 100,
+            },
         },
         targetWeightInDg: {
             type: DataTypes.INTEGER,
@@ -50,7 +56,13 @@ module.exports = (sequelize) => {
                 min: 100,
             },
         },
-        waistWidthInMm: {
+        currentWaistWidthInMm: {
+            type: DataTypes.INTEGER,
+            validate: {
+                min: 10,
+            },
+        },
+        startWaistWidthInMm: {
             type: DataTypes.INTEGER,
             validate: {
                 min: 10,
@@ -62,7 +74,13 @@ module.exports = (sequelize) => {
                 min: 10,
             },
         },
-        bicepWidthInMm: {
+        currentBicepWidthInMm: {
+            type: DataTypes.INTEGER,
+            validate: {
+                min: 10,
+            },
+        },
+        startBicepWidthInMm: {
             type: DataTypes.INTEGER,
             validate: {
                 min: 10,
@@ -83,10 +101,10 @@ module.exports = (sequelize) => {
             beforeUpdate: async user => {
                 // programId and programEnrolmentDate must be set together
                 // same goes for dietId and dietPickDate
-                if ((user.programId && !user.programEnrolmentDate) ||
-                    (!user.programId && user.programEnrolmentDate) ||
-                    (user.dietId && !user.dietPickDate) ||
-                    (!user.dietId && user.dietPickDate))
+                if ((user.programId != user.previous('programId') &&
+                    !user.programEnrolmentDate) ||
+                    (user.dietId != user.previous('dietId') &&
+                    !user.dietPickDate))
                 {
                     throw new Error("Date of program/diet pick must be given");
                 }
