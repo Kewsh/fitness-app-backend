@@ -5,14 +5,16 @@ module.exports = (sequelize) => {
         type: {
             type: DataTypes.STRING,
             allowNull: false,
-            values: [
-                'TWITTER',
-                'INSTAGRAM',
-                'FACEBOOK',
-                'TIKTOK',
-                'TELEGRAM',
-                'YOUTUBE',
-            ],
+            validate: {
+                isIn: [
+                    'TWITTER',
+                    'INSTAGRAM',
+                    'FACEBOOK',
+                    'TIKTOK',
+                    'TELEGRAM',
+                    'YOUTUBE',
+                ],
+            },
         },
         url: {
             type: DataTypes.STRING,
