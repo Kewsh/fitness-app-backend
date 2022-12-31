@@ -38,6 +38,12 @@ module.exports = (sequelize) => {
                 min: 100,
             },
         },
+        programEnrolmentDate: {
+            type: DataTypes.DATEONLY,         
+        },
+        dietPickDate: {
+            type: DataTypes.DATEONLY,
+        },
         targetWeightInDg: {
             type: DataTypes.INTEGER,
             validate: {
@@ -75,9 +81,15 @@ module.exports = (sequelize) => {
                 user.password = await bcrypt.hash(user.password, salt);
             },
             beforeUpdate: async user => {
+                if ((user.programId && !user.programEnrolmentDate) ||
+                    (user.dietId && !user.dietPickDate))
+                {
+                    throw new Error("Date of program/diet pick must be given");
+                }
+
                 const salt = await bcrypt.genSalt();
                 user.password = await bcrypt.hash(user.password, salt);
-            }
-        }
+            },
+        },
     });
 }
