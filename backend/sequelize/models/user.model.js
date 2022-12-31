@@ -81,8 +81,12 @@ module.exports = (sequelize) => {
                 user.password = await bcrypt.hash(user.password, salt);
             },
             beforeUpdate: async user => {
+                // programId and programEnrolmentDate must be set together
+                // same goes for dietId and dietPickDate
                 if ((user.programId && !user.programEnrolmentDate) ||
-                    (user.dietId && !user.dietPickDate))
+                    (!user.programId && user.programEnrolmentDate) ||
+                    (user.dietId && !user.dietPickDate) ||
+                    (!user.dietId && user.dietPickDate))
                 {
                     throw new Error("Date of program/diet pick must be given");
                 }
