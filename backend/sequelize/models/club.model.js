@@ -28,7 +28,7 @@ module.exports = (sequelize) => {
             type: DataTypes.STRING,
         },
         since: {
-            type: DataTypes.DATE,
+            type: DataTypes.DATEONLY,
         },
         password: {
             type: DataTypes.STRING,

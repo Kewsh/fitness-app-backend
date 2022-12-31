@@ -17,7 +17,7 @@ module.exports = (sequelize) => {
             type: DataTypes.STRING(4096),
         },
         since: {
-            type: DataTypes.DATE,
+            type: DataTypes.DATEONLY,
         },
     });
 }
