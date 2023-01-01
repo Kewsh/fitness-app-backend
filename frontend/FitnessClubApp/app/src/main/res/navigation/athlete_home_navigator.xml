@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/athlete_home_navigator"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/athleteHomeFragment">
+
+    <fragment
+        android:id="@+id/athleteHomeFragment"
+        android:name="com.fitness.app.views.fragments.AthleteHomeFragment"
+        android:label="fragment_athlete_home"
+        tools:layout="@layout/fragment_athlete_home">
+
+    </fragment>
+
+</navigation>

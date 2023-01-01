@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/athleteHomeNav"
+        android:title="Home"
+        android:icon="@drawable/ic_athlete_home_nav"/>
+    <item
+        android:id="@+id/athleteFitnessNav"
+        android:title="Fitness"
+        android:icon="@drawable/ic_athlete_fitness_nav"/>
+    <item
+        android:id="@+id/athleteSearchNav"
+        android:title="Discover"
+        android:icon="@drawable/ic_athlete_search_nav"/>
+    <item
+        android:id="@+id/athleteRestaurantNav"
+        android:title="Diet"
+        android:icon="@drawable/ic_athlete_restaurant_nav"/>
+    <item
+        android:id="@+id/athleteGroupsNav"
+        android:title="Club"
+        android:icon="@drawable/ic_athlete_groups_nav"/>
+
+</menu>

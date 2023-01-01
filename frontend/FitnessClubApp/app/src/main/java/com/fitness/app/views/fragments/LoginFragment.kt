@@ -1,5 +1,6 @@
 package com.fitness.app.views.fragments
 
+import android.content.Intent
 import com.fitness.app.R
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,6 +11,7 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.fitness.app.databinding.FragmentLoginBinding
 import com.fitness.app.util.constructLoginPageTitle
+import com.fitness.app.views.activities.AthleteHomeActivity
 
 
 class LoginFragment : Fragment(R.layout.fragment_login) {
@@ -49,6 +51,11 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             navigator.navigate(LoginFragmentDirections.actionLoginFragmentToAthleteSignUpFragment())
         }
 
+        binding.loginButton.setOnClickListener {
+            activity?.finish()
+            val intent = Intent(this.activity,AthleteHomeActivity::class.java)
+            startActivity(intent)
+        }
 
     }
 

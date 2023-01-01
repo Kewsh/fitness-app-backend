@@ -3,13 +3,23 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Administrator/StudioProjects/fitness-club-app/frontend/FitnessClubApp/app/src/main/res/drawable/athlete_bottom_nav_bar.xml" value="0.118" />
         <entry key="..\:/Users/Administrator/StudioProjects/fitness-club-app/frontend/FitnessClubApp/app/src/main/res/drawable/button.xml" value="0.171" />
         <entry key="..\:/Users/Administrator/StudioProjects/fitness-club-app/frontend/FitnessClubApp/app/src/main/res/drawable/ic_google.xml" value="0.1375" />
+        <entry key="..\:/Users/Administrator/StudioProjects/fitness-club-app/frontend/FitnessClubApp/app/src/main/res/drawable/ic_menu.xml" value="0.1445" />
+        <entry key="..\:/Users/Administrator/StudioProjects/fitness-club-app/frontend/FitnessClubApp/app/src/main/res/drawable/ic_profilepic.xml" value="0.1855" />
         <entry key="..\:/Users/Administrator/StudioProjects/fitness-club-app/frontend/FitnessClubApp/app/src/main/res/drawable/rounded_corner.xml" value="0.1" />
+        <entry key="..\:/Users/Administrator/StudioProjects/fitness-club-app/frontend/FitnessClubApp/app/src/main/res/layout/activity_athlete_home.xml" value="0.1" />
         <entry key="..\:/Users/Administrator/StudioProjects/fitness-club-app/frontend/FitnessClubApp/app/src/main/res/layout/activity_get_started.xml" value="0.264" />
         <entry key="..\:/Users/Administrator/StudioProjects/fitness-club-app/frontend/FitnessClubApp/app/src/main/res/layout/activity_main.xml" value="0.27447916666666666" />
+        <entry key="..\:/Users/Administrator/StudioProjects/fitness-club-app/frontend/FitnessClubApp/app/src/main/res/layout/athlete_checkout_events_item.xml" value="0.1" />
+        <entry key="..\:/Users/Administrator/StudioProjects/fitness-club-app/frontend/FitnessClubApp/app/src/main/res/layout/athlete_food_item.xml" value="0.1" />
+        <entry key="..\:/Users/Administrator/StudioProjects/fitness-club-app/frontend/FitnessClubApp/app/src/main/res/layout/athlete_today_diet_item.xml" value="0.1" />
+        <entry key="..\:/Users/Administrator/StudioProjects/fitness-club-app/frontend/FitnessClubApp/app/src/main/res/layout/athlete_today_workout_item.xml" value="0.264" />
+        <entry key="..\:/Users/Administrator/StudioProjects/fitness-club-app/frontend/FitnessClubApp/app/src/main/res/layout/athlete_your_events_item.xml" value="0.1" />
         <entry key="..\:/Users/Administrator/StudioProjects/fitness-club-app/frontend/FitnessClubApp/app/src/main/res/layout/button.xml" value="0.2734375" />
         <entry key="..\:/Users/Administrator/StudioProjects/fitness-club-app/frontend/FitnessClubApp/app/src/main/res/layout/f.xml" value="0.1" />
+        <entry key="..\:/Users/Administrator/StudioProjects/fitness-club-app/frontend/FitnessClubApp/app/src/main/res/layout/fragment_athlete_home.xml" value="0.264" />
         <entry key="..\:/Users/Administrator/StudioProjects/fitness-club-app/frontend/FitnessClubApp/app/src/main/res/layout/fragment_athlete_sign_up.xml" value="0.264" />
         <entry key="..\:/Users/Administrator/StudioProjects/fitness-club-app/frontend/FitnessClubApp/app/src/main/res/layout/fragment_club_sign_up.xml" value="0.1" />
         <entry key="..\:/Users/Administrator/StudioProjects/fitness-club-app/frontend/FitnessClubApp/app/src/main/res/layout/fragment_forgot_password.xml" value="0.264" />
@@ -22,6 +32,7 @@
         <entry key="..\:/Users/Administrator/StudioProjects/fitness-club-app/frontend/FitnessClubApp/app/src/main/res/layout/welcome_slider3.xml" value="0.22435897435897437" />
         <entry key="..\:/Users/Administrator/StudioProjects/fitness-club-app/frontend/FitnessClubApp/app/src/main/res/layout/welcome_slider4.xml" value="0.22435897435897437" />
         <entry key="..\:/Users/Administrator/StudioProjects/fitness-club-app/frontend/FitnessClubApp/app/src/main/res/layout/welcome_slider5.xml" value="0.22435897435897437" />
+        <entry key="..\:/Users/Administrator/StudioProjects/fitness-club-app/frontend/FitnessClubApp/app/src/main/res/menu/athlete_bottom_nav_menu.xml" value="0.3796875" />
       </map>
     </option>
   </component>

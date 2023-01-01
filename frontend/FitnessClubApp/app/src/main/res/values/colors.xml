@@ -14,4 +14,11 @@
     <color name="btn_color">#39683F</color>
     <color name="light_blue">#449DDE</color>
 
+    <color name="quote_text">#384039</color>
+    <color name="grey">#EEEEEE</color>
+    <color name="progress_target_weight">#D6D94D</color>
+    <color name="progress_target_waist">#1A90FF</color>
+    <color name="progress_target_bicep">#87D473</color>
+    <color name="athlete_bottom_nav_color">#78A17D</color>
+
 </resources>
