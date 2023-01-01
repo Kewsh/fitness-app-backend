@@ -43,10 +43,6 @@ module.exports = (sequelize) => {
                 min: 0,
             },
         },
-        isDone: {
-            type: DataTypes.BOOLEAN,
-            defaultValue: false,
-        },
         day: {
             type: DataTypes.INTEGER,
             allowNull: false,
