@@ -42,10 +42,6 @@ module.exports = (sequelize) => {
                 isEmail: true,
             },
         },
-        isEmailPublic: {
-            type: DataTypes.BOOLEAN,
-            defaultValue: false,
-        },
         phoneNumber: {
             type: DataTypes.STRING,
             allowNull: false,
