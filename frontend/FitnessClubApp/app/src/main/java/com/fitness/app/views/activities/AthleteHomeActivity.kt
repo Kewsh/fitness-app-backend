@@ -10,6 +10,7 @@ import com.fitness.app.databinding.ActivityAthleteHomeBinding
 import com.fitness.app.repository.AthleteHomeRepository
 import com.fitness.app.viewmodel.AthleteHomeViewModel
 import com.fitness.app.viewmodel.AthleteHomeViewModelFactory
+import com.fitness.app.views.fragments.AthleteDiscoverFragment
 import com.fitness.app.views.fragments.AthleteFitnessFragment
 import com.fitness.app.views.fragments.AthleteHomeFragment
 
@@ -22,6 +23,7 @@ class AthleteHomeActivity : AppCompatActivity() {
 
         val homeFragment:AthleteHomeFragment = AthleteHomeFragment()
         val fitnessFragment:AthleteFitnessFragment = AthleteFitnessFragment()
+        val discoverFragment:AthleteDiscoverFragment = AthleteDiscoverFragment()
 
         setCurrentFragment(homeFragment)
 
@@ -39,6 +41,7 @@ class AthleteHomeActivity : AppCompatActivity() {
             when(menuItem.itemId){
                 R.id.athleteHomeNav-> setCurrentFragment(homeFragment)
                 R.id.athleteFitnessNav-> setCurrentFragment(fitnessFragment)
+                R.id.athleteDiscoverNav-> setCurrentFragment(discoverFragment)
             }
             true
         }

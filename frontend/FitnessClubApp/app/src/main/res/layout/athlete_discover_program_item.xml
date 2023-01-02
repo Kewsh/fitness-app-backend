@@ -8,7 +8,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
@@ -49,11 +49,11 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
                         android:gravity="start"
-                        android:textStyle="bold"
                         android:text="Lose belly fat in 30 days"
                         android:textAlignment="textStart"
                         android:textColor="@color/black"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/programSubtitle"
@@ -65,20 +65,6 @@
                         android:text="By Pulse Fitness Club"
                         android:textAlignment="textStart"
                         android:textColor="@color/black_80"
-                        android:textSize="12sp" />
-
-                    <TextView
-                        android:id="@+id/programDescription"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="start"
-                        android:layout_marginTop="15dp"
-                        android:gravity="start"
-                        android:text="This program focuses on burning as much belly fat as
-one could possibly take, in a span of 30 days. Fully
-analyzed by our coaches and ..."
-                        android:textAlignment="textStart"
-                        android:textColor="@color/black"
                         android:textSize="12sp" />
 
 

@@ -132,4 +132,26 @@ class AthleteHomeRepository() {
         return dayWorkouts
 
     }
+
+    fun getAllDiscoverProgramsItems(): ArrayList<DiscoverProgram> {
+        val discoverPrograms:ArrayList<DiscoverProgram> = ArrayList()
+
+        var discoverProgram = DiscoverProgram(R.drawable.temp_program_image,"Lose belly fat in 30 days","by Pulse Fitness Club")
+        discoverPrograms.add(discoverProgram)
+
+        discoverProgram = DiscoverProgram(R.drawable.temp_program_image,"Lose belly fat in 30 days","by Pulse Fitness Club")
+        discoverPrograms.add(discoverProgram)
+
+        discoverProgram = DiscoverProgram(R.drawable.temp_program_image,"Lose belly fat in 30 days","by Pulse Fitness Club")
+        discoverPrograms.add(discoverProgram)
+
+        discoverProgram = DiscoverProgram(R.drawable.temp_program_image,"Lose belly fat in 30 days","by Pulse Fitness Club")
+        discoverPrograms.add(discoverProgram)
+
+        discoverProgram = DiscoverProgram(R.drawable.temp_program_image,"Lose belly fat in 30 days","by Pulse Fitness Club")
+        discoverPrograms.add(discoverProgram)
+
+        return discoverPrograms
+
+    }
 }

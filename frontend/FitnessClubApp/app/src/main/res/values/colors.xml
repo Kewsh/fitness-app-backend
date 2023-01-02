@@ -20,5 +20,6 @@
     <color name="progress_target_waist">#1A90FF</color>
     <color name="progress_target_bicep">#87D473</color>
     <color name="athlete_bottom_nav_color">#78A17D</color>
+    <color name="athlete_discover_tab_indicator">#39683F</color>
 
 </resources>

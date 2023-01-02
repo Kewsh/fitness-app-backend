@@ -10,7 +10,7 @@
         android:title="Fitness"
         android:icon="@drawable/ic_athlete_fitness_nav"/>
     <item
-        android:id="@+id/athleteSearchNav"
+        android:id="@+id/athleteDiscoverNav"
         android:title="Discover"
         android:icon="@drawable/ic_athlete_search_nav"/>
     <item
