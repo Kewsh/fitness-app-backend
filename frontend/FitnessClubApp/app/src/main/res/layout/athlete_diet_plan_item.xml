@@ -16,12 +16,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="5dp"
             android:layout_marginStart="20dp"
+            android:layout_marginTop="5dp"
             android:layout_marginBottom="10dp">
 
             <TextView
-                android:id="@+id/dayWorkoutTitle"
+                android:id="@+id/dietPlanTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
@@ -31,7 +31,7 @@
                 android:text="Day 1" />
 
             <ImageView
-                android:id="@+id/dayWorkoutIsCheckedImage"
+                android:id="@+id/dietPlanIsCheckedImage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -40,7 +40,7 @@
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/workoutsRecyclerView"
+            android:id="@+id/dietsRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -50,8 +50,8 @@
             android:clipToPadding="false"
             android:paddingStart="20dp"
             android:paddingEnd="10dp"
-            tools:itemCount="10"
-            tools:listitem="@layout/athlete_today_workout_item" />
+            tools:itemCount="15"
+            tools:listitem="@layout/athlete_today_diet_item" />
 
 
     </LinearLayout>

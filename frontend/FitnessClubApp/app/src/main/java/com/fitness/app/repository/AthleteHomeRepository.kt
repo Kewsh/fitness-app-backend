@@ -154,4 +154,26 @@ class AthleteHomeRepository() {
         return discoverPrograms
 
     }
+
+    fun getAllDietPlanItems(): ArrayList<DietPlan> {
+        val dietPlans:ArrayList<DietPlan> = ArrayList()
+
+        var dietPlan = DietPlan("Day 1",R.drawable.ic_checked,getAllTodayDietItems())
+        dietPlans.add(dietPlan)
+
+        dietPlan = DietPlan("Day 2",R.drawable.ic_checked,getAllTodayDietItems())
+        dietPlans.add(dietPlan)
+
+        dietPlan = DietPlan("Day 3",R.drawable.ic_checked,getAllTodayDietItems())
+        dietPlans.add(dietPlan)
+
+        dietPlan = DietPlan("Day 4",R.drawable.ic_checked,getAllTodayDietItems())
+        dietPlans.add(dietPlan)
+
+        dietPlan = DietPlan("Day 5",R.drawable.ic_checked,getAllTodayDietItems())
+        dietPlans.add(dietPlan)
+
+        return dietPlans
+
+    }
 }

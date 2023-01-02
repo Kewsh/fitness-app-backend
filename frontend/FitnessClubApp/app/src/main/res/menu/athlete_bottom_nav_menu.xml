@@ -14,7 +14,7 @@
         android:title="Discover"
         android:icon="@drawable/ic_athlete_search_nav"/>
     <item
-        android:id="@+id/athleteRestaurantNav"
+        android:id="@+id/athleteDietNav"
         android:title="Diet"
         android:icon="@drawable/ic_athlete_restaurant_nav"/>
     <item

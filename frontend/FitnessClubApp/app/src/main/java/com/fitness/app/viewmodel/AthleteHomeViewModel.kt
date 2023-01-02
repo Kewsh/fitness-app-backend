@@ -33,4 +33,8 @@ class AthleteHomeViewModel(private val athleteHomeRepository: AthleteHomeReposit
     fun getAllDiscoverProgramsItems(): ArrayList<DiscoverProgram> {
         return athleteHomeRepository.getAllDiscoverProgramsItems()
     }
+
+    fun getAllDietPlanItems(): ArrayList<DietPlan> {
+        return athleteHomeRepository.getAllDietPlanItems()
+    }
 }

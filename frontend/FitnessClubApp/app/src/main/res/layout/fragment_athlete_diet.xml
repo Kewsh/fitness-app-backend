@@ -10,7 +10,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context=".views.fragments.AthleteFitnessFragment">
+        tools:context=".views.fragments.AthleteDietFragment">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -44,6 +44,7 @@
                         app:civ_border_overlay="true"
                         app:civ_border_width="1.5dp" />
 
+
                 </RelativeLayout>
 
                 <androidx.core.widget.NestedScrollView
@@ -60,68 +61,89 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
                             android:orientation="vertical">
 
-                            <LinearLayout
-                                android:layout_width="match_parent"
+                            <TextView
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:orientation="vertical"
+                                android:text="Day 13"
                                 android:layout_marginStart="20dp"
-                                android:layout_marginEnd="20dp">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="10dp"
-                                    android:text="Day 13"
-                                    android:textColor="@color/black"
-                                    android:textSize="14sp" />
-
-                            </LinearLayout>
+                                android:layout_marginEnd="20dp"
+                                android:textColor="@color/black" />
 
                             <androidx.recyclerview.widget.RecyclerView
-                                android:id="@+id/workoutsRecyclerView"
+                                android:id="@+id/dietsRecyclerView"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="10dp"
+                                android:orientation="horizontal"
                                 android:clipToPadding="false"
                                 android:paddingStart="20dp"
                                 android:paddingEnd="10dp"
-                                android:orientation="horizontal"
                                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                                 app:reverseLayout="true"
-                                tools:itemCount="10"
-                                tools:listitem="@layout/athlete_today_workout_item" />
+                                tools:itemCount="15"
+                                tools:listitem="@layout/athlete_today_diet_item" />
 
-                            <include
-                                layout="@layout/athlete_program"
-                                android:layout_width="match_parent"
-                                android:layout_marginStart="20dp"
-                                android:layout_marginEnd="20dp"
-                                android:layout_height="wrap_content" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_marginTop="15dp">
 
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="10dp"
-                                android:text="Program"
+                                android:text="Foods you can try!"
                                 android:layout_marginStart="20dp"
                                 android:layout_marginEnd="20dp"
-                                android:textColor="@color/black_80" />
+                                android:textColor="@color/black" />
 
                             <androidx.recyclerview.widget.RecyclerView
-                                android:id="@+id/dayWorkoutsRecyclerView"
+                                android:id="@+id/foodsRecyclerView"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="10dp"
                                 android:orientation="horizontal"
                                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                                 app:reverseLayout="true"
-                                tools:itemCount="4"
-                                tools:listitem="@layout/athlete_day_workout_item" />
-
+                                android:clipToPadding="false"
+                                android:paddingStart="20dp"
+                                android:paddingEnd="10dp"
+                                tools:itemCount="15"
+                                tools:listitem="@layout/athlete_food_item" />
 
                         </LinearLayout>
+
+                        <include
+                            layout="@layout/athlete_diet"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginEnd="20dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="Plan"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginEnd="20dp"
+                            android:textColor="@color/black_80" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/dietPlansRecyclerView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:orientation="horizontal"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                            app:reverseLayout="true"
+                            tools:itemCount="4"
+                            tools:listitem="@layout/athlete_diet_plan_item" />
 
                     </LinearLayout>
 
@@ -130,6 +152,7 @@
             </LinearLayout>
 
         </RelativeLayout>
+
 
     </FrameLayout>
 </layout>

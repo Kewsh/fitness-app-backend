@@ -15,9 +15,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="20dp">
+            android:layout_marginTop="20dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -26,7 +24,9 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp">
 
                     <ImageButton
                         android:layout_width="wrap_content"
@@ -36,9 +36,9 @@
 
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/profilePic"
-                        android:layout_alignParentEnd="true"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
+                        android:layout_alignParentEnd="true"
                         android:background="@drawable/ic_profilepic"
                         app:civ_border_color="@color/white"
                         app:civ_border_overlay="true"
@@ -50,8 +50,8 @@
                 <ScrollView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:scrollbars="none"
-                    android:layout_marginBottom="60dp">
+                    android:layout_marginBottom="60dp"
+                    android:scrollbars="none">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -66,6 +66,8 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:layout_marginStart="20dp"
+                                android:layout_marginEnd="20dp"
                                 android:orientation="vertical">
 
                                 <TextView
@@ -95,6 +97,9 @@
                                 android:orientation="horizontal"
                                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                                 app:reverseLayout="true"
+                                android:clipToPadding="false"
+                                android:paddingStart="20dp"
+                                android:paddingEnd="10dp"
                                 tools:itemCount="10"
                                 tools:listitem="@layout/athlete_today_workout_item" />
 
@@ -107,6 +112,8 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:layout_marginStart="20dp"
+                                    android:layout_marginEnd="20dp"
                                     android:text="Today’s diet"
                                     android:textColor="@color/black" />
 
@@ -118,13 +125,18 @@
                                     android:orientation="horizontal"
                                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                                     app:reverseLayout="true"
+                                    android:clipToPadding="false"
+                                    android:paddingStart="20dp"
+                                    android:paddingEnd="10dp"
                                     tools:itemCount="15"
                                     tools:listitem="@layout/athlete_today_diet_item" />
 
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
+                                    android:layout_marginStart="20dp"
                                     android:layout_marginTop="20dp"
+                                    android:layout_marginEnd="20dp"
                                     android:text="Foods you can try!"
                                     android:textColor="@color/black" />
 
@@ -135,6 +147,9 @@
                                     android:layout_marginTop="10dp"
                                     android:orientation="horizontal"
                                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                                    android:clipToPadding="false"
+                                    android:paddingStart="20dp"
+                                    android:paddingEnd="10dp"
                                     app:reverseLayout="true"
                                     tools:itemCount="15"
                                     tools:listitem="@layout/athlete_food_item" />
@@ -142,7 +157,9 @@
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
+                                    android:layout_marginStart="20dp"
                                     android:layout_marginTop="20dp"
+                                    android:layout_marginEnd="20dp"
                                     android:text="Don’t forget about your targets!"
                                     android:textColor="@color/black" />
 
@@ -154,121 +171,130 @@
                                     <LinearLayout
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:orientation="vertical">
+                                        android:orientation="vertical"
+                                        android:layout_marginStart="20dp"
+                                        android:layout_marginEnd="20dp">
 
                                         <LinearLayout
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
-                                            android:layout_marginTop="20dp"
-                                            android:orientation="horizontal">
+                                            android:orientation="vertical">
 
-                                            <TextView
-                                                android:layout_width="wrap_content"
+                                            <LinearLayout
+                                                android:layout_width="match_parent"
                                                 android:layout_height="wrap_content"
-                                                android:text="Target weight:"
-                                                android:textColor="@color/black" />
+                                                android:layout_marginTop="20dp"
+                                                android:orientation="horizontal">
 
-                                            <TextView
-                                                android:layout_width="wrap_content"
+                                                <TextView
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:text="Target weight:"
+                                                    android:textColor="@color/black" />
+
+                                                <TextView
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_marginStart="5dp"
+                                                    android:text="75kg"
+                                                    android:textColor="@color/black" />
+
+                                            </LinearLayout>
+
+                                            <com.google.android.material.progressindicator.LinearProgressIndicator
+                                                android:layout_width="match_parent"
                                                 android:layout_height="wrap_content"
-                                                android:layout_marginStart="5dp"
-                                                android:text="75kg"
-                                                android:textColor="@color/black" />
+                                                android:layout_marginTop="10dp"
+                                                android:progress="50"
+                                                app:indicatorColor="@color/progress_target_weight"
+                                                app:trackColor="@color/grey"
+                                                app:trackCornerRadius="10dp"
+                                                app:trackThickness="15dp" />
 
                                         </LinearLayout>
-
-                                        <com.google.android.material.progressindicator.LinearProgressIndicator
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:layout_marginTop="10dp"
-                                            android:progress="50"
-                                            app:indicatorColor="@color/progress_target_weight"
-                                            app:trackColor="@color/grey"
-                                            app:trackCornerRadius="10dp"
-                                            app:trackThickness="15dp" />
-
-                                    </LinearLayout>
-
-                                    <LinearLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:orientation="vertical">
 
                                         <LinearLayout
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
-                                            android:layout_marginTop="20dp"
-                                            android:orientation="horizontal">
+                                            android:orientation="vertical">
 
-                                            <TextView
-                                                android:layout_width="wrap_content"
+                                            <LinearLayout
+                                                android:layout_width="match_parent"
                                                 android:layout_height="wrap_content"
-                                                android:text="Target waist width:"
-                                                android:textColor="@color/black" />
+                                                android:layout_marginTop="20dp"
+                                                android:orientation="horizontal">
 
-                                            <TextView
-                                                android:layout_width="wrap_content"
+                                                <TextView
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:text="Target waist width:"
+                                                    android:textColor="@color/black" />
+
+                                                <TextView
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_marginStart="5dp"
+                                                    android:text="90cm"
+                                                    android:textColor="@color/black" />
+
+                                                <ImageView
+                                                    android:id="@+id/dayWorkoutIsCheckedImage"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_gravity="center"
+                                                    android:layout_marginStart="10dp"
+                                                    android:background="@drawable/ic_checked" />
+
+                                            </LinearLayout>
+
+                                            <com.google.android.material.progressindicator.LinearProgressIndicator
+                                                android:layout_width="match_parent"
                                                 android:layout_height="wrap_content"
-                                                android:layout_marginStart="5dp"
-                                                android:text="90cm"
-                                                android:textColor="@color/black" />
-
-                                            <ImageView
-                                                android:id="@+id/dayWorkoutIsCheckedImage"
-                                                android:layout_width="wrap_content"
-                                                android:layout_height="wrap_content"
-                                                android:layout_gravity="center"
-                                                android:layout_marginStart="10dp"
-                                                android:background="@drawable/ic_checked" />
-
+                                                android:layout_marginTop="10dp"
+                                                android:progress="100"
+                                                app:indicatorColor="@color/progress_target_waist"
+                                                app:trackColor="@color/grey"
+                                                app:trackCornerRadius="10dp"
+                                                app:trackThickness="15dp" />
                                         </LinearLayout>
-
-                                        <com.google.android.material.progressindicator.LinearProgressIndicator
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:layout_marginTop="10dp"
-                                            android:progress="100"
-                                            app:indicatorColor="@color/progress_target_waist"
-                                            app:trackColor="@color/grey"
-                                            app:trackCornerRadius="10dp"
-                                            app:trackThickness="15dp" />
-                                    </LinearLayout>
-
-                                    <LinearLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:orientation="vertical">
 
                                         <LinearLayout
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
-                                            android:layout_marginTop="20dp"
-                                            android:orientation="horizontal">
+                                            android:orientation="vertical">
 
-                                            <TextView
-                                                android:layout_width="wrap_content"
+                                            <LinearLayout
+                                                android:layout_width="match_parent"
                                                 android:layout_height="wrap_content"
-                                                android:text="Target bicep size:"
-                                                android:textColor="@color/black" />
+                                                android:layout_marginTop="20dp"
+                                                android:orientation="horizontal">
 
-                                            <TextView
-                                                android:layout_width="wrap_content"
+                                                <TextView
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:text="Target bicep size:"
+                                                    android:textColor="@color/black" />
+
+                                                <TextView
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_marginStart="5dp"
+                                                    android:text="38cm"
+                                                    android:textColor="@color/black" />
+
+                                            </LinearLayout>
+
+                                            <com.google.android.material.progressindicator.LinearProgressIndicator
+                                                android:layout_width="match_parent"
                                                 android:layout_height="wrap_content"
-                                                android:layout_marginStart="5dp"
-                                                android:text="38cm"
-                                                android:textColor="@color/black" />
+                                                android:layout_marginTop="10dp"
+                                                android:progress="70"
+                                                app:indicatorColor="@color/progress_target_bicep"
+                                                app:trackColor="@color/grey"
+                                                app:trackCornerRadius="10dp"
+                                                app:trackThickness="15dp" />
 
                                         </LinearLayout>
-
-                                        <com.google.android.material.progressindicator.LinearProgressIndicator
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:layout_marginTop="10dp"
-                                            android:progress="70"
-                                            app:indicatorColor="@color/progress_target_bicep"
-                                            app:trackColor="@color/grey"
-                                            app:trackCornerRadius="10dp"
-                                            app:trackThickness="15dp" />
 
                                     </LinearLayout>
 
@@ -282,6 +308,8 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:text="Your events"
+                                            android:layout_marginStart="20dp"
+                                            android:layout_marginEnd="20dp"
                                             android:textColor="@color/black" />
 
                                         <androidx.recyclerview.widget.RecyclerView
@@ -290,6 +318,9 @@
                                             android:layout_height="wrap_content"
                                             android:layout_marginTop="10dp"
                                             android:orientation="horizontal"
+                                            android:clipToPadding="false"
+                                            android:paddingStart="20dp"
+                                            android:paddingEnd="10dp"
                                             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                                             app:reverseLayout="true"
                                             tools:itemCount="15"
@@ -307,6 +338,8 @@
                                         <TextView
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
+                                            android:layout_marginEnd="20dp"
+                                            android:layout_marginStart="20dp"
                                             android:text="Check out these events!"
                                             android:textColor="@color/black" />
 
@@ -315,6 +348,9 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:layout_marginTop="10dp"
+                                            android:clipToPadding="false"
+                                            android:paddingStart="20dp"
+                                            android:paddingEnd="10dp"
                                             android:orientation="horizontal"
                                             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                                             app:reverseLayout="true"
@@ -328,6 +364,8 @@
                                         android:layout_height="wrap_content"
                                         android:layout_marginTop="20dp"
                                         android:gravity="center"
+                                        android:layout_marginStart="20dp"
+                                        android:layout_marginEnd="20dp"
                                         android:orientation="vertical">
 
                                         <ImageView
