@@ -34,7 +34,7 @@ class AthleteHomeFragment : Fragment(R.layout.fragment_athlete_home) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentAthleteHomeBinding.bind(view)
-        val navigator = Navigation.findNavController(view)
+//        val navigator = Navigation.findNavController(view)
         val activity = activity as AthleteHomeActivity
 
         setUpWorkouts()
@@ -43,6 +43,7 @@ class AthleteHomeFragment : Fragment(R.layout.fragment_athlete_home) {
         setUpYourEvents()
         setUpCheckoutEvents()
         Picasso.get().load(R.drawable.athlete_temp_new_events_item_image).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).into(binding.profilePic)
+
     }
 
     private fun setUpWorkouts(){

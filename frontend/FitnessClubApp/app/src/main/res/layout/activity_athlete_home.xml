@@ -17,14 +17,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <androidx.fragment.app.FragmentContainerView
-                android:id="@+id/athleteHomeMainFragment"
-                android:name="androidx.navigation.fragment.NavHostFragment"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:defaultNavHost="true"
-                app:navGraph="@navigation/athlete_home_navigator" />
-
         </FrameLayout>
 
         <com.google.android.material.bottomnavigation.BottomNavigationView

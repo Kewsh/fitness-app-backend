@@ -110,4 +110,26 @@ class AthleteHomeRepository() {
 
         return diets
     }
+
+    fun getAllDayWorkoutItems(): ArrayList<DayWorkout> {
+        val dayWorkouts:ArrayList<DayWorkout> = ArrayList()
+
+        var dayWorkout = DayWorkout("Day 1",R.drawable.ic_checked,getAllTodayWorkoutItems())
+        dayWorkouts.add(dayWorkout)
+
+        dayWorkout = DayWorkout("Day 2",R.drawable.ic_checked,getAllTodayWorkoutItems())
+        dayWorkouts.add(dayWorkout)
+
+        dayWorkout = DayWorkout("Day 3",R.drawable.ic_checked,getAllTodayWorkoutItems())
+        dayWorkouts.add(dayWorkout)
+
+        dayWorkout = DayWorkout("Day 4",R.drawable.ic_checked,getAllTodayWorkoutItems())
+        dayWorkouts.add(dayWorkout)
+
+        dayWorkout = DayWorkout("Day 5",R.drawable.ic_checked,getAllTodayWorkoutItems())
+        dayWorkouts.add(dayWorkout)
+
+        return dayWorkouts
+
+    }
 }

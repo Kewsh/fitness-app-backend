@@ -1,6 +1,7 @@
 package com.fitness.app.viewmodel
 
 import androidx.lifecycle.ViewModel
+import com.fitness.app.R
 import com.fitness.app.model.*
 import com.fitness.app.repository.AthleteHomeRepository
 
@@ -23,5 +24,9 @@ class AthleteHomeViewModel(private val athleteHomeRepository: AthleteHomeReposit
 
     fun getAllYourEventsItems() : ArrayList<YourEvent> {
         return athleteHomeRepository.getAllYourEventsItems()
+    }
+
+    fun getAllDayWorkoutItems(): ArrayList<DayWorkout> {
+        return athleteHomeRepository.getAllDayWorkoutItems()
     }
 }
