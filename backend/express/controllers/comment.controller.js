@@ -14,10 +14,7 @@ module.exports.createOne = async (req, res) => {
         });
 
         // get user's fullname. can we do this in the first query?
-        comment.dataValues.user = {
-            fullName: (await comment.getUser()).fullName,
-            userId: comment.userId,
-        };
+        comment.dataValues.authorFullName = (await comment.getUser()).fullName;
 
         return res.status(201).json(comment);
     } catch (error) {
