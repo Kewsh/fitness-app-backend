@@ -18,7 +18,7 @@ async function init() {
     await assertDatabaseConnectionOk();
 
     // synchronize models with database
-    await sequelize.sync({ force: true });
+    await sequelize.sync();
 
     app.listen(PORT, () => {
         console.log(`Server started listening on port ${PORT}`);

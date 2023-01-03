@@ -58,6 +58,15 @@ module.exports = (sequelize) => {
         address: {
             type: DataTypes.STRING(1024),
         },
+        numberOfAthletes: {
+            type: DataTypes.VIRTUAL,
+        },
+        rating: {
+            type: DataTypes.VIRTUAL,
+        },
+        numberOfRatings: {
+            type: DataTypes.VIRTUAL,
+        }
     }, {
         hooks: {
             beforeCreate: async club => {
@@ -67,7 +76,48 @@ module.exports = (sequelize) => {
             beforeUpdate: async club => {
                 const salt = await bcrypt.genSalt();
                 club.password = await bcrypt.hash(club.password, salt);
-            }
-        }
+            },
+            afterFind: async query => {
+                // get program ids that belong to this club
+                const programIds = await getPrograms(sequelize, query.id);
+                
+                // set virtual fields
+                query.numberOfAthletes = await getNumberOfAthletes(
+                    sequelize,
+                    programIds
+                );
+                const rating = await getRating(sequelize, programIds);
+                query.rating = Number(rating.dataValues.avgRate);
+                query.numberOfRatings = rating.dataValues.nRates;
+            },
+        },
+    });
+}
+
+const getPrograms = async (sequelize, clubId) => {
+    return (await sequelize.models.program.findAll({
+        where: { clubId },
+        attributes: ['id'],
+    })).map(program => program.dataValues.id);
+}
+
+const getRating = async (sequelize, programIds) => {
+    // find all comments whose programId is in programIds and have ratings
+    // this query returns a list with one member (why?)
+    return (await sequelize.models.comment.findAll({
+        where: { programId: programIds },
+        attributes: [
+            [sequelize.fn('AVG', sequelize.col('rate')), 'avgRate'],
+            [sequelize.fn('COUNT', sequelize.col('rate')), 'nRates'],
+        ],
+    }))[0];
+}
+
+const getNumberOfAthletes = async (sequelize, programIds) => {
+    // get number of users whose programId is in programIds
+    return await sequelize.models.user.count({
+        where: {
+            programId: programIds,
+        },
     });
 }
