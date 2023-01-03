@@ -10,5 +10,11 @@ module.exports = (sequelize) => {
             type: DataTypes.STRING,
             allowNull: false,
         },
+        amountAndTitle: {
+            type: DataTypes.VIRTUAL,
+            get() {
+                return `${this.amount} ${this.title}`;
+            },
+        },
     });
 }
