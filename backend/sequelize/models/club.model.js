@@ -88,7 +88,7 @@ module.exports = (sequelize) => {
                 );
                 const rating = await getRating(sequelize, programIds);
                 query.rating = Number(rating.dataValues.avgRate);
-                query.numberOfRatings = rating.dataValues.nRates;
+                query.numberOfRatings = Number(rating.dataValues.nRates);
             },
         },
     });
