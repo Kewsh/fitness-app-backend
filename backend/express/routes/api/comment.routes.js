@@ -1,15 +1,14 @@
 const router = require('express').Router();
+const {
+    createOne,
+    updateOne,
+    deleteOne
+} = require('../../controllers/comment.controller');
 
-router.post('/', (req, res) => {
-    // create one
-});
+router.post('/', createOne);
 
-router.patch('/:id', (req, res) => {
-    // edit one
-});
+router.patch('/:id', updateOne);
 
-router.delete('/:id', (req, res) => {
-    // delete one
-});
+router.delete('/:id', deleteOne);
 
 module.exports = router;
