@@ -78,6 +78,9 @@ module.exports = (sequelize) => {
                 club.password = await bcrypt.hash(club.password, salt);
             },
             afterFind: async query => {
+                // skip this hook if no match is found
+                if (!query) return;
+
                 // get program ids that belong to this club
                 const programIds = await getPrograms(sequelize, query.id);
                 

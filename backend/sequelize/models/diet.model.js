@@ -31,6 +31,9 @@ module.exports = (sequelize) => {
     }, {
         hooks: {
             afterFind: async query => {
+                // skip this hook if no match is found
+                if (!query) return;
+
                 // set virtual fields
                 query.numberOfUsers = await getNumberOfUsers(
                     sequelize,
