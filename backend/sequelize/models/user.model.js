@@ -17,6 +17,12 @@ module.exports = (sequelize) => {
                 is: /^[a-zA-Z\s]*$/,
             },
         },
+        fullName: {
+            type: DataTypes.VIRTUAL,
+            get() {
+                return `${this.firstName} ${this.lastName}`;
+            },
+        },
         email: {
             type: DataTypes.STRING,
             allowNull: false,
