@@ -75,9 +75,9 @@ module.exports.getPrograms = async (req, res) => {
             where: { clubId: req.params.id },
             attributes: { exclude: ['coverPicPath'] },
         });
-        res.status(200).json(programs);
+        return res.status(200).json(programs);
     } catch (error) {
-        res.status(500).json(error);
+        return res.status(500).json(error);
     }
 }
 
@@ -87,9 +87,9 @@ module.exports.getEvents = async (req, res) => {
             where: { clubId: req.params.id },
             attributes: { exclude: ['coverPicPath'] },
         });
-        res.status(200).json(events);
+        return res.status(200).json(events);
     } catch (error) {
-        res.status(500).json(error);
+        return res.status(500).json(error);
     }
 }
 
