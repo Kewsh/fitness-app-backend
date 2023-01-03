@@ -101,6 +101,7 @@ const getPrograms = async (sequelize, clubId) => {
     return (await sequelize.models.program.findAll({
         where: { clubId },
         attributes: ['id'],
+        hooks: false,
     })).map(program => program.dataValues.id);
 }
 
