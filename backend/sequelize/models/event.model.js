@@ -31,5 +31,22 @@ module.exports = (sequelize) => {
         endDate: {
             type: DataTypes.DATE,
         },
+        attendees: {
+            type: DataTypes.VIRTUAL,
+        }
+    }, {
+        hooks: {
+            afterFind: async query => {
+                // set virtual field attendees
+                if (query) {
+                    query.attendees = await getNumberOfAttendees(query);
+                }
+            }
+        }
     });
+}
+
+const getNumberOfAttendees = async (event) => {
+    // get number of users who have participated in the event
+    return await event.countUsers();
 }
