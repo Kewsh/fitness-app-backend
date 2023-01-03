@@ -1,19 +1,14 @@
 const router = require('express').Router();
+const {
+    findOneById,
+    getCoverPicture,
+    getReviews
+} = require('../../controllers/recipe.controller');
 
-router.get('/:id', (req, res) => {
-    // get one (populate ingredients)
-});
+router.get('/:id', findOneById);
 
-router.get('/:id/cover', (req, res) => {
-    // get recipe's cover picture
-});
+router.get('/:id/cover', getCoverPicture);
 
-router.get('/:id/diet', (req, res) => {
-    // get recipe's diet
-});
-
-router.get('/:id/reviews', (req, res) => {
-    // get recipe's reviews (populate comment)
-});
+router.get('/:id/reviews', getReviews);
 
 module.exports = router;
