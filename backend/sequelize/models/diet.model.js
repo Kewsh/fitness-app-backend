@@ -19,6 +19,9 @@ module.exports = (sequelize) => {
                 min: 0,
             },
         },
+        duration: {
+            type: DataTypes.VIRTUAL
+        },
         numberOfUsers: {
             type: DataTypes.VIRTUAL,
         },
@@ -35,6 +38,10 @@ module.exports = (sequelize) => {
                 if (!query) return;
 
                 // set virtual fields
+                query.duration = (
+                    await getDuration(sequelize, query.id)
+                ).dataValues.duration;
+
                 query.numberOfUsers = await getNumberOfUsers(
                     sequelize,
                     query.id
@@ -47,6 +54,16 @@ module.exports = (sequelize) => {
     });
 }
 
+
+const getDuration = async (sequelize, dietId) => {
+    // get maximum day on workouts that belong to this program
+    return (await sequelize.models.food.findAll({
+        where: { dietId },
+        attributes: [
+            [sequelize.fn('MAX', sequelize.col('day')), 'duration'],
+        ],
+    }))[0];
+}
 
 const getRating = async (sequelize, dietId) => {
     // find all comments whose dietId is the same as param dietId
