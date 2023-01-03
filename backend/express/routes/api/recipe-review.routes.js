@@ -1,27 +1,23 @@
 const router = require('express').Router();
+const {
+    createOne,
+    updateOne,
+    deleteOne,
+    getPicture,
+    setPicture,
+    deletePicture
+} = require('../../controllers/recipe-review.controller');
 
-router.post('/', (req, res) => {
-    // create one
-});
+router.post('/', createOne);
 
-router.patch('/:id', (req, res) => {
-    // update one
-});
+router.patch('/:id', updateOne);
 
-router.delete('/:id', (req, res) => {
-    // delete one
-});
+router.delete('/:id', deleteOne);
 
-router.get('/:id/picture', (req, res) => {
-    // get review picture
-});
+router.get('/:id/picture', getPicture);
 
-router.put('/:id/picture', (req, res) => {
-    // update review picture
-});
+router.put('/:id/picture', setPicture);
 
-router.delete('/:id/picture', (req, res) => {
-    // delete review picture
-});
+router.delete('/:id/picture', deletePicture);
 
 module.exports = router;
