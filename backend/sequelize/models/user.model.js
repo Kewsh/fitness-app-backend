@@ -98,6 +98,15 @@ module.exports = (sequelize) => {
                 min: 10,
             },
         },
+        targetWeightProgressPercentage: {
+            type: DataTypes.VIRTUAL,
+        },
+        targetWaistWidthProgressPercentage: {
+            type: DataTypes.VIRTUAL,
+        },
+        targetBicepWidthProgressPercentage: {
+            type: DataTypes.VIRTUAL,
+        }
     }, {
         hooks: {
             beforeCreate: async user => {
@@ -118,6 +127,48 @@ module.exports = (sequelize) => {
                 const salt = await bcrypt.genSalt();
                 user.password = await bcrypt.hash(user.password, salt);
             },
+            afterFind: async query => {
+                // set virtual fields
+                if (query.targetWeightInDg) {
+                    query.targetWeightProgressPercentage = calculateProgress(
+                        query.currentWeightInDg,
+                        query.startWeightInDg,
+                        query.targetWeightInDg,
+                    );
+                }
+                if (query.targetWaistWidthInMm) {
+                    query.targetWaistWidthProgressPercentage = calculateProgress(
+                        query.currentWaistWidthInMm,
+                        query.startWaistWidthInMm,
+                        query.targetWaistWidthInMm,
+                    );
+                }
+                if (query.targetBicepWidthInMm) {
+                    query.targetBicepWidthProgressPercentage = calculateProgress(
+                        query.currentBicepWidthInMm,
+                        query.startBicepWidthInMm,
+                        query.targetBicepWidthInMm,
+                    );
+                }
+            }
         },
     });
+}
+
+
+const calculateProgress = (current, start, target) => {
+    if (start < target) {
+        const initialDifference = target-start;
+        const progress = Math.floor((
+            (initialDifference-target+current) / initialDifference)
+            *100
+        );
+        return progress >= 100 ? 100 : progress;
+    }
+    const initialDifference = start-target;
+    const progress = Math.floor((
+        (initialDifference-current+target) / initialDifference)
+        *100
+    );
+    return progress >= 100 ? 100 : progress;
 }
