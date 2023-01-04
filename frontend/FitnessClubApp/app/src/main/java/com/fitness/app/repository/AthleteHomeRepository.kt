@@ -176,4 +176,23 @@ class AthleteHomeRepository() {
         return dietPlans
 
     }
+
+    fun getAllUserCommentItems(): ArrayList<UserComment> {
+        val userComments:ArrayList<UserComment> = ArrayList()
+
+        var userComment = UserComment(R.drawable.temp_mona_lisa_image,"Mona Lisa","4.3","This program focuses on burning as much belly fat as\n" +
+                "one could possibly take, in a span of 30 days.")
+        userComments.add(userComment)
+
+        userComment = UserComment(R.drawable.temp_mona_lisa_image,"Mona Lisa","4.3","This program focuses on burning as much belly fat as\n" +
+                "one could possibly take, in a span of 30 days.")
+        userComments.add(userComment)
+
+        userComment = UserComment(R.drawable.temp_mona_lisa_image,"Mona Lisa","4.3","This program focuses on burning as much belly fat as\n" +
+                "one could possibly take, in a span of 30 days.")
+        userComments.add(userComment)
+
+        return userComments
+
+    }
 }

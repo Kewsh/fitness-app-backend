@@ -3,7 +3,9 @@ package com.fitness.app.views.activities
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.WindowManager
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
 import com.fitness.app.R
 import com.fitness.app.databinding.ActivityAthleteHomeBinding
@@ -18,6 +20,8 @@ class AthleteHomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAthleteHomeBinding.inflate(layoutInflater)
+
+        this.window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         val homeFragment:AthleteHomeFragment = AthleteHomeFragment()
         val fitnessFragment:AthleteFitnessFragment = AthleteFitnessFragment()
@@ -52,6 +56,7 @@ class AthleteHomeActivity : AppCompatActivity() {
     private fun setCurrentFragment(fragment: Fragment)=
         supportFragmentManager.beginTransaction().apply {
             replace(R.id.athleteHomeMainParentFragment,fragment)
+            setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
             commit()
         }
 }

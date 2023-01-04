@@ -6,17 +6,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.fitness.app.R
-import com.fitness.app.databinding.AthleteDayWorkoutItemBinding
 import com.fitness.app.databinding.AthleteDiscoverProgramItemBinding
-import com.fitness.app.model.DayWorkout
 import com.fitness.app.model.DiscoverProgram
-import com.fitness.app.util.DayWorkoutDiffUtilCallback
 import com.fitness.app.util.DiscoverProgramDiffUtilCallback
+import com.fitness.app.views.fragments.AthleteProgramDescriptionFragment
+
 
 class DiscoverProgramsAdapter(
     private val lifecycleOwner: LifecycleOwner,
@@ -44,6 +44,16 @@ class DiscoverProgramsAdapter(
                 image.setBackgroundResource(R.drawable.temp_program_image)
                 title.text = discoverProgram.title
                 subTitle.text = discoverProgram.subTitle
+
+                binding.program.setOnClickListener {
+                    val programDescriptionFragment = AthleteProgramDescriptionFragment()
+                    val fragmentManager = (context as AppCompatActivity).supportFragmentManager.beginTransaction()
+                    fragmentManager.replace(R.id.athleteHomeMainParentFragment, programDescriptionFragment)
+                    fragmentManager.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                    fragmentManager.addToBackStack(null)
+                    fragmentManager.commit()
+                }
+
 
             }
 
