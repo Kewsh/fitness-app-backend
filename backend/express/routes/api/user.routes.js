@@ -1,27 +1,17 @@
 const router = require('express').Router();
+const {
+    findOne,
+    createOne,
+    getEvents,
+    getProfilePicture,
+} = require('../../controllers/user.controller');
 
-router.get('/', (req, res) => {
-    // get one by user and pass
-});
+router.get('/', findOne);
 
-router.post('/', (req, res) => {
-    // create one
-});
+router.post('/', createOne);
 
-router.get('/:id/program', (req, res) => {
-    // get user's program
-});
+router.get('/:id/events', getEvents);
 
-router.get('/:id/diet', (req, res) => {
-    // get user's diet
-});
-
-router.get('/:id/events', (req, res) => {
-    // get user's events
-});
-
-router.get('/:id/profile-picture', (req, res) => {
-    // get user's profile picture
-});
+router.get('/:id/profile-picture', getProfilePicture);
 
 module.exports = router;
