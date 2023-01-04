@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -13,6 +15,8 @@ import com.fitness.app.R
 import com.fitness.app.databinding.AthleteTodayWorkoutItemBinding
 import com.fitness.app.model.Workout
 import com.fitness.app.util.WorkoutDiffUtilCallback
+import com.fitness.app.views.fragments.AthleteProgramDescriptionFragment
+import com.fitness.app.views.fragments.AthleteWorkoutDescriptionFragment
 
 class WorkoutAdapter(
     private val lifecycleOwner: LifecycleOwner,
@@ -38,8 +42,17 @@ class WorkoutAdapter(
             holder.apply {
                 image.setBackgroundResource(workout.image)
                 title.text = workout.title
-            }
 
+                binding.workout.setOnClickListener {
+                    val athleteWorkoutDescriptionFragment = AthleteWorkoutDescriptionFragment()
+                    val fragmentManager = (context as AppCompatActivity).supportFragmentManager.beginTransaction()
+                    fragmentManager.replace(R.id.athleteHomeMainParentFragment, athleteWorkoutDescriptionFragment)
+                    fragmentManager.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                    fragmentManager.addToBackStack(null)
+                    fragmentManager.commit()
+                }
+
+            }
         }
 
     }
