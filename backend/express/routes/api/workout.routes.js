@@ -1,19 +1,14 @@
 const router = require('express').Router();
+const {
+    findOneById,
+    getCoverPicture,
+    getInstructionVideo
+} = require('../../controllers/workout.controller');
 
-router.get('/:id', (req, res) => {
-    // get one
-});
+router.get('/:id', findOneById);
 
-router.get('/:id/program', (req, res) => {
-    // get workout's program
-});
+router.get('/:id/cover', getCoverPicture);
 
-router.get('/:id/cover', (req, res) => {
-    // get workout's cover picture
-});
-
-router.get('/:id/video', (req, res) => {
-    // get workout's instruction video
-});
+router.get('/:id/video', getInstructionVideo);
 
 module.exports = router;
