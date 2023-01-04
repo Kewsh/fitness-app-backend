@@ -11,9 +11,14 @@ module.exports.findOne = async (req, res) => {
             return res.status(400).json('Missing fields in request body');
         }
 
-        const club = await clubModel.findOne({ where: {
-            email: req.body.email,
-        }});
+        const club = await clubModel.findOne({
+            where: {
+                email: req.body.email,
+            },
+            attributes: {
+                exclude: ['coverPicPath', 'logoPath'],
+            },
+        });
 
         if (!club) {
             return res.status(404).json('No Club found with this email');
