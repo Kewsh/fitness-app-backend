@@ -44,55 +44,55 @@ module.exports = (sequelize) => {
         dietPickDate: {
             type: DataTypes.DATEONLY,
         },
-        currentWeightInDg: {
+        currentWeight: {
             type: DataTypes.INTEGER,
             validate: {
                 min: 100,
             },
         },
-        startWeightInDg: {
+        startWeight: {
             type: DataTypes.INTEGER,
             validate: {
                 min: 100,
             },
         },
-        targetWeightInDg: {
+        targetWeight: {
             type: DataTypes.INTEGER,
             validate: {
                 min: 100,
             },
         },
-        currentWaistWidthInMm: {
+        currentWaistWidth: {
             type: DataTypes.INTEGER,
             validate: {
                 min: 10,
             },
         },
-        startWaistWidthInMm: {
+        startWaistWidth: {
             type: DataTypes.INTEGER,
             validate: {
                 min: 10,
             },
         },
-        targetWaistWidthInMm: {
+        targetWaistWidth: {
             type: DataTypes.INTEGER,
             validate: {
                 min: 10,
             },
         },
-        currentBicepWidthInMm: {
+        currentBicepWidth: {
             type: DataTypes.INTEGER,
             validate: {
                 min: 10,
             },
         },
-        startBicepWidthInMm: {
+        startBicepWidth: {
             type: DataTypes.INTEGER,
             validate: {
                 min: 10,
             },
         },
-        targetBicepWidthInMm: {
+        targetBicepWidth: {
             type: DataTypes.INTEGER,
             validate: {
                 min: 10,
