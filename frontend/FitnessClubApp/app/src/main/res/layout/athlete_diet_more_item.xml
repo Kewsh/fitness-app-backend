@@ -13,6 +13,7 @@
 
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
+            android:layout_marginEnd="10dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
@@ -29,7 +30,7 @@
                     android:id="@+id/dietImage"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/temp_diet_big_image" />
+                    android:background="@drawable/temp_diet_more_image" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -68,20 +69,6 @@
                         android:textColor="@color/black_80"
                         android:textSize="12sp" />
 
-                    <TextView
-                        android:id="@+id/dietDescription"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="start"
-                        android:layout_marginTop="15dp"
-                        android:gravity="start"
-                        android:text="The purpose of this diet is to keep you energetic and
-healthy, while letting you enjoy all the meals you love.
-Much study has been done in ..."
-                        android:textAlignment="textStart"
-                        android:textColor="@color/black"
-                        android:textSize="12sp" />
-
 
                 </LinearLayout>
 
@@ -89,6 +76,7 @@ Much study has been done in ..."
             </LinearLayout>
 
         </com.google.android.material.card.MaterialCardView>
+
 
     </RelativeLayout>
 </layout>

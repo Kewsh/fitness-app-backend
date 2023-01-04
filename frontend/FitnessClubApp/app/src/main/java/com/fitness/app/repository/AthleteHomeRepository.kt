@@ -167,12 +167,6 @@ class AthleteHomeRepository() {
         dietPlan = DietPlan("Day 3",R.drawable.ic_checked,getAllTodayDietItems())
         dietPlans.add(dietPlan)
 
-        dietPlan = DietPlan("Day 4",R.drawable.ic_checked,getAllTodayDietItems())
-        dietPlans.add(dietPlan)
-
-        dietPlan = DietPlan("Day 5",R.drawable.ic_checked,getAllTodayDietItems())
-        dietPlans.add(dietPlan)
-
         return dietPlans
 
     }
@@ -193,6 +187,25 @@ class AthleteHomeRepository() {
         userComments.add(userComment)
 
         return userComments
+
+    }
+
+    fun getAllMoreDietItems(): ArrayList<MoreDiet> {
+        val moreDiets:ArrayList<MoreDiet> = ArrayList()
+
+        var moreDiet = MoreDiet(R.drawable.temp_diet_more_image,"Meat lover’s healthy diet","by Dr. Ahmad Davoodi")
+        moreDiets.add(moreDiet)
+
+        moreDiet = MoreDiet(R.drawable.temp_diet_more_image,"Meat lover’s healthy diet","by Dr. Ahmad Davoodi")
+        moreDiets.add(moreDiet)
+
+        moreDiet = MoreDiet(R.drawable.temp_diet_more_image,"Meat lover’s healthy diet","by Dr. Ahmad Davoodi")
+        moreDiets.add(moreDiet)
+
+        moreDiet = MoreDiet(R.drawable.temp_diet_more_image,"Meat lover’s healthy diet","by Dr. Ahmad Davoodi")
+        moreDiets.add(moreDiet)
+
+        return moreDiets
 
     }
 }

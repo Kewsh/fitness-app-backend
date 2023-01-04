@@ -41,4 +41,8 @@ class AthleteHomeViewModel(private val athleteHomeRepository: AthleteHomeReposit
     fun getAllUserCommentItems():ArrayList<UserComment>{
         return athleteHomeRepository.getAllUserCommentItems()
     }
+
+    fun getAllMoreDietItems():ArrayList<MoreDiet>{
+        return athleteHomeRepository.getAllMoreDietItems()
+    }
 }

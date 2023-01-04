@@ -6,60 +6,51 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.fitness.app.R
 import com.fitness.app.adapters.*
-import com.fitness.app.databinding.FragmentAthleteDietBinding
-import com.fitness.app.databinding.FragmentAthleteFitnessBinding
+import com.fitness.app.databinding.FragmentAthleteDietDescriptionBinding
+import com.fitness.app.databinding.FragmentAthleteProgramDescriptionBinding
+import com.fitness.app.model.MoreDiet
 import com.fitness.app.viewmodel.AthleteHomeViewModel
-import com.fitness.app.views.activities.AthleteHomeActivity
-import com.squareup.picasso.MemoryPolicy
-import com.squareup.picasso.NetworkPolicy
-import com.squareup.picasso.Picasso
 import java.util.concurrent.TimeUnit
 
-class AthleteDietFragment : Fragment(R.layout.fragment_athlete_diet) {
+class AthleteDietDescriptionFragment : Fragment(R.layout.fragment_athlete_diet_description) {
     val viewModel: AthleteHomeViewModel by activityViewModels()
-    lateinit var binding: FragmentAthleteDietBinding
-    lateinit var dietAdapter: DietAdapter
-    lateinit var foodAdapter: FoodAdapter
+    lateinit var binding: FragmentAthleteDietDescriptionBinding
     lateinit var dietPlansAdapter: DietPlansAdapter
+    lateinit var foodAdapter: FoodAdapter
+    lateinit var userCommentAdapter: UserCommentAdapter
+    lateinit var moreDietAdapter: MoreDietAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding = FragmentAthleteDietDescriptionBinding.bind(view)
 
-        binding = FragmentAthleteDietBinding.bind(view)
-        val activity = activity as AthleteHomeActivity
-        setUpDiets()
         setUpFoods()
         setUpDietPlans()
-        Picasso.get().load(R.drawable.athlete_temp_new_events_item_image).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(
-            NetworkPolicy.NO_CACHE).into(binding.profilePic)
+        setUpUserComments()
+        setUpMoreDiets()
 
-        binding.dietLayout.diet.setOnClickListener {
-            val athleteDietDescriptionFragment = AthleteDietDescriptionFragment()
-            val fragmentManager = (context as AppCompatActivity).supportFragmentManager.beginTransaction()
-            fragmentManager.replace(R.id.athleteHomeMainParentFragment, athleteDietDescriptionFragment)
-            fragmentManager.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-            fragmentManager.addToBackStack(null)
-            fragmentManager.commit()
+        binding.backButton.setOnClickListener {
+            (context as AppCompatActivity).supportFragmentManager.popBackStack()
         }
-
     }
 
-    private fun setUpFoods(){
-        binding.foodsRecyclerView.apply {
+    private fun setUpMoreDiets(){
+        binding.moreDietsRecyclerView.apply {
             layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL)
             setHasFixedSize(true)
-            foodAdapter = FoodAdapter(viewLifecycleOwner, context)
+            moreDietAdapter =
+                MoreDietAdapter(viewLifecycleOwner, context)
 //            dietAdapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
-            adapter = foodAdapter
+            adapter = moreDietAdapter
             postponeEnterTransition(300, TimeUnit.MILLISECONDS)
             viewTreeObserver.addOnPreDrawListener {
                 startPostponedEnterTransition()
@@ -68,17 +59,17 @@ class AthleteDietFragment : Fragment(R.layout.fragment_athlete_diet) {
 
         }
 
-        foodAdapter.submitList(viewModel.getAllFoodItems())
+        moreDietAdapter.submitList(viewModel.getAllMoreDietItems())
     }
 
-    private fun setUpDiets(){
-        binding.dietsRecyclerView.apply {
-            layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL)
+    private fun setUpUserComments(){
+        binding.userCommentsRecyclerView.apply {
+            layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
             setHasFixedSize(true)
-            dietAdapter =
-                DietAdapter(viewLifecycleOwner, context)
+            userCommentAdapter =
+                UserCommentAdapter(viewLifecycleOwner, context)
 //            dietAdapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
-            adapter = dietAdapter
+            adapter = userCommentAdapter
             postponeEnterTransition(300, TimeUnit.MILLISECONDS)
             viewTreeObserver.addOnPreDrawListener {
                 startPostponedEnterTransition()
@@ -87,7 +78,7 @@ class AthleteDietFragment : Fragment(R.layout.fragment_athlete_diet) {
 
         }
 
-        dietAdapter.submitList(viewModel.getAllTodayDietItems())
+        userCommentAdapter.submitList(viewModel.getAllUserCommentItems())
     }
 
     private fun setUpDietPlans(){
@@ -107,6 +98,24 @@ class AthleteDietFragment : Fragment(R.layout.fragment_athlete_diet) {
         }
 
         dietPlansAdapter.submitList(viewModel.getAllDietPlanItems())
+    }
+
+    private fun setUpFoods(){
+        binding.foodsRecyclerView.apply {
+            layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL)
+            setHasFixedSize(true)
+            foodAdapter = FoodAdapter(viewLifecycleOwner, context)
+//            dietAdapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
+            adapter = foodAdapter
+            postponeEnterTransition(300, TimeUnit.MILLISECONDS)
+            viewTreeObserver.addOnPreDrawListener {
+                startPostponedEnterTransition()
+                true
+            }
+
+        }
+
+        foodAdapter.submitList(viewModel.getAllFoodItems())
     }
 
 }
