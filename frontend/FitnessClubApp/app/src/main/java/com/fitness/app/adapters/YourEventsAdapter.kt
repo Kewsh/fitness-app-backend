@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -14,6 +16,8 @@ import com.fitness.app.databinding.AthleteTodayDietItemBinding
 import com.fitness.app.databinding.AthleteYourEventsItemBinding
 import com.fitness.app.model.YourEvent
 import com.fitness.app.util.YourEventDiffUtilCallback
+import com.fitness.app.views.fragments.AthleteDietDescriptionFragment
+import com.fitness.app.views.fragments.AthleteEventDescriptionFragment
 
 class YourEventsAdapter(
     private val lifecycleOwner: LifecycleOwner,
@@ -40,6 +44,15 @@ class YourEventsAdapter(
                 image.setBackgroundResource(yourEvent.image)
                 title.text = yourEvent.title
                 subtitle.text = yourEvent.subTitle
+
+                binding.event.setOnClickListener {
+                    val athleteEventDescriptionFragment = AthleteEventDescriptionFragment()
+                    val fragmentManager = (context as AppCompatActivity).supportFragmentManager.beginTransaction()
+                    fragmentManager.replace(R.id.athleteHomeMainParentFragment, athleteEventDescriptionFragment)
+                    fragmentManager.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                    fragmentManager.addToBackStack(null)
+                    fragmentManager.commit()
+                }
             }
 
         }
