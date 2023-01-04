@@ -37,4 +37,8 @@ class AthleteHomeViewModel(private val athleteHomeRepository: AthleteHomeReposit
     fun getAllDietPlanItems(): ArrayList<DietPlan> {
         return athleteHomeRepository.getAllDietPlanItems()
     }
+
+    fun getAllUserCommentItems():ArrayList<UserComment>{
+        return athleteHomeRepository.getAllUserCommentItems()
+    }
 }

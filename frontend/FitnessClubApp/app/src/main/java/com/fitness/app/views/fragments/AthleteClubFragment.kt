@@ -36,6 +36,7 @@ class AthleteClubFragment : Fragment(R.layout.fragment_athlete_club) {
 
         setUpPrograms()
         setUpEvents()
+
     }
 
     private fun setUpPrograms(){
