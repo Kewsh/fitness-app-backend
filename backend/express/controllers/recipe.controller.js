@@ -3,6 +3,7 @@ const {
     recipeIngredient: recipeIngredientModel,
     recipeReview: recipeReviewModel,
     comment: commentModel,
+    user: userModel,
 } = require('../../sequelize').models;
 
 module.exports.findOneById = async (req, res) => {
@@ -29,15 +30,19 @@ module.exports.getReviews = async (req, res) => {
     try {
         const reviews = await recipeReviewModel.findAll({
             where: { recipeId: req.params.id },
-            include: commentModel,
+            include: {
+                model: commentModel,
+                include: {
+                    model: userModel,
+                    attributes: [
+                        'firstName',
+                        'lastName',
+                        'fullName'
+                    ],
+                },
+            },
             attributes: { exclude: ['reviewPicPath'] },
         });
-
-        // get user's fullname. can we do this in the first query?
-        await Promise.all(reviews.map(async review => {
-            review.comment.dataValues.authorFullName =
-                (await review.comment.getUser()).fullName;
-        }));
 
         return res.status(200).json(reviews);
     } catch (error) {

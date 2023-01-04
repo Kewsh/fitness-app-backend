@@ -43,6 +43,14 @@ module.exports.getComments = async (req, res) => {
     try {
         const comments = await commentModel.findAll({
             where: { programId: req.params.id },
+            include: {
+                model: userModel,
+                attributes: [
+                    'firstName',
+                    'lastName',
+                    'fullName'
+                ],
+            },
         });
         return res.status(200).json(comments);
     } catch (error) {

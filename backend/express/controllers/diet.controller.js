@@ -60,8 +60,17 @@ module.exports.getRecipes = async (req, res) => {
 module.exports.getComments = async (req, res) => {
     try {
         const comments = await commentModel.findAll({
-            where: { dietId: req.params.id }
+            where: { dietId: req.params.id },
+            include: {
+                model: userModel,
+                attributes: [
+                    'firstName',
+                    'lastName',
+                    'fullName'
+                ],
+            },
         });
+
         return res.status(200).json(comments);
     } catch (error) {
         return res.status(500).json(error);
