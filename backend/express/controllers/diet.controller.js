@@ -77,8 +77,10 @@ module.exports.pick = async (req, res) => {
         }
         const [ affectedRows ] = await userModel.update({
             dietId: req.params.id,
+            dietPickDate: new Date(),
         }, {
-            where: { id: req.body.userId }
+            where: { id: req.body.userId },
+            individualHooks: true,
         });
         if (!affectedRows) {
             return res.status(404).json('No user found with this id');

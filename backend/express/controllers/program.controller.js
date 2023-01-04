@@ -63,8 +63,10 @@ module.exports.enroll = async (req, res) => {
         }
         const [ affectedRows ] = await userModel.update({
             programId: req.params.id,
+            programEnrolmentDate: new Date(),
         }, {
-            where: { id: req.body.userId }
+            where: { id: req.body.userId },
+            individualHooks: true,
         });
         if (!affectedRows) {
             return res.status(404).json('No user found with this id');
