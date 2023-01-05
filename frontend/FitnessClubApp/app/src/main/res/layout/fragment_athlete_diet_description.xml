@@ -298,19 +298,41 @@ healthy, while letting you enjoy all the meals you love. Much study has been don
                             android:layout_height="wrap_content"
                             android:text="View all comments" />
 
-
-                        <com.google.android.material.textfield.TextInputEditText
+                        <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
-                            android:backgroundTint="@color/black_80"
-                            android:drawableEnd="@drawable/ic_star_icon"
-                            android:hint="@string/write_your_comment_here"
-                            android:paddingStart="15dp"
-                            android:paddingEnd="15dp"
-                            android:textColor="@color/black"
-                            android:textCursorDrawable="@null"
-                            android:textSize="12sp" />
+                            android:layout_marginBottom="40dp">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/writeCommentEditText"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:backgroundTint="@color/black_80"
+                                android:hint="@string/write_your_comment_here"
+                                android:paddingStart="15dp"
+                                android:paddingEnd="15dp"
+                                android:textColor="@color/black"
+                                android:textCursorDrawable="@null"
+                                android:textSize="12sp" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:gravity="end|center"
+                                android:orientation="horizontal">
+
+                                <ImageButton
+                                    android:id="@+id/addRating"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginEnd="15dp"
+                                    android:background="@drawable/ic_star_icon" />
+
+                            </LinearLayout>
+
+                        </RelativeLayout>
 
                     </LinearLayout>
 

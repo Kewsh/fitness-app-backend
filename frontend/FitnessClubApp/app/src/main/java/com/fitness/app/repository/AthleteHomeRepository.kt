@@ -208,4 +208,21 @@ class AthleteHomeRepository() {
         return moreDiets
 
     }
+
+    fun getAllWhoTriedFoodItems(): ArrayList<WhoTriedFood> {
+        val whoTriedFoods:ArrayList<WhoTriedFood> = ArrayList()
+
+        var whoTriedFood = WhoTriedFood(R.drawable.temp_who_tried_image,"Mona Lisa","4.3","This program focuses on burning as much\n" +
+                "belly fat as one could possibly take, in a\n" +
+                "span of 30 days  ...")
+        whoTriedFoods.add(whoTriedFood)
+
+        whoTriedFood = WhoTriedFood(R.drawable.temp_who_tried_image,"Mona Lisa","4.3","This program focuses on burning as much\n" +
+                "belly fat as one could possibly take, in a\n" +
+                "span of 30 days  ...")
+        whoTriedFoods.add(whoTriedFood)
+
+        return whoTriedFoods
+
+    }
 }
