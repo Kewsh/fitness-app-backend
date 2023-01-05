@@ -45,4 +45,8 @@ class AthleteHomeViewModel(private val athleteHomeRepository: AthleteHomeReposit
     fun getAllMoreDietItems():ArrayList<MoreDiet>{
         return athleteHomeRepository.getAllMoreDietItems()
     }
+
+    fun getAllWhoTriedFoodItems():ArrayList<WhoTriedFood>{
+        return athleteHomeRepository.getAllWhoTriedFoodItems()
+    }
 }
