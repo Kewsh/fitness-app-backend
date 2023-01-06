@@ -9,9 +9,9 @@ const {
     getLogo,
 } = require('../../controllers/club.controller');
 
-router.get('/', findOne);
+router.post('/login', findOne);
 
-router.post('/', createOne);
+router.post('/signup', createOne);
 
 router.get('/:id', findOneById);
 
