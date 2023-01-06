@@ -79,9 +79,11 @@ module.exports.getPrograms = async (req, res) => {
         const programs = await programModel.findAll({
             where: { clubId: req.params.id },
             attributes: { exclude: ['coverPicPath'] },
+            hooks: false,
         });
         return res.status(200).json(programs);
     } catch (error) {
+        console.log(error);
         return res.status(500).json(error);
     }
 }
@@ -91,6 +93,7 @@ module.exports.getEvents = async (req, res) => {
         const events = await eventModel.findAll({
             where: { clubId: req.params.id },
             attributes: { exclude: ['coverPicPath'] },
+            hooks: false,
         });
         return res.status(200).json(events);
     } catch (error) {
