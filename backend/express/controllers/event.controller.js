@@ -2,6 +2,7 @@ const {
     event: eventModel,
     club: clubModel,
     user: userModel,
+    comment: commentModel,
 } = require('../../sequelize').models;
 
 module.exports.discover = async (req, res) => {
