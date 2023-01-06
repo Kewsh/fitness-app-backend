@@ -7,7 +7,8 @@ module.exports.getPicture = async (req, res) => {
 module.exports.getDiets = async (req, res) => {
     try {
         const diets = await dietModel.findAll({
-            where: { nutritionistId: req.params.id }
+            where: { nutritionistId: req.params.id },
+            hooks: false,
         });
         return res.status(200).json(diets)
     } catch (error) {
