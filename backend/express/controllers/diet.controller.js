@@ -49,7 +49,8 @@ module.exports.getFoods = async (req, res) => {
 module.exports.getRecipes = async (req, res) => {
     try {
         const recipes = await recipeModel.findAll({
-            where: { dietId: req.params.id }
+            where: { dietId: req.params.id },
+            hooks: false,
         });
         return res.status(200).json(recipes);
     } catch (error) {
