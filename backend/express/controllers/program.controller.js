@@ -1,3 +1,4 @@
+const { getUploadedFilePath } = require('../file-utils');
 const {
     program: programModel,
     workout: workoutModel,
@@ -78,7 +79,21 @@ module.exports.getComments = async (req, res) => {
 }
 
 module.exports.getCoverPicture = async (req, res) => {
+    try {
+        const program = await programModel.findByPk(
+            req.params.id,
+            { attributes: ['id', 'coverPicPath'] }
+        );
 
+        if (!program || !program.coverPicPath) {
+            return res.status(404).json('No cover picture found');
+        }
+
+        res.status(200)
+           .sendFile(getUploadedFilePath(program.coverPicPath));
+    } catch (error) {
+        return res.status(500).json(error);
+    }
 }
 
 module.exports.enroll = async (req, res) => {

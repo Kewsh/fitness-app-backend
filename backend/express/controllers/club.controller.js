@@ -1,3 +1,4 @@
+const { getUploadedFilePath } = require('../file-utils');
 const {
     club: clubModel,
     socialMedia: socialMediaModel,
@@ -119,9 +120,37 @@ module.exports.getEvents = async (req, res) => {
 }
 
 module.exports.getCoverPicture = async (req, res) => {
-    
+    try {
+        const club = await clubModel.findByPk(
+            req.params.id,
+            { attributes: ['id', 'coverPicPath'] }
+        );
+
+        if (!club || !club.coverPicPath) {
+            return res.status(404).json('No cover picture found');
+        }
+
+        res.status(200)
+           .sendFile(getUploadedFilePath(club.coverPicPath));
+    } catch (error) {
+        return res.status(500).json(error);
+    }
 }
 
 module.exports.getLogo = async (req, res) => {
-    
+    try {
+        const club = await clubModel.findByPk(
+            req.params.id,
+            { attributes: ['id', 'logoPath'] }
+        );
+
+        if (!club || !club.logoPath) {
+            return res.status(404).json('No logo found');
+        }
+
+        res.status(200)
+           .sendFile(getUploadedFilePath(club.logoPath));
+    } catch (error) {
+        return res.status(500).json(error);
+    }
 }

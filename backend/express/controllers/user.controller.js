@@ -1,3 +1,4 @@
+const { getUploadedFilePath } = require('../file-utils');
 const {
     user: userModel,
     measurement: measurementModel,
@@ -83,5 +84,19 @@ module.exports.getEvents = async (req, res) => {
 }
 
 module.exports.getProfilePicture = async (req, res) => {
+    try {
+        const user = await userModel.findByPk(
+            req.params.id,
+            { attributes: ['id', 'profilePicPath'] }
+        );
 
+        if (!user || !user.profilePicPath) {
+            return res.status(404).json('No profile picture found');
+        }
+
+        res.status(200)
+           .sendFile(getUploadedFilePath(user.profilePicPath));
+    } catch (error) {
+        return res.status(500).json(error);
+    }
 }

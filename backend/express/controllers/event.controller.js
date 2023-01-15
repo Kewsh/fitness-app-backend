@@ -1,3 +1,4 @@
+const { getUploadedFilePath } = require('../file-utils');
 const {
     event: eventModel,
     club: clubModel,
@@ -48,7 +49,21 @@ module.exports.getComments = async (req, res) => {
 }
 
 module.exports.getCoverPicture = async (req, res) => {
+    try {
+        const event = await eventModel.findByPk(
+            req.params.id,
+            { attributes: ['id', 'coverPicPath'] }
+        );
 
+        if (!event || !event.coverPicPath) {
+            return res.status(404).json('No cover picture found');
+        }
+
+        res.status(200)
+           .sendFile(getUploadedFilePath(event.coverPicPath));
+    } catch (error) {
+        return res.status(500).json(error);
+    }
 }
 
 module.exports.participate = async (req, res) => {

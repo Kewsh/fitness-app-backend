@@ -1,3 +1,4 @@
+const { getUploadedFilePath } = require('../file-utils');
 const {
     diet: dietModel,
     food: foodModel,
@@ -32,7 +33,21 @@ module.exports.findOneById = async (req, res) => {
 }
 
 module.exports.getCoverPicture = async (req, res) => {
+    try {
+        const diet = await dietModel.findByPk(
+            req.params.id,
+            { attributes: ['id', 'coverPicPath'] }
+        );
 
+        if (!diet || !diet.coverPicPath) {
+            return res.status(404).json('No cover picture found');
+        }
+
+        res.status(200)
+           .sendFile(getUploadedFilePath(diet.coverPicPath));
+    } catch (error) {
+        return res.status(500).json(error);
+    }
 }
 
 module.exports.getFoods = async (req, res) => {
