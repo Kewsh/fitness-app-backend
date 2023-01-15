@@ -27,8 +27,13 @@ module.exports.findOne = async (req, res) => {
             return res.status(401).json('Invalid password');
         }
 
-        // exclude password from response object
-        const { password, ...userResponse } = club.dataValues;
+        // exclude some fields from response
+        const {
+            password,
+            coverPicPath,
+            logoPath,
+            ...userResponse
+        } = club.dataValues;
 
         return res.status(200).json(userResponse);
     } catch (error) {
@@ -92,7 +97,6 @@ module.exports.getPrograms = async (req, res) => {
         });
         return res.status(200).json(programs);
     } catch (error) {
-        console.log(error);
         return res.status(500).json(error);
     }
 }
