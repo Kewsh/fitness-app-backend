@@ -51,6 +51,12 @@ module.exports = (sequelize) => {
                 max: 366,
             },
         },
+        setsAndReps: {
+            type: DataTypes.VIRTUAL,
+            get() {
+                return `${this.sets}x${this.reps || (this.setTimeInSeconds + 'sec')} ${this.title}`;
+            },
+        }
     }, {
         hooks: {
             beforeCreate: workout => {

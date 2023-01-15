@@ -3,7 +3,6 @@ const {
     workout: workoutModel,
     comment: commentModel,
     user: userModel,
-    club: clubModel,
 } = require('../../sequelize').models;
 
 module.exports.discover = async (req, res) => {
@@ -14,11 +13,21 @@ module.exports.findOneById = async (req, res) => {
     try {
         const program = await programModel.findByPk(req.params.id, {
             attributes: { exclude: ['coverPicPath'] },
-            include: {
-                model: clubModel,
-                attributes: ['name'],
-            },
         });
+
+        // this can't be done in include, since hooks don't run on
+        // included models
+        program.dataValues.club = await program.getClub({
+            attributes: { exclude: [
+                'coverPicPath',
+                'logoPath',
+                'password',
+                'email',
+                'createdAt',
+                'updatedAt',
+            ]},
+        });
+
         if (!program) {
             return res.status(404).json('No program found with this id');
         }
@@ -32,6 +41,15 @@ module.exports.getWorkouts = async (req, res) => {
     try {
         const workouts = await workoutModel.findAll({
             where: { programId: req.params.id },
+            attributes: [
+                'id',
+                'title',
+                'sets',
+                'reps',
+                'setTimeInSeconds',
+                'setsAndReps',
+                'day'
+            ],
         });
         return res.status(200).json(workouts);
     } catch (error) {
@@ -46,6 +64,7 @@ module.exports.getComments = async (req, res) => {
             include: {
                 model: userModel,
                 attributes: [
+                    'id',
                     'firstName',
                     'lastName',
                     'fullName'

@@ -28,15 +28,12 @@ module.exports = (sequelize) => {
         duration: {
             type: DataTypes.VIRTUAL,
         },
-        numberOfAthletes: {
+        nAthletes: {
             type: DataTypes.VIRTUAL,
         },
         rating: {
             type: DataTypes.VIRTUAL,
         },
-        numberOfRatings: {
-            type: DataTypes.VIRTUAL,
-        }
     }, {
         hooks: {
             afterFind: async query => {
@@ -48,14 +45,17 @@ module.exports = (sequelize) => {
                     await getDuration(sequelize, query.id)
                 ).dataValues.duration;
 
-                query.numberOfAthletes = await getNumberOfAthletes(
+                query.nAthletes = await getNumberOfAthletes(
                     sequelize,
                     query.id
                 );
-
                 const rating = await getRating(sequelize, query.id);
-                query.rating = parseInt(rating.dataValues.avgRate);
-                query.numberOfRatings = Number(rating.dataValues.nRates);
+                query.rating = {
+                    rating: parseInt(rating.dataValues.avgRate),
+                    nRates: query.numberOfRatings = parseInt(
+                        rating.dataValues.nRates
+                    ),
+                };
             }
         }
     });
