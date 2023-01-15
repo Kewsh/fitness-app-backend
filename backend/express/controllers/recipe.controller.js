@@ -1,5 +1,6 @@
 const {
     recipe: recipeModel,
+    diet: dietModel,
     recipeIngredient: recipeIngredientModel,
     recipeReview: recipeReviewModel,
     comment: commentModel,
@@ -10,7 +11,16 @@ module.exports.findOneById = async (req, res) => {
     try {
         const recipe = await recipeModel.findByPk(req.params.id, {
             attributes: { exclude: ['coverPicPath'] },
-            include: recipeIngredientModel,
+            include: [
+                {
+                    model: recipeIngredientModel,
+                    attributes: ['title', 'amount', 'amountAndTitle'],
+                },
+                {
+                    model: dietModel,
+                    attributes: ['id', 'title'],
+                }
+            ],
         });
 
         if (!recipe) {
@@ -35,6 +45,7 @@ module.exports.getReviews = async (req, res) => {
                 include: {
                     model: userModel,
                     attributes: [
+                        'id',
                         'firstName',
                         'lastName',
                         'fullName'

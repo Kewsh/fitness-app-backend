@@ -40,9 +40,6 @@ module.exports = (sequelize) => {
         rating: {
             type: DataTypes.VIRTUAL,
         },
-        numberOfRatings: {
-            type: DataTypes.VIRTUAL,
-        }
     }, {
         hooks: {
             afterFind: async query => {
@@ -51,8 +48,12 @@ module.exports = (sequelize) => {
 
                 // set virtual fields
                 const rating = await getRating(sequelize, query.id);
-                query.rating = parseInt(rating.dataValues.avgRate);
-                query.numberOfRatings = Number(rating.dataValues.nRates);
+                query.rating = {
+                    rating: parseInt(rating.dataValues.avgRate),
+                    nRates: query.numberOfRatings = parseInt(
+                        rating.dataValues.nRates
+                    ),
+                };
             }
         }
     });
