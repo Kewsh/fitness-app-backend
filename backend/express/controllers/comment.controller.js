@@ -2,8 +2,7 @@ const { comment: commentModel } = require('../../sequelize').models;
 
 module.exports.createOne = async (req, res) => {
     try {
-        const comment = await commentModel.create(
-        {
+        const comment = await commentModel.create({
             text: req.body.text,
             rate: req.body.rate,
             programId: req.body.programId,
@@ -13,8 +12,11 @@ module.exports.createOne = async (req, res) => {
             userId: req.body.userId,
         });
 
-        // get user's fullname. can we do this in the first query?
-        comment.dataValues.authorFullName = (await comment.getUser()).fullName;
+        // get author's fullname
+        //TODO: find a way to do this in the first query
+        comment.dataValues.user = {
+            fullName: (await comment.getUser()).fullName
+        }
 
         return res.status(201).json(comment);
     } catch (error) {
