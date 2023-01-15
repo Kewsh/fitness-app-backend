@@ -15,7 +15,7 @@ module.exports.findOneById = async (req, res) => {
             attributes: { exclude: ['coverPicPath'] },
             include: {
                 model: clubModel,
-                attributes: ['name'],
+                attributes: ['id', 'name'],
             },
         });
         if (!event) {
@@ -34,6 +34,7 @@ module.exports.getComments = async (req, res) => {
             include: {
                 model: userModel,
                 attributes: [
+                    'id',
                     'firstName',
                     'lastName',
                     'fullName'
