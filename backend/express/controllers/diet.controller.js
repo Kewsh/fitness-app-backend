@@ -1,6 +1,5 @@
 const {
     diet: dietModel,
-    nutritionist: nutritionistModel,
     food: foodModel,
     recipe: recipeModel,
     comment: commentModel,
@@ -15,10 +14,12 @@ module.exports.findOneById = async (req, res) => {
     try {
         const diet = await dietModel.findByPk(req.params.id, {
             attributes: { exclude: ['coverPicPath'] },
-            include: {
-                model: nutritionistModel,
-                attributes: { exclude: ['picPath'] }
-            },
+        });
+
+        //TODO: this can't be done in include, since hooks don't run on
+        // included models
+        diet.dataValues.nutritionist = await diet.getNutritionist({
+            attributes: { exclude: ['picPath'] },
         });
 
         if (!diet) {
