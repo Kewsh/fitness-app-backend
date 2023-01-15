@@ -44,6 +44,9 @@ module.exports = (sequelize) => {
         dietPickDate: {
             type: DataTypes.DATEONLY,
         },
+        clubId: {
+            type: DataTypes.VIRTUAL,
+        }
     }, {
         hooks: {
             beforeCreate: async user => {
@@ -61,9 +64,26 @@ module.exports = (sequelize) => {
                     throw new Error("Date of program/diet pick must be given");
                 }
 
-                const salt = await bcrypt.genSalt();
-                user.password = await bcrypt.hash(user.password, salt);
+                // hash password only if it's been updated
+                if (user.password != user.previous('password')) {
+                    const salt = await bcrypt.genSalt();
+                    user.password = await bcrypt.hash(user.password, salt);
+                }
             },
+            afterFind: async query => {
+                if (query) {
+                    // get user's clubId from the program they're enrolled in
+                    const program = await sequelize.models.program.findByPk(
+                        query.programId,
+                        {
+                            attributes: ['id', 'clubId'],
+                            hooks: false,
+                        },
+                    );
+                    if (program)
+                        query.clubId = program.clubId;
+                }
+            }
         }
     });
 }
