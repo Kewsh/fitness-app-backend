@@ -11,7 +11,7 @@ module.exports.findOneById = async (req, res) => {
             },
             include: {
                 model: programModel,
-                attributes: ['title'],
+                attributes: ['id', 'title'],
             },
         });
         if (!workout) {
