@@ -7,6 +7,7 @@ module.exports = (sequelize) => {
         diet,
         event,
         food,
+        measurement,
         nutritionist,
         program,
         recipeIngredient,
@@ -165,4 +166,13 @@ module.exports = (sequelize) => {
         },
     });
     comment.belongsTo(user);
+
+    user.hasMany(measurement, {
+        onDelete: 'CASCADE',
+        foreignKey: {
+            name: 'userId',
+            allowNull: false,
+        },
+    });
+    measurement.belongsTo(user);
 }

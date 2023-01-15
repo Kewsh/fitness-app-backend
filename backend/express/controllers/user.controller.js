@@ -1,4 +1,7 @@
-const { user: userModel } = require('../../sequelize').models;
+const {
+    user: userModel,
+    measurement: measurementModel,
+} = require('../../sequelize').models;
 
 module.exports.findOne = async (req, res) => {
     try {
@@ -10,6 +13,7 @@ module.exports.findOne = async (req, res) => {
             where: {
                 email: req.body.email,
             },
+            include: measurementModel,
             attributes: {
                 exclude: ['profilePicPath']
             }
@@ -38,13 +42,19 @@ module.exports.createOne = async (req, res) => {
             lastName: req.body.lastName,
             email: req.body.email,
             password: req.body.password,
-        });
+            measurements: [
+                { type: 'WEIGHT' },
+                { type: 'BICEP' },
+                { type: 'WAIST' },
+            ],
+        }, { include: [measurementModel] });
 
         // exclude password from response object
         const { password, ...userResponse } = user.dataValues;
 
         return res.status(201).json(userResponse);
     } catch (error) {
+        console.log(error);
         return res.status(500).json(error);
     }
 }
