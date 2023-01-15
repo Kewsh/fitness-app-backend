@@ -1,3 +1,5 @@
+const { getUploadedFilePath, deleteFile } = require('../file-utils');
+const upload = require('../multer');
 const {
     recipeReview: recipeReviewModel,
     comment: commentModel,
@@ -67,13 +69,78 @@ module.exports.deleteOne = async (req, res) => {
 }
 
 module.exports.getPicture = async (req, res) => {
+    try {
+        const recipeReview = await recipeReviewModel.findByPk(
+            req.params.id,
+            { attributes: ['id', 'reviewPicPath'] }
+        );
 
+        if (!recipeReview || !recipeReview.reviewPicPath) {
+            return res.status(404).json('No review picture found');
+        }
+
+        res.status(200)
+           .sendFile(getUploadedFilePath(recipeReview.reviewPicPath));
+    } catch (error) {
+        return res.status(500).json(error);
+    }
 }
 
 module.exports.setPicture = async (req, res) => {
+    const handler = upload.single('picture');
 
+    handler(req, res, async error => {
+        if (error) {
+            return res.status(500).json(error.message);
+        }
+        try {
+            const recipeReview = await recipeReviewModel.findByPk(
+                req.params.id,
+                { attributes: ['id', 'reviewPicPath'] },
+            );
+
+            if (!recipeReview) {
+                //TODO: find a better way to abort the upload
+                deleteFile(getUploadedFilePath(req.file.filename));
+                throw new Error('No recipe review found with this id');
+            }
+    
+            // delete previous picture from database (if exists)
+            if (recipeReview.reviewPicPath)
+                deleteFile(getUploadedFilePath(recipeReview.reviewPicPath));
+    
+            // update picture name in database
+            recipeReview.reviewPicPath = req.file.filename;
+            await recipeReview.save();
+
+            return res.status(200).json();
+        } catch (error) {
+            // abort file upload
+            deleteFile(getUploadedFilePath(req.file.filename));
+            return res.status(500).json(error);
+        }
+    });
 }
 
 module.exports.deletePicture = async (req, res) => {
+    try {
+        const recipeReview = await recipeReviewModel.findByPk(
+            req.params.id,
+            { attributes: ['id', 'reviewPicPath'] }
+        );
+    
+        if (!recipeReview || !recipeReview.reviewPicPath) {
+            return res.status(404).json('No review picture found');
+        }
 
+        deleteFile(getUploadedFilePath(recipeReview.reviewPicPath));
+
+        // update picture name in database
+        recipeReview.reviewPicPath = null;
+        await recipeReview.save();
+
+        return res.status(200).json();
+    } catch (error) {
+        return res.status(500).json(error);
+    }
 }
