@@ -34,11 +34,11 @@ module.exports.getCoverPicture = async (req, res) => {
 
 }
 
-// this route must have query params (at least day)
 module.exports.getFoods = async (req, res) => {
     try {
         const foods = await foodModel.findAll({
-            where: { dietId: req.params.id }
+            where: { dietId: req.params.id },
+            attributes: ['id', 'amount', 'title', 'amountAndTitle', 'day'],
         });
         return res.status(200).json(foods);
     } catch (error) {
@@ -50,6 +50,7 @@ module.exports.getRecipes = async (req, res) => {
     try {
         const recipes = await recipeModel.findAll({
             where: { dietId: req.params.id },
+            attributes: ['id', 'title'],
             hooks: false,
         });
         return res.status(200).json(recipes);
@@ -65,9 +66,10 @@ module.exports.getComments = async (req, res) => {
             include: {
                 model: userModel,
                 attributes: [
+                    'id',
                     'firstName',
                     'lastName',
-                    'fullName'
+                    'fullName',
                 ],
             },
         });

@@ -22,15 +22,12 @@ module.exports = (sequelize) => {
         duration: {
             type: DataTypes.VIRTUAL
         },
-        numberOfUsers: {
+        nAthletes: {
             type: DataTypes.VIRTUAL,
         },
         rating: {
             type: DataTypes.VIRTUAL,
         },
-        numberOfRatings: {
-            type: DataTypes.VIRTUAL,
-        }
     }, {
         hooks: {
             afterFind: async query => {
@@ -42,13 +39,17 @@ module.exports = (sequelize) => {
                     await getDuration(sequelize, query.id)
                 ).dataValues.duration;
 
-                query.numberOfUsers = await getNumberOfUsers(
+                query.nAthletes = await getNumberOfAthletes(
                     sequelize,
                     query.id
                 );
                 const rating = await getRating(sequelize, query.id);
-                query.rating = parseInt(rating.dataValues.avgRate);
-                query.numberOfRatings = Number(rating.dataValues.nRates);
+                query.rating = {
+                    rating: parseInt(rating.dataValues.avgRate),
+                    nRates: query.numberOfRatings = parseInt(
+                        rating.dataValues.nRates
+                    ),
+                };
             }
         }
     });
@@ -77,7 +78,7 @@ const getRating = async (sequelize, dietId) => {
     }))[0];
 }
 
-const getNumberOfUsers = async (sequelize, dietId) => {
+const getNumberOfAthletes = async (sequelize, dietId) => {
     // get number of users whose dietId is the same as param dietId
     return await sequelize.models.user.count({ where: { dietId } });
 }
