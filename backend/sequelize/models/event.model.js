@@ -33,17 +33,41 @@ module.exports = (sequelize) => {
         },
         attendees: {
             type: DataTypes.VIRTUAL,
+        },
+        rating: {
+            type: DataTypes.VIRTUAL,
+        },
+        numberOfRatings: {
+            type: DataTypes.VIRTUAL,
         }
     }, {
         hooks: {
             afterFind: async query => {
+                // skip this hook if no match is found
+                if (!query) return;
+
                 // set virtual field attendees
-                if (query) {
-                    query.attendees = await getNumberOfAttendees(query);
-                }
+                query.attendees = await getNumberOfAttendees(query);
+
+                const rating = await getRating(sequelize, query.id);
+                query.rating = parseInt(rating.dataValues.avgRate);
+                query.numberOfRatings = Number(rating.dataValues.nRates);
             }
         }
     });
+}
+
+
+const getRating = async (sequelize, eventId) => {
+    // find all comments whose eventId is the same as param programId
+    // this query returns a list with one member (why?)
+    return (await sequelize.models.comment.findAll({
+        where: { eventId },
+        attributes: [
+            [sequelize.fn('AVG', sequelize.col('rate')), 'avgRate'],
+            [sequelize.fn('COUNT', sequelize.col('rate')), 'nRates'],
+        ],
+    }))[0];
 }
 
 const getNumberOfAttendees = async (event) => {
