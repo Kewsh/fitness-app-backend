@@ -1,6 +1,7 @@
 const {
     user: userModel,
     measurement: measurementModel,
+    club: clubModel,
 } = require('../../sequelize').models;
 
 module.exports.findOne = async (req, res) => {
@@ -26,8 +27,8 @@ module.exports.findOne = async (req, res) => {
             return res.status(401).json('Invalid password');
         }
 
-        // exclude password from response object
-        const { password, ...userResponse } = user.dataValues;
+        // exclude some fields from response object
+        const { password, profilePicPath, ...userResponse } = user.dataValues;
 
         return res.status(200).json(userResponse);
     } catch (error) {
@@ -47,31 +48,32 @@ module.exports.createOne = async (req, res) => {
                 { type: 'BICEP' },
                 { type: 'WAIST' },
             ],
-        }, { include: [measurementModel] });
+        }, { include: measurementModel });
 
-        // exclude password from response object
-        const { password, ...userResponse } = user.dataValues;
+        // exclude some fields from response object
+        const { password, profilePicPath, ...userResponse } = user.dataValues;
 
         return res.status(201).json(userResponse);
     } catch (error) {
-        console.log(error);
         return res.status(500).json(error);
     }
 }
 
 module.exports.getEvents = async (req, res) => {
-    try {
+    try {   
         const user = await userModel.findByPk(req.params.id);
         if (!user) {
             return res.status(404).json('No user found with this id');
         }
-        //TODO: get clubName
         const events = await user.getEvents({
+            attributes: ['id', 'title'],
+            include: {
+                model: clubModel,
+                attributes: ['name'],
+                // sequelize bug: https://github.com/sequelize/sequelize/issues/13450
+                push: () => {},
+            },
             hooks: false,
-            attributes: [
-                'id',
-                'title'
-            ],
         });
 
         return res.status(200).json(events);
