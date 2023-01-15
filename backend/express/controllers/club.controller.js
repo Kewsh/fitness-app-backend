@@ -49,8 +49,13 @@ module.exports.createOne = async (req, res) => {
             address: req.body.address,
         });
 
-        // exclude password from response object
-        const { password, ...userResponse } = club.dataValues;
+        // exclude some fields from response
+        const {
+            password,
+            coverPicPath,
+            logoPath,
+            ...userResponse
+        } = club.dataValues;
         
         return res.status(201).json(userResponse);
     } catch (error) {
@@ -78,7 +83,11 @@ module.exports.getPrograms = async (req, res) => {
     try {
         const programs = await programModel.findAll({
             where: { clubId: req.params.id },
-            attributes: { exclude: ['coverPicPath'] },
+            attributes: ['id', 'title'],
+            include: {
+                model: clubModel,
+                attributes: ['name'],
+            },
             hooks: false,
         });
         return res.status(200).json(programs);
@@ -92,7 +101,11 @@ module.exports.getEvents = async (req, res) => {
     try {
         const events = await eventModel.findAll({
             where: { clubId: req.params.id },
-            attributes: { exclude: ['coverPicPath'] },
+            attributes: ['id', 'title'],
+            include: {
+                model: clubModel,
+                attributes: ['name'],
+            },
             hooks: false,
         });
         return res.status(200).json(events);
