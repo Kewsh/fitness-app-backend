@@ -6,14 +6,14 @@ module.exports = (sequelize) => {
             type: DataTypes.STRING,
             allowNull: false,
             validate: {
-                isIn: [
+                isIn: [[
                     'TWITTER',
                     'INSTAGRAM',
                     'FACEBOOK',
                     'TIKTOK',
                     'TELEGRAM',
                     'YOUTUBE',
-                ],
+                ]],
             },
         },
         url: {

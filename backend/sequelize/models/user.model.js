@@ -17,6 +17,12 @@ module.exports = (sequelize) => {
                 is: /^[a-zA-Z\s]*$/,
             },
         },
+        fullName: {
+            type: DataTypes.VIRTUAL,
+            get() {
+                return `${this.firstName} ${this.lastName}`;
+            },
+        },
         email: {
             type: DataTypes.STRING,
             allowNull: false,
@@ -38,60 +44,9 @@ module.exports = (sequelize) => {
         dietPickDate: {
             type: DataTypes.DATEONLY,
         },
-        currentWeightInDg: {
-            type: DataTypes.INTEGER,
-            validate: {
-                min: 100,
-            },
-        },
-        startWeightInDg: {
-            type: DataTypes.INTEGER,
-            validate: {
-                min: 100,
-            },
-        },
-        targetWeightInDg: {
-            type: DataTypes.INTEGER,
-            validate: {
-                min: 100,
-            },
-        },
-        currentWaistWidthInMm: {
-            type: DataTypes.INTEGER,
-            validate: {
-                min: 10,
-            },
-        },
-        startWaistWidthInMm: {
-            type: DataTypes.INTEGER,
-            validate: {
-                min: 10,
-            },
-        },
-        targetWaistWidthInMm: {
-            type: DataTypes.INTEGER,
-            validate: {
-                min: 10,
-            },
-        },
-        currentBicepWidthInMm: {
-            type: DataTypes.INTEGER,
-            validate: {
-                min: 10,
-            },
-        },
-        startBicepWidthInMm: {
-            type: DataTypes.INTEGER,
-            validate: {
-                min: 10,
-            },
-        },
-        targetBicepWidthInMm: {
-            type: DataTypes.INTEGER,
-            validate: {
-                min: 10,
-            },
-        },
+        clubId: {
+            type: DataTypes.VIRTUAL,
+        }
     }, {
         hooks: {
             beforeCreate: async user => {
@@ -109,9 +64,26 @@ module.exports = (sequelize) => {
                     throw new Error("Date of program/diet pick must be given");
                 }
 
-                const salt = await bcrypt.genSalt();
-                user.password = await bcrypt.hash(user.password, salt);
+                // hash password only if it's been updated
+                if (user.password != user.previous('password')) {
+                    const salt = await bcrypt.genSalt();
+                    user.password = await bcrypt.hash(user.password, salt);
+                }
             },
-        },
+            afterFind: async query => {
+                if (query) {
+                    // get user's clubId from the program they're enrolled in
+                    const program = await sequelize.models.program.findByPk(
+                        query.programId,
+                        {
+                            attributes: ['id', 'clubId'],
+                            hooks: false,
+                        },
+                    );
+                    if (program)
+                        query.clubId = program.clubId;
+                }
+            }
+        }
     });
 }

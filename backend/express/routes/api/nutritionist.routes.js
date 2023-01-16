@@ -1,11 +1,11 @@
 const router = require('express').Router();
+const {
+    getPicture,
+    getDiets
+} = require('../../controllers/nutritionist.controller');
 
-router.get('/:id/picture', (req, res) => {
-    // get nutritionist's picture
-});
+router.get('/:id/picture', getPicture);
 
-router.get('/:id/diets', (req, res) => {
-    // get nutritionist's diets
-});
+router.get('/:id/diets', getDiets);
 
 module.exports = router;

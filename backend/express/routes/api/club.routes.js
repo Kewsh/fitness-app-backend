@@ -1,31 +1,26 @@
 const router = require('express').Router();
+const {
+    findOne,
+    createOne,
+    findOneById,
+    getPrograms,
+    getEvents,
+    getCoverPicture,
+    getLogo,
+} = require('../../controllers/club.controller');
 
-router.get('/', (req, res) => {
-    // get one by email and password (log in)
-});
+router.post('/login', findOne);
 
-router.post('/', (req, res) => {
-    // create one
-});
+router.post('/signup', createOne);
 
-router.get('/:id', (req, res) => {
-    // get one (show profile) (populate social media)
-});
+router.get('/:id', findOneById);
 
-router.get('/:id/programs', (req, res) => {
-    // get club's programs
-});
+router.get('/:id/programs', getPrograms);
 
-router.get('/:id/events', (req, res) => {
-    // get club's events
-});
+router.get('/:id/events', getEvents);
 
-router.get('/:id/cover', (req, res) => {
-    // get club's cover picture
-});
+router.get('/:id/cover', getCoverPicture);
 
-router.get('/:id/logo', (req, res) => {
-    // get club's logo
-});
+router.get('/:id/logo', getLogo);
 
 module.exports = router;

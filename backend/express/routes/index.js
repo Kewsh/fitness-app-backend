@@ -4,6 +4,7 @@ module.exports = (app) => {
     app.use('/diet', require('./api/diet.routes'));
     app.use('/event', require('./api/event.routes'));
     app.use('/food', require('./api/food.routes'));
+    app.use('/measurement', require('./api/measurement.routes'));
     app.use('/nutritionist', require('./api/nutritionist.routes'));
     app.use('/program', require('./api/program.routes'));
     app.use('/recipe-review', require('./api/recipe-review.routes'));

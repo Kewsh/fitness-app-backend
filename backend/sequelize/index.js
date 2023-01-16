@@ -9,6 +9,7 @@ const modelDefiners = [
     require('./models/diet.model'),
     require('./models/event.model'),
     require('./models/food.model'),
+    require('./models/measurement.model'),
     require('./models/nutritionist.model'),
     require('./models/program.model'),
     require('./models/recipe-ingredient.model'),
