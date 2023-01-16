@@ -24,16 +24,16 @@ module.exports.createOne = async (req, res) => {
             fullName: (await recipeReview.comment.getUser()).fullName
         }
 
-        return res.status(201).json(recipeReview);
+        return res.success(201, recipeReview);
     } catch (error) {
-        return res.status(500).json(error);
+        return res.error(500, error.message);
     }
 }
 
 module.exports.updateOne = async (req, res) => {
     try {
         if (!req.body.text && !req.body.rate) {
-            return res.status(400).json('Missing fields in request body');
+            return res.error(400, 'Missing fields in request body');
         }
         const [ affectedRows ] = await commentModel.update({
             text: req.body.text,
@@ -43,12 +43,12 @@ module.exports.updateOne = async (req, res) => {
         });
 
         if (!affectedRows) {
-            return res.status(404).json('No recipe review found with this id');
+            return res.error(404, 'No recipe review found with this id');
         }
 
-        return res.status(200).json();
+        return res.success(200, {});
     } catch (error) {
-        return res.status(500).json(error);
+        return res.error(500, error.message);
     }
 }
 
@@ -59,12 +59,12 @@ module.exports.deleteOne = async (req, res) => {
         });
 
         if (!destroyedRows) {
-            return res.status(404).json('No recipe review found with this id');
+            return res.error(404, 'No recipe review found with this id');
         }
 
-        return res.status(200).json();
+        return res.success(200, {});
     } catch (error) {
-        return res.status(500).json(error);
+        return res.error(500, error.message);
     }
 }
 
@@ -76,13 +76,13 @@ module.exports.getPicture = async (req, res) => {
         );
 
         if (!recipeReview || !recipeReview.reviewPicPath) {
-            return res.status(404).json('No review picture found');
+            return res.error(404, 'No review picture found');
         }
 
         res.status(200)
            .sendFile(getUploadedFilePath(recipeReview.reviewPicPath));
     } catch (error) {
-        return res.status(500).json(error);
+        return res.error(500, error.message);
     }
 }
 
@@ -91,7 +91,7 @@ module.exports.setPicture = async (req, res) => {
 
     handler(req, res, async error => {
         if (error) {
-            return res.status(500).json(error.message);
+            return res.error(500, error.message);
         }
         try {
             const recipeReview = await recipeReviewModel.findByPk(
@@ -113,11 +113,12 @@ module.exports.setPicture = async (req, res) => {
             recipeReview.reviewPicPath = req.file.filename;
             await recipeReview.save();
 
-            return res.status(200).json();
+            return res.success(200, {});
         } catch (error) {
             // abort file upload
             deleteFile(getUploadedFilePath(req.file.filename));
-            return res.status(500).json(error);
+
+            return res.error(500, error.message);
         }
     });
 }
@@ -130,7 +131,7 @@ module.exports.deletePicture = async (req, res) => {
         );
     
         if (!recipeReview || !recipeReview.reviewPicPath) {
-            return res.status(404).json('No review picture found');
+            return res.error(404, 'No review picture found');
         }
 
         deleteFile(getUploadedFilePath(recipeReview.reviewPicPath));
@@ -139,8 +140,8 @@ module.exports.deletePicture = async (req, res) => {
         recipeReview.reviewPicPath = null;
         await recipeReview.save();
 
-        return res.status(200).json();
+        return res.success(200, {});
     } catch (error) {
-        return res.status(500).json(error);
+        return res.error(500, error.message);
     }
 }

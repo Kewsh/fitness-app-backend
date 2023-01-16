@@ -8,7 +8,7 @@ const {
 module.exports.findOne = async (req, res) => {
     try {
         if (!req.body.email || !req.body.password) {
-            return res.status(400).json('Missing fields in request body');
+            return res.error(400, 'Missing fields in request body');
         }
 
         const user = await userModel.findOne({
@@ -22,18 +22,18 @@ module.exports.findOne = async (req, res) => {
         });
 
         if (!user) {
-            return res.status(404).json('No user found with this email');
+            return res.error(404, 'No user found with this email');
         }
         if (!(await user.isPasswordValid(req.body.password, user.password))) {
-            return res.status(401).json('Invalid password');
+            return res.error(401, 'Invalid password');
         }
 
         // exclude some fields from response object
         const { password, profilePicPath, ...userResponse } = user.dataValues;
 
-        return res.status(200).json(userResponse);
+        return res.success(200, userResponse);
     } catch (error) {
-        return res.status(500).json(error);
+        return res.error(500, error.message);
     }
 }
 
@@ -54,9 +54,9 @@ module.exports.createOne = async (req, res) => {
         // exclude some fields from response object
         const { password, profilePicPath, ...userResponse } = user.dataValues;
 
-        return res.status(201).json(userResponse);
+        return res.success(201, userResponse);
     } catch (error) {
-        return res.status(500).json(error);
+        return res.error(500, error.message);
     }
 }
 
@@ -64,7 +64,7 @@ module.exports.getEvents = async (req, res) => {
     try {   
         const user = await userModel.findByPk(req.params.id);
         if (!user) {
-            return res.status(404).json('No user found with this id');
+            return res.error(404, 'No user found with this id');
         }
         const events = await user.getEvents({
             attributes: ['id', 'title'],
@@ -77,9 +77,9 @@ module.exports.getEvents = async (req, res) => {
             hooks: false,
         });
 
-        return res.status(200).json(events);
+        return res.success(200, events);
     } catch (error) {
-        return res.status(500).json(error);
+        return res.error(500, error.message);
     }
 }
 
@@ -91,12 +91,12 @@ module.exports.getProfilePicture = async (req, res) => {
         );
 
         if (!user || !user.profilePicPath) {
-            return res.status(404).json('No profile picture found');
+            return res.error(404, 'No profile picture found');
         }
 
         res.status(200)
            .sendFile(getUploadedFilePath(user.profilePicPath));
     } catch (error) {
-        return res.status(500).json(error);
+        return res.error(500, error.message);
     }
 }

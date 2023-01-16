@@ -18,16 +18,16 @@ module.exports.createOne = async (req, res) => {
             fullName: (await comment.getUser()).fullName
         }
 
-        return res.status(201).json(comment);
+        return res.success(201, comment);
     } catch (error) {
-        return res.status(500).json(error);
+        return res.error(500, error.message);
     }
 }
 
 module.exports.updateOne = async (req, res) => {
     try {
         if (!req.body.text && !req.body.rate) {
-            return res.status(400).json('Missing fields in request body');
+            return res.error(400, 'Missing fields in request body');
         }
         const [ affectedRows ] = await commentModel.update({
             text: req.body.text,
@@ -37,12 +37,12 @@ module.exports.updateOne = async (req, res) => {
         });
 
         if (!affectedRows) {
-            return res.status(404).json('No comment found with this id');
+            return res.error(404, 'No comment found with this id');
         }
 
-        return res.status(200).json();
+        return res.success(200, {});
     } catch (error) {
-        return res.status(500).json(error);
+        return res.error(500, error.message);
     }
 }
 
@@ -53,11 +53,11 @@ module.exports.deleteOne = async (req, res) => {
         });
 
         if (!destroyedRows) {
-            return res.status(404).json('No comment found with this id');
+            return res.error(404, 'No comment found with this id');
         }
 
-        return res.status(200).json();
+        return res.success(200, {});
     } catch (error) {
-        return res.status(500).json(error);
+        return res.error(500, error.message);
     }
 }

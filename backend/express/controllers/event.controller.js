@@ -18,7 +18,7 @@ module.exports.discover = async (req, res) => {
         });
 
         if (!user) {
-            return res.status(404).json('No user found with this id');
+            return res.error(404, 'No user found with this id');
         }
         const eventIds = user.dataValues.events.map(event => event.id);
 
@@ -33,9 +33,9 @@ module.exports.discover = async (req, res) => {
             hooks: false,
         })
 
-        return res.status(200).json(events);
+        return res.success(200, events);
     } catch (error) {
-        return res.status(500).json(error);
+        return res.error(500, error.message);
     }
 }
 
@@ -49,11 +49,11 @@ module.exports.findOneById = async (req, res) => {
             },
         });
         if (!event) {
-            return res.status(404).json('No event found with this id');
+            return res.error(404, 'No event found with this id');
         }
-        return res.status(200).json(event);
+        return res.success(200, event);
     } catch (error) {
-        return res.status(500).json(error);
+        return res.error(500, error.message);
     }
 }
 
@@ -71,9 +71,9 @@ module.exports.getComments = async (req, res) => {
                 ],
             },
         });
-        return res.status(200).json(comments);
+        return res.success(200, comments);
     } catch (error) {
-        return res.status(500).json(error);
+        return res.error(500, error.message);
     }
 }
 
@@ -85,40 +85,42 @@ module.exports.getCoverPicture = async (req, res) => {
         );
 
         if (!event || !event.coverPicPath) {
-            return res.status(404).json('No cover picture found');
+            return res.error(404, 'No cover picture found');
         }
 
         res.status(200)
            .sendFile(getUploadedFilePath(event.coverPicPath));
     } catch (error) {
-        return res.status(500).json(error);
+        return res.error(500, error.message);
     }
 }
 
 module.exports.participate = async (req, res) => {
     try {
         if (!req.body.userId) {
-            return res.status(400).json(
-                'Missing field "userId" in request body'
-            );
+            return res.error(400, 'Missing field "userId" in request body');
         }
         // can we do this all in one query?
         const event = await eventModel.findByPk(req.params.id);
         if (!event) {
-            return res.status(404).json('No event found with this id');
+            return res.error(404, 'No event found with this id');
         }
+
         const user = await userModel.findByPk(req.body.userId);
         if (!user) {
-            return res.status(404).json('No user found with this id');
+            return res.error(404, 'No user found with this id');
         }
+
         const participation = await event.addUser(user);
         if (!participation) {
-            return res.status(400).json(
+            return res.error(
+                400,
                 'User has already participated in this event'
             );
         }
-        return res.status(200).json(participation);
+
+        return res.success(200, participation);
     } catch (error) {
-        return res.status(500).json(error);
+        return res.error(500, error.message);
     }
 }

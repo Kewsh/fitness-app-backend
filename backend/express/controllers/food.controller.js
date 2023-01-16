@@ -9,12 +9,12 @@ module.exports.getCoverPicture = async (req, res) => {
         );
 
         if (!food || !food.coverPicPath) {
-            return res.status(404).json('No cover picture found');
+            return res.error(404, 'No cover picture found');
         }
 
         res.status(200)
            .sendFile(getUploadedFilePath(food.coverPicPath));
     } catch (error) {
-        return res.status(500).json(error);
+        return res.error(500, error.message);
     }
 }

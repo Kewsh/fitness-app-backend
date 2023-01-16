@@ -16,7 +16,7 @@ module.exports.discover = async (req, res) => {
         });
 
         if (!user) {
-            return res.status(404).json('No user found with this id');
+            return res.error(404, 'No user found with this id');
         }
         const dietId = user.dietId;
 
@@ -31,9 +31,9 @@ module.exports.discover = async (req, res) => {
             hooks: false,
         })
 
-        return res.status(200).json(diets);
+        return res.success(200, diets);
     } catch (error) {
-        return res.status(500).json(error);
+        return res.error(500, error.message);
     }
 }
 
@@ -50,11 +50,12 @@ module.exports.findOneById = async (req, res) => {
         });
 
         if (!diet) {
-            return res.status(404).json('No diet found with this id');
+            return res.error(404, 'No diet found with this id');
         }
-        return res.status(200).json(diet);
+
+        return res.success(200, diet);
     } catch (error) {
-        return res.status(500).json(error);
+        return res.error(500, error.message);
     }
 }
 
@@ -66,13 +67,13 @@ module.exports.getCoverPicture = async (req, res) => {
         );
 
         if (!diet || !diet.coverPicPath) {
-            return res.status(404).json('No cover picture found');
+            return res.error(404, 'No cover picture found');
         }
 
         res.status(200)
            .sendFile(getUploadedFilePath(diet.coverPicPath));
     } catch (error) {
-        return res.status(500).json(error);
+        return res.error(500, error.message);
     }
 }
 
@@ -82,9 +83,9 @@ module.exports.getFoods = async (req, res) => {
             where: { dietId: req.params.id },
             attributes: ['id', 'amount', 'title', 'amountAndTitle', 'day'],
         });
-        return res.status(200).json(foods);
+        return res.success(200, foods);
     } catch (error) {
-        return res.status(500).json(error);
+        return res.error(500, error.message);
     }
 }
 
@@ -95,9 +96,9 @@ module.exports.getRecipes = async (req, res) => {
             attributes: ['id', 'title'],
             hooks: false,
         });
-        return res.status(200).json(recipes);
+        return res.success(200, recipes);
     } catch (error) {
-        return res.status(500).json(error);
+        return res.error(500, error.message);
     }
 }
 
@@ -116,18 +117,16 @@ module.exports.getComments = async (req, res) => {
             },
         });
 
-        return res.status(200).json(comments);
+        return res.success(200, comments);
     } catch (error) {
-        return res.status(500).json(error);
+        return res.error(500, error.message);
     }
 }
 
 module.exports.pick = async (req, res) => {
     try {
         if (!req.body.userId) {
-            return res.status(400).json(
-                'Missing field "userId" in request body'
-            );
+            return res.error(400, 'Missing field "userId" in request body');
         }
         const [ affectedRows ] = await userModel.update({
             dietId: req.params.id,
@@ -137,11 +136,11 @@ module.exports.pick = async (req, res) => {
             individualHooks: true,
         });
         if (!affectedRows) {
-            return res.status(404).json('No user found with this id');
+            return res.error(404, 'No user found with this id');
         }
 
-        return res.status(200).json();
+        return res.success(200, {});
     } catch (error) {
-        return res.status(500).json(error);
+        return res.error(500, error.message);
     }
 }
