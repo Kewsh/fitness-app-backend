@@ -7,7 +7,7 @@ const {
     participate
 } = require('../../controllers/event.controller');
 
-router.get('/', discover);
+router.post('/discover', discover);
 
 router.get('/:id', findOneById);
 

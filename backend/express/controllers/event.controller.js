@@ -1,3 +1,4 @@
+const { Op } = require('sequelize');
 const { getUploadedFilePath } = require('../file-utils');
 const {
     event: eventModel,
@@ -7,7 +8,35 @@ const {
 } = require('../../sequelize').models;
 
 module.exports.discover = async (req, res) => {
+    try {
+        const user = await userModel.findByPk(req.body.userId, {
+            attributes: ['id'],
+            include: {
+                model: eventModel,
+                attributes: ['id']
+            }
+        });
 
+        if (!user) {
+            return res.status(404).json('No user found with this id');
+        }
+        const eventIds = user.dataValues.events.map(event => event.id);
+
+        // find all events user hasn't participated in
+        const events = await eventModel.findAll({
+            where: { id: { [Op.not]: eventIds } },
+            include: {
+                model: clubModel,
+                attributes: ['name'],
+            },
+            attributes: ['id', 'title'],
+            hooks: false,
+        })
+
+        return res.status(200).json(events);
+    } catch (error) {
+        return res.status(500).json(error);
+    }
 }
 
 module.exports.findOneById = async (req, res) => {

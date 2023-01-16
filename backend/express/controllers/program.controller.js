@@ -1,13 +1,39 @@
+const { Op } = require('sequelize');
 const { getUploadedFilePath } = require('../file-utils');
 const {
     program: programModel,
     workout: workoutModel,
     comment: commentModel,
     user: userModel,
+    club: clubModel,
 } = require('../../sequelize').models;
 
 module.exports.discover = async (req, res) => {
+    try {
+        const user = await userModel.findByPk(req.body.userId, {
+            attributes: ['id', 'programId'],
+        });
 
+        if (!user) {
+            return res.status(404).json('No user found with this id');
+        }
+        const programId = user.programId;
+
+        // find all programs user hasn't picked
+        const programs = await programModel.findAll({
+            where: { id: { [Op.not]: programId } },
+            include: {
+                model: clubModel,
+                attributes: ['name'],
+            },
+            attributes: ['id', 'title'],
+            hooks: false,
+        })
+
+        return res.status(200).json(programs);
+    } catch (error) {
+        return res.status(500).json(error);
+    }
 }
 
 module.exports.findOneById = async (req, res) => {

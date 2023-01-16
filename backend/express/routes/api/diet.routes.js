@@ -9,7 +9,7 @@ const {
     pick
 } = require('../../controllers/diet.controller');
 
-router.get('/', discover);
+router.post('/discover', discover);
 
 router.get('/:id', findOneById);
 

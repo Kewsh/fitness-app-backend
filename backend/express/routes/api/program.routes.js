@@ -8,7 +8,7 @@ const {
     enroll
 } = require('../../controllers/program.controller');
 
-router.get('/', discover);
+router.post('/discover', discover);
 
 router.get('/:id', findOneById);
 
