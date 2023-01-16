@@ -3,7 +3,7 @@ const { measurement: measurementModel } = require('../../sequelize').models;
 module.exports.updateOne = async (req, res) => {
     try {
         if (!req.body.current && !req.body.start && !req.body.target) {
-            return res.status(400).json('Missing fields in request body');
+            return res.error(400, 'Missing fields in request body');
         }
         const [ affectedRows ] = await measurementModel.update({
             current: req.body.current,
@@ -14,11 +14,11 @@ module.exports.updateOne = async (req, res) => {
         });
 
         if (!affectedRows) {
-            return res.status(404).json('No measurement found with this id');
+            return res.error(404, 'No measurement found with this id');
         }
 
-        return res.status(200).json();
+        return res.success(200, {});
     } catch (error) {
-        return res.status(500).json(error);
+        return res.error(500, error.message);
     }
 }

@@ -9,7 +9,7 @@ const {
 module.exports.findOne = async (req, res) => {
     try {
         if (!req.body.email || !req.body.password) {
-            return res.status(400).json('Missing fields in request body');
+            return res.error(400, 'Missing fields in request body');
         }
 
         const club = await clubModel.findOne({
@@ -22,10 +22,10 @@ module.exports.findOne = async (req, res) => {
         });
 
         if (!club) {
-            return res.status(404).json('No Club found with this email');
+            return res.error(404, 'No club found with this email');
         }
         if (!(await club.isPasswordValid(req.body.password, club.password))) {
-            return res.status(401).json('Invalid password');
+            return res.error(401, 'Invalid password');
         }
 
         // exclude some fields from response
@@ -36,9 +36,9 @@ module.exports.findOne = async (req, res) => {
             ...userResponse
         } = club.dataValues;
 
-        return res.status(200).json(userResponse);
+        return res.success(200, userResponse)
     } catch (error) {
-        return res.status(500).json(error);
+        return res.error(500, error.message);
     }
 }
 
@@ -63,9 +63,9 @@ module.exports.createOne = async (req, res) => {
             ...userResponse
         } = club.dataValues;
         
-        return res.status(201).json(userResponse);
+        return res.success(201, userResponse);
     } catch (error) {
-        return res.status(500).json(error);
+        return res.error(500, error.message);
     }
 }
 
@@ -77,11 +77,11 @@ module.exports.findOneById = async(req, res) => {
         });
 
         if (!club) {
-            return res.status(404).json('No Club found with this id');
+            return res.error(404, 'No club found with this id');
         }
-        return res.status(200).json(club);
+        return res.success(200, club);
     } catch (error) {
-        return res.status(500).json(error);
+        return res.error(500, error.message);
     }
 }
 
@@ -96,9 +96,9 @@ module.exports.getPrograms = async (req, res) => {
             },
             hooks: false,
         });
-        return res.status(200).json(programs);
+        return res.success(200, programs);
     } catch (error) {
-        return res.status(500).json(error);
+        return res.error(500, error.message);
     }
 }
 
@@ -113,9 +113,9 @@ module.exports.getEvents = async (req, res) => {
             },
             hooks: false,
         });
-        return res.status(200).json(events);
+        return res.success(200, events);
     } catch (error) {
-        return res.status(500).json(error);
+        return res.error(500, error.message);
     }
 }
 
@@ -127,13 +127,14 @@ module.exports.getCoverPicture = async (req, res) => {
         );
 
         if (!club || !club.coverPicPath) {
-            return res.status(404).json('No cover picture found');
+            return res.error(404, 'No cover picture found');
         }
 
+        //TODO: send both body and file? how?
         res.status(200)
            .sendFile(getUploadedFilePath(club.coverPicPath));
     } catch (error) {
-        return res.status(500).json(error);
+        return res.error(500, error.message);
     }
 }
 
@@ -145,12 +146,12 @@ module.exports.getLogo = async (req, res) => {
         );
 
         if (!club || !club.logoPath) {
-            return res.status(404).json('No logo found');
+            return res.error(404, 'No logo found');
         }
 
         res.status(200)
            .sendFile(getUploadedFilePath(club.logoPath));
     } catch (error) {
-        return res.status(500).json(error);
+        return res.error(500, error.message);
     }
 }

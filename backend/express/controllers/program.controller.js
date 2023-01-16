@@ -15,7 +15,7 @@ module.exports.discover = async (req, res) => {
         });
 
         if (!user) {
-            return res.status(404).json('No user found with this id');
+            return res.error(404, 'No user found with this id');
         }
         const programId = user.programId;
 
@@ -30,9 +30,9 @@ module.exports.discover = async (req, res) => {
             hooks: false,
         })
 
-        return res.status(200).json(programs);
+        return res.success(200, programs);
     } catch (error) {
-        return res.status(500).json(error);
+        return res.error(500, error.message);
     }
 }
 
@@ -56,11 +56,11 @@ module.exports.findOneById = async (req, res) => {
         });
 
         if (!program) {
-            return res.status(404).json('No program found with this id');
+            return res.error(404, 'No program found with this id');
         }
-        return res.status(200).json(program);
+        return res.success(200, program);
     } catch (error) {
-        return res.status(500).json(error);
+        return res.error(500, error.message);
     }
 }
 
@@ -78,9 +78,9 @@ module.exports.getWorkouts = async (req, res) => {
                 'day'
             ],
         });
-        return res.status(200).json(workouts);
+        return res.success(200, workouts);
     } catch (error) {
-        return res.status(500).json(error);
+        return res.error(500, error.message);
     }
 }
 
@@ -98,9 +98,9 @@ module.exports.getComments = async (req, res) => {
                 ],
             },
         });
-        return res.status(200).json(comments);
+        return res.success(200, comments);
     } catch (error) {
-        return res.status(500).json(error);
+        return res.error(500, error.message);
     }
 }
 
@@ -112,22 +112,20 @@ module.exports.getCoverPicture = async (req, res) => {
         );
 
         if (!program || !program.coverPicPath) {
-            return res.status(404).json('No cover picture found');
+            return res.error(404, 'No cover picture found');
         }
 
         res.status(200)
            .sendFile(getUploadedFilePath(program.coverPicPath));
     } catch (error) {
-        return res.status(500).json(error);
+        return res.error(500, error.message);
     }
 }
 
 module.exports.enroll = async (req, res) => {
     try {
         if (!req.body.userId) {
-            return res.status(400).json(
-                'Missing field "userId" in request body'
-            );
+            return res.error(400, 'Missing field "userId" in request body');
         }
         const [ affectedRows ] = await userModel.update({
             programId: req.params.id,
@@ -137,11 +135,11 @@ module.exports.enroll = async (req, res) => {
             individualHooks: true,
         });
         if (!affectedRows) {
-            return res.status(404).json('No user found with this id');
+            return res.error(404, 'No user found with this id');
         }
 
-        return res.status(200).json();
+        return res.success(200, {});
     } catch (error) {
-        return res.status(500).json(error);
+        return res.error(500, error.message);
     }
 }

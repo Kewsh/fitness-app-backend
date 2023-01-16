@@ -16,11 +16,11 @@ module.exports.findOneById = async (req, res) => {
             },
         });
         if (!workout) {
-            return res.status(404).json('No workout found with this id');
+            return res.error(404, 'No workout found with this id');
         }
-        return res.status(200).json(workout);
+        return res.success(200, workout);
     } catch (error) {
-        return res.status(500).json(error);
+        return res.error(500, error.message);
     }
 }
 
@@ -32,13 +32,13 @@ module.exports.getCoverPicture = async (req, res) => {
         );
 
         if (!workout || !workout.coverPicPath) {
-            return res.status(404).json('No cover picture found');
+            return res.error(404, 'No cover picture found');
         }
 
         res.status(200)
            .sendFile(getUploadedFilePath(workout.coverPicPath));
     } catch (error) {
-        return res.status(500).json(error);
+        return res.error(500, error.message);
     }
 }
 

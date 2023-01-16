@@ -25,11 +25,11 @@ module.exports.findOneById = async (req, res) => {
         });
 
         if (!recipe) {
-            return res.status(404).json('No recipe found with this id');
+            return res.error(404, 'No recipe found with this id');
         }
-        return res.status(200).json(recipe);
+        return res.success(200, recipe);
     } catch (error) {
-        return res.status(500).json(error);
+        return res.error(500, error.message);
     }
 }
 
@@ -41,13 +41,13 @@ module.exports.getCoverPicture = async (req, res) => {
         );
 
         if (!recipe || !recipe.coverPicPath) {
-            return res.status(404).json('No cover picture found');
+            return res.error(404, 'No cover picture found');
         }
 
         res.status(200)
            .sendFile(getUploadedFilePath(recipe.coverPicPath));
     } catch (error) {
-        return res.status(500).json(error);
+        return res.error(500, error.message);
     }
 }
 
@@ -70,8 +70,8 @@ module.exports.getReviews = async (req, res) => {
             attributes: { exclude: ['reviewPicPath'] },
         });
 
-        return res.status(200).json(reviews);
+        return res.success(200, reviews);
     } catch (error) {
-        return res.status(500).json(error);
+        return res.error(500, error.message);
     }
 }

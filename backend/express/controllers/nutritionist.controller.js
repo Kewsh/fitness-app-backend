@@ -12,13 +12,13 @@ module.exports.getPicture = async (req, res) => {
         );
 
         if (!nutritionist || !nutritionist.picPath) {
-            return res.status(404).json('No picture found');
+            return res.error(404, 'No picture found');
         }
 
         res.status(200)
            .sendFile(getUploadedFilePath(nutritionist.picPath));
     } catch (error) {
-        return res.status(500).json(error);
+        return res.error(500, error.message);
     }
 }
 
@@ -33,8 +33,9 @@ module.exports.getDiets = async (req, res) => {
             attributes: ['id', 'title'],
             hooks: false,
         });
-        return res.status(200).json(diets)
+
+        return res.success(200, diets);
     } catch (error) {
-        return res.status(500).json(error);
+        return res.error(500, error.message);
     }
 }
