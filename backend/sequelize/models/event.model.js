@@ -48,14 +48,14 @@ module.exports = (sequelize) => {
                 if (Array.isArray(query)){
                     for (const result of query) {
                         const { nAttendees, rating } =
-                            await getVirtualFields(sequelize, result.id);
+                            await getVirtualFields(sequelize, result);
 
                         result.nAttendees = nAttendees;
                         result.rating = rating;
                     }
                 } else {
                     const { nAttendees, rating } =
-                        await getVirtualFields(sequelize, query.id);
+                        await getVirtualFields(sequelize, query);
 
                     query.nAttendees = nAttendees;
                     query.rating = rating;
@@ -66,9 +66,9 @@ module.exports = (sequelize) => {
 }
 
 
-const getVirtualFields = async (sequelize, id) => {
-    const nAttendees = await getNumberOfAttendees(sequelize, id);
-    let rating = await getRating(sequelize, id);
+const getVirtualFields = async (sequelize, event) => {
+    const nAttendees = await getNumberOfAttendees(event);
+    let rating = await getRating(sequelize, event.id);
     rating = {
         rating: parseInt(rating.avgRate),
         nRates: parseInt(rating.nRates),
