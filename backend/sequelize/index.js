@@ -7,6 +7,7 @@ const modelDefiners = [
     require('./models/club.model'),
     require('./models/comment.model'),
     require('./models/diet.model'),
+    require('./models/email.model'),
     require('./models/event.model'),
     require('./models/food.model'),
     require('./models/measurement.model'),
