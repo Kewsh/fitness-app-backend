@@ -58,12 +58,11 @@ module.exports.getPrograms = async (req, res) => {
     try {
         const programs = await programModel.findAll({
             where: { clubId: req.params.id },
-            attributes: ['id', 'title'],
+            attributes: { exclude: ['coverPicPath'] },
             include: {
                 model: clubModel,
                 attributes: ['name'],
             },
-            hooks: false,
         });
         return res.success(200, programs);
     } catch (error) {
@@ -75,12 +74,11 @@ module.exports.getEvents = async (req, res) => {
     try {
         const events = await eventModel.findAll({
             where: { clubId: req.params.id },
-            attributes: ['id', 'title'],
+            attributes: { exclude: ['coverPicPath'] },
             include: {
                 model: clubModel,
                 attributes: ['name'],
             },
-            hooks: false,
         });
         return res.success(200, events);
     } catch (error) {
