@@ -43,21 +43,39 @@ module.exports = (sequelize) => {
                 // skip this hook if no match is found
                 if (!query) return;
 
-                // set virtual field attendees
-                query.nAttendees = await getNumberOfAttendees(query);
+                // set virtual fields.
+                // e.g. query can be from findAll or findOne
+                if (Array.isArray(query)){
+                    for (const result of query) {
+                        const { nAttendees, rating } =
+                            await getVirtualFields(sequelize, result.id);
 
-                const rating = await getRating(sequelize, query.id);
-                query.rating = {
-                    rating: parseInt(rating.dataValues.avgRate),
-                    nRates: query.numberOfRatings = parseInt(
-                        rating.dataValues.nRates
-                    ),
-                };
+                        result.nAttendees = nAttendees;
+                        result.rating = rating;
+                    }
+                } else {
+                    const { nAttendees, rating } =
+                        await getVirtualFields(sequelize, query.id);
+
+                    query.nAttendees = nAttendees;
+                    query.rating = rating;
+                }
             }
         }
     });
 }
 
+
+const getVirtualFields = async (sequelize, id) => {
+    const nAttendees = await getNumberOfAttendees(sequelize, id);
+    let rating = await getRating(sequelize, id);
+    rating = {
+        rating: parseInt(rating.avgRate),
+        nRates: parseInt(rating.nRates),
+    };
+
+    return { nAttendees, rating };
+}
 
 const getRating = async (sequelize, eventId) => {
     // find all comments whose eventId is the same as param programId
@@ -68,7 +86,7 @@ const getRating = async (sequelize, eventId) => {
             [sequelize.fn('AVG', sequelize.col('rate')), 'avgRate'],
             [sequelize.fn('COUNT', sequelize.col('rate')), 'nRates'],
         ],
-    }))[0];
+    }))[0].dataValues;
 }
 
 const getNumberOfAttendees = async (event) => {
