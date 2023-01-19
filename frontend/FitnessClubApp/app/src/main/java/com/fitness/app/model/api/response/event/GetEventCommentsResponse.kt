@@ -1,14 +1,16 @@
-package com.fitness.app.model.api.response.comment
+package com.fitness.app.model.api.response.event
 
+import com.fitness.app.model.api.response.club.ClubLogInData
+import com.fitness.app.model.api.response.comment.User
 import com.google.gson.annotations.SerializedName
 
-data class CreateCommentResponse(
+data class GetEventCommentsResponse(
     @SerializedName("status") val status:String,
     @SerializedName("code") val code:Int,
-    @SerializedName("data") val data:CreateCommentData,
+    @SerializedName("data") val data: ArrayList<GetEventCommentsData>,
 )
 
-data class CreateCommentData(
+data class GetEventCommentsData(
     @SerializedName("id") val id:Int,
     @SerializedName("text") val text:String,
     @SerializedName("rate") val rate:Int,
@@ -19,12 +21,5 @@ data class CreateCommentData(
     @SerializedName("userId") val userId:Int,
     @SerializedName("updatedAt") val updatedAt:String,
     @SerializedName("createdAt") val createdAt:String,
-    @SerializedName("user") val user:User,
-)
-
-data class User(
-    @SerializedName("id") val id:Int,
-    @SerializedName("fullName") val fullName:String,
-    @SerializedName("firstName") val firstName:String,
-    @SerializedName("lastName") val lastName:String,
+    @SerializedName("user") val user: User,
 )
