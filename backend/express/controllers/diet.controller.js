@@ -21,8 +21,10 @@ module.exports.discover = async (req, res) => {
         const dietId = user.dietId;
 
         // find all diets user hasn't picked
-        const diets = await dietModel.findAll({
+        const diets = await dietModel.findAndCountAll({
             where: { id: { [Op.not]: dietId } },
+            limit: req.query.limit,
+            offset: req.query.offset,
             include: {
                 model: nutritionistModel,
                 attributes: ['fullName'],
@@ -79,8 +81,16 @@ module.exports.getCoverPicture = async (req, res) => {
 
 module.exports.getFoods = async (req, res) => {
     try {
-        const foods = await foodModel.findAll({
-            where: { dietId: req.params.id },
+        const where = { dietId: req.params.id };
+        if (req.query.day) {
+            where.day = req.query.day; 
+        }
+
+        const foods = await foodModel.findAndCountAll({
+            where,
+            order: ['day'],
+            limit: req.query.limit,
+            offset: req.query.offset,
             attributes: ['id', 'amount', 'title', 'amountAndTitle', 'day'],
         });
         return res.success(200, foods);
@@ -91,8 +101,10 @@ module.exports.getFoods = async (req, res) => {
 
 module.exports.getRecipes = async (req, res) => {
     try {
-        const recipes = await recipeModel.findAll({
+        const recipes = await recipeModel.findAndCountAll({
             where: { dietId: req.params.id },
+            limit: req.query.limit,
+            offset: req.query.offset,
             attributes: ['id', 'title'],
             hooks: false,
         });
@@ -104,8 +116,10 @@ module.exports.getRecipes = async (req, res) => {
 
 module.exports.getComments = async (req, res) => {
     try {
-        const comments = await commentModel.findAll({
+        const comments = await commentModel.findAndCountAll({
             where: { dietId: req.params.id },
+            limit: req.query.limit,
+            offset: req.query.offset,
             include: {
                 model: userModel,
                 attributes: [

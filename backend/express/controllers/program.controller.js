@@ -77,7 +77,6 @@ module.exports.updateOne = async (req, res) => {
 
         return res.success(200, {});
     } catch (error) {
-        console.log(error);
         return res.error(500, error.message);
     }
 }
@@ -94,8 +93,10 @@ module.exports.discover = async (req, res) => {
         const programId = user.programId;
 
         // find all programs user hasn't picked
-        const programs = await programModel.findAll({
+        const programs = await programModel.findAndCountAll({
             where: { id: { [Op.not]: programId } },
+            limit: req.query.limit,
+            offset: req.query.offset,
             include: {
                 model: clubModel,
                 attributes: ['name'],
@@ -140,8 +141,16 @@ module.exports.findOneById = async (req, res) => {
 
 module.exports.getWorkouts = async (req, res) => {
     try {
-        const workouts = await workoutModel.findAll({
-            where: { programId: req.params.id },
+        const where = { programId: req.params.id };
+        if (req.query.day) {
+            where.day = req.query.day; 
+        }
+
+        const workouts = await workoutModel.findAndCountAll({
+            where,
+            order: ['day'],
+            limit: req.query.limit,
+            offset: req.query.offset,
             attributes: [
                 'id',
                 'title',
@@ -160,8 +169,10 @@ module.exports.getWorkouts = async (req, res) => {
 
 module.exports.getComments = async (req, res) => {
     try {
-        const comments = await commentModel.findAll({
+        const comments = await commentModel.findAndCountAll({
             where: { programId: req.params.id },
+            limit: req.query.limit,
+            offset: req.query.offset,
             include: {
                 model: userModel,
                 attributes: [

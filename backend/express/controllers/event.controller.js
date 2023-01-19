@@ -77,8 +77,10 @@ module.exports.discover = async (req, res) => {
         const eventIds = user.dataValues.events.map(event => event.id);
 
         // find all events user hasn't participated in
-        const events = await eventModel.findAll({
+        const events = await eventModel.findAndCountAll({
             where: { id: { [Op.not]: eventIds } },
+            limit: req.query.limit,
+            offset: req.query.offset,
             include: {
                 model: clubModel,
                 attributes: ['name'],
@@ -107,15 +109,16 @@ module.exports.findOneById = async (req, res) => {
         }
         return res.success(200, event);
     } catch (error) {
-        console.log(error);
         return res.error(500, error.message);
     }
 }
 
 module.exports.getComments = async (req, res) => {
     try {
-        const comments = await commentModel.findAll({
+        const comments = await commentModel.findAndCountAll({
             where: { eventId: req.params.id },
+            limit: req.query.limit,
+            offset: req.query.offset,
             include: {
                 model: userModel,
                 attributes: [

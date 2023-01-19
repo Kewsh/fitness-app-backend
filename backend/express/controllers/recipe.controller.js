@@ -53,8 +53,10 @@ module.exports.getCoverPicture = async (req, res) => {
 
 module.exports.getReviews = async (req, res) => {
     try {
-        const reviews = await recipeReviewModel.findAll({
+        const reviews = await recipeReviewModel.findAndCountAll({
             where: { recipeId: req.params.id },
+            limit: req.query.limit,
+            offset: req.query.offset,
             include: {
                 model: commentModel,
                 include: {
