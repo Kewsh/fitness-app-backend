@@ -6,7 +6,6 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.util.Log
 import com.fitness.app.R
-import com.fitness.app.api.APIInterface
 import com.fitness.app.api.ServiceBuilder
 import com.fitness.app.api.endpoint.AthleteEndpoints
 import com.fitness.app.model.api.request.athlete.AthleteLogInRequest

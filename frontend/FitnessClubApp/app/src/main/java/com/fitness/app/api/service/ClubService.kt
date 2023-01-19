@@ -6,8 +6,8 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.util.Log
 import com.fitness.app.R
-import com.fitness.app.api.APIInterface
 import com.fitness.app.api.ServiceBuilder
+import com.fitness.app.api.endpoint.ClubEndpoints
 import com.fitness.app.model.api.request.club.ClubLogInRequest
 import com.fitness.app.model.api.request.club.ClubSignUpRequest
 import com.fitness.app.model.api.response.club.ClubLogInResponse
@@ -20,7 +20,7 @@ import retrofit2.Response
 
 class ClubService(val context: Context) {
     fun signUpClub(clubSignUpRequest: ClubSignUpRequest, onResult: (ClubSignUpResponse?) -> Unit){
-        val retrofit = ServiceBuilder.buildService(APIInterface::class.java)
+        val retrofit = ServiceBuilder.buildService(ClubEndpoints::class.java)
         retrofit.signUpClub(clubSignUpRequest).enqueue(
             object : Callback<ClubSignUpResponse> {
                 override fun onFailure(call: Call<ClubSignUpResponse>, t: Throwable) {
@@ -60,7 +60,7 @@ class ClubService(val context: Context) {
     }
 
     fun logInClub(clubLogInRequest: ClubLogInRequest, onResult: (ClubLogInResponse?) -> Unit){
-        val retrofit = ServiceBuilder.buildService(APIInterface::class.java)
+        val retrofit = ServiceBuilder.buildService(ClubEndpoints::class.java)
         retrofit.logInClub(clubLogInRequest).enqueue(
             object : Callback<ClubLogInResponse> {
                 override fun onFailure(call: Call<ClubLogInResponse>, t: Throwable) {
