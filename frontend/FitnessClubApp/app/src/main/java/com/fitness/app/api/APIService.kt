@@ -6,9 +6,10 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.util.Log
 import com.fitness.app.R
-import com.fitness.app.model.AthleteLogIn
-import com.fitness.app.model.AthleteSignUp
-import com.fitness.app.model.AthleteSignUpResponse
+import com.fitness.app.model.api.request.AthleteLogInRequest
+import com.fitness.app.model.api.request.AthleteSignUpRequest
+import com.fitness.app.model.api.response.AthleteLogInResponse
+import com.fitness.app.model.api.response.AthleteSignUpResponse
 import com.fitness.app.views.activities.AthleteHomeActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import retrofit2.Call
@@ -16,9 +17,9 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class APIService(val context: Context) {
-    fun signUpAthlete(athleteSignUp: AthleteSignUp, onResult: (AthleteSignUpResponse?) -> Unit){
+    fun signUpAthlete(athleteSignUpRequest: AthleteSignUpRequest, onResult: (AthleteSignUpResponse?) -> Unit){
         val retrofit = ServiceBuilder.buildService(APIInterface::class.java)
-        retrofit.signUpAthlete(athleteSignUp).enqueue(
+        retrofit.signUpAthlete(athleteSignUpRequest).enqueue(
             object : Callback<AthleteSignUpResponse> {
                 override fun onFailure(call: Call<AthleteSignUpResponse>, t: Throwable) {
                     Log.e("onFailure",t.toString())
@@ -29,7 +30,7 @@ class APIService(val context: Context) {
                         .show()
                     onResult(null)
                 }
-                override fun onResponse( call: Call<AthleteSignUpResponse>, response: Response<AthleteSignUpResponse>) {
+                override fun onResponse(call: Call<AthleteSignUpResponse>, response: Response<AthleteSignUpResponse>) {
                     val statusCode = response.code()
                     Log.e("status code : ",statusCode.toString())
                     if(statusCode==201){
@@ -54,11 +55,11 @@ class APIService(val context: Context) {
         )
     }
 
-    fun logInAthlete(athleteLogIn: AthleteLogIn, onResult: (AthleteSignUpResponse?) -> Unit){
+    fun logInAthlete(athleteLogInRequest: AthleteLogInRequest, onResult: (AthleteLogInResponse?) -> Unit){
         val retrofit = ServiceBuilder.buildService(APIInterface::class.java)
-        retrofit.logInAthlete(athleteLogIn).enqueue(
-            object : Callback<AthleteSignUpResponse> {
-                override fun onFailure(call: Call<AthleteSignUpResponse>, t: Throwable) {
+        retrofit.logInAthlete(athleteLogInRequest).enqueue(
+            object : Callback<AthleteLogInResponse> {
+                override fun onFailure(call: Call<AthleteLogInResponse>, t: Throwable) {
                     Log.e("onFailure",t.toString())
                     MaterialAlertDialogBuilder(context, R.style.AlertDialogTheme)
                         .setTitle("Failed!")
@@ -67,7 +68,7 @@ class APIService(val context: Context) {
                         .show()
                     onResult(null)
                 }
-                override fun onResponse( call: Call<AthleteSignUpResponse>, response: Response<AthleteSignUpResponse>) {
+                override fun onResponse(call: Call<AthleteLogInResponse>, response: Response<AthleteLogInResponse>) {
                     val statusCode = response.code()
                     Log.e("status code : ",statusCode.toString())
                     if(statusCode==200){

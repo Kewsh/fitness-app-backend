@@ -1,10 +1,8 @@
 package com.fitness.app.views.fragments
 
 import android.content.DialogInterface
-import android.content.Intent
 import com.fitness.app.R
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,9 +11,8 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.fitness.app.api.APIService
 import com.fitness.app.databinding.FragmentLoginBinding
-import com.fitness.app.model.AthleteLogIn
+import com.fitness.app.model.api.request.AthleteLogInRequest
 import com.fitness.app.util.constructLoginPageTitle
-import com.fitness.app.views.activities.AthleteHomeActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 
@@ -61,7 +58,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             val pass = binding.password.text.toString()
             if(email!="" && pass!="") {
                 val athlete =
-                    AthleteLogIn(email,pass)
+                    AthleteLogInRequest(email,pass)
                 login(athlete)
             }
             else{
@@ -76,7 +73,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
     }
 
-    private fun login(athlete: AthleteLogIn) {
+    private fun login(athlete: AthleteLogInRequest) {
         val apiService = APIService(requireContext())
 
         apiService.logInAthlete(athlete) {

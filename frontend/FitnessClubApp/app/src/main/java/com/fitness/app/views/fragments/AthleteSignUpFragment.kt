@@ -2,7 +2,6 @@ package com.fitness.app.views.fragments
 
 import android.content.DialogInterface
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -13,8 +12,7 @@ import androidx.navigation.Navigation
 import com.fitness.app.R
 import com.fitness.app.api.APIService
 import com.fitness.app.databinding.FragmentAthleteSignUpBinding
-import com.fitness.app.model.AthleteLogIn
-import com.fitness.app.model.AthleteSignUp
+import com.fitness.app.model.api.request.AthleteSignUpRequest
 import com.fitness.app.util.constructSignUpTerms
 import com.fitness.app.viewmodel.AthleteHomeViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -60,7 +58,7 @@ class AthleteSignUpFragment : Fragment(R.layout.fragment_athlete_sign_up) {
             if(firstName!=""&&lastName!=""&&email!="" && pass!="" && confirmPass!="") {
                 if(confirmPass == pass) {
                     val athlete =
-                        AthleteSignUp(
+                        AthleteSignUpRequest(
                             firstName,lastName,email,pass
                         )
                     signUp(athlete)
@@ -86,7 +84,7 @@ class AthleteSignUpFragment : Fragment(R.layout.fragment_athlete_sign_up) {
 
     }
 
-    private fun signUp(athlete:AthleteSignUp) {
+    private fun signUp(athlete: AthleteSignUpRequest) {
         val apiService = APIService(requireContext())
         apiService.signUpAthlete(athlete) {
 
