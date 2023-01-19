@@ -1,4 +1,4 @@
-package com.fitness.app.model.api.request
+package com.fitness.app.model.api.request.athlete
 
 import com.google.gson.annotations.SerializedName
 

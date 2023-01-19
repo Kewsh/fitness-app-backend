@@ -9,9 +9,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import com.fitness.app.api.APIService
+import com.fitness.app.api.service.athlete.AthleteService
 import com.fitness.app.databinding.FragmentLoginBinding
-import com.fitness.app.model.api.request.AthleteLogInRequest
+import com.fitness.app.model.api.request.athlete.AthleteLogInRequest
 import com.fitness.app.util.constructLoginPageTitle
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
@@ -59,7 +59,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             if(email!="" && pass!="") {
                 val athlete =
                     AthleteLogInRequest(email,pass)
-                login(athlete)
+                athleteLogin(athlete)
             }
             else{
                 MaterialAlertDialogBuilder(requireContext(), R.style.AlertDialogTheme)
@@ -73,8 +73,8 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
     }
 
-    private fun login(athlete: AthleteLogInRequest) {
-        val apiService = APIService(requireContext())
+    private fun athleteLogin(athlete: AthleteLogInRequest) {
+        val apiService = AthleteService(requireContext())
 
         apiService.logInAthlete(athlete) {
 

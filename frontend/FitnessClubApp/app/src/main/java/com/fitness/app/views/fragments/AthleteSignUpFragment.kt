@@ -10,9 +10,9 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.fitness.app.R
-import com.fitness.app.api.APIService
+import com.fitness.app.api.service.athlete.AthleteService
 import com.fitness.app.databinding.FragmentAthleteSignUpBinding
-import com.fitness.app.model.api.request.AthleteSignUpRequest
+import com.fitness.app.model.api.request.athlete.AthleteSignUpRequest
 import com.fitness.app.util.constructSignUpTerms
 import com.fitness.app.viewmodel.AthleteHomeViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -61,7 +61,7 @@ class AthleteSignUpFragment : Fragment(R.layout.fragment_athlete_sign_up) {
                         AthleteSignUpRequest(
                             firstName,lastName,email,pass
                         )
-                    signUp(athlete)
+                    athleteSignUp(athlete)
                 }
                 else{
                     MaterialAlertDialogBuilder(requireContext(), R.style.AlertDialogTheme)
@@ -84,8 +84,8 @@ class AthleteSignUpFragment : Fragment(R.layout.fragment_athlete_sign_up) {
 
     }
 
-    private fun signUp(athlete: AthleteSignUpRequest) {
-        val apiService = APIService(requireContext())
+    private fun athleteSignUp(athlete: AthleteSignUpRequest) {
+        val apiService = AthleteService(requireContext())
         apiService.signUpAthlete(athlete) {
 
         }

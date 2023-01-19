@@ -1,13 +1,13 @@
 package com.fitness.app.api
 
-import com.fitness.app.model.api.request.AthleteLogInRequest
-import com.fitness.app.model.api.request.AthleteSignUpRequest
-import com.fitness.app.model.api.request.ClubLogInRequest
-import com.fitness.app.model.api.request.ClubSignUpRequest
-import com.fitness.app.model.api.response.AthleteLogInResponse
-import com.fitness.app.model.api.response.AthleteSignUpResponse
-import com.fitness.app.model.api.response.ClubLogInResponse
-import com.fitness.app.model.api.response.ClubSignUpResponse
+import com.fitness.app.model.api.request.athlete.AthleteLogInRequest
+import com.fitness.app.model.api.request.athlete.AthleteSignUpRequest
+import com.fitness.app.model.api.request.club.ClubLogInRequest
+import com.fitness.app.model.api.request.club.ClubSignUpRequest
+import com.fitness.app.model.api.response.athlete.AthleteLogInResponse
+import com.fitness.app.model.api.response.athlete.AthleteSignUpResponse
+import com.fitness.app.model.api.response.club.ClubLogInResponse
+import com.fitness.app.model.api.response.club.ClubSignUpResponse
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.POST
