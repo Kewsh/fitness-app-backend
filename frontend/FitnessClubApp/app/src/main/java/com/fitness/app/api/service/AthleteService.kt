@@ -1,4 +1,4 @@
-package com.fitness.app.api.service.athlete
+package com.fitness.app.api.service
 
 import android.app.Activity
 import android.content.Context

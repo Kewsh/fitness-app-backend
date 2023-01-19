@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import com.fitness.app.api.service.athlete.AthleteService
+import com.fitness.app.api.service.AthleteService
 import com.fitness.app.databinding.FragmentLoginBinding
 import com.fitness.app.model.api.request.athlete.AthleteLogInRequest
 import com.fitness.app.util.constructLoginPageTitle

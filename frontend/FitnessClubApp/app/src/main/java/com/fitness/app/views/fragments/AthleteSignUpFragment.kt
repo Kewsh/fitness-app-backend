@@ -10,7 +10,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.fitness.app.R
-import com.fitness.app.api.service.athlete.AthleteService
+import com.fitness.app.api.service.AthleteService
 import com.fitness.app.databinding.FragmentAthleteSignUpBinding
 import com.fitness.app.model.api.request.athlete.AthleteSignUpRequest
 import com.fitness.app.util.constructSignUpTerms
