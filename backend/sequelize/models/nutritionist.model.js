@@ -34,18 +34,23 @@ module.exports = (sequelize) => {
                 // get diet ids that belong to this nutritionist
                 const dietIds = await getDiets(sequelize, query.id);
                 
-                // set virtual fields
-                query.nAthletes = await getNumberOfAthletes(
-                    sequelize,
-                    dietIds
-                );
-                const rating = await getRating(sequelize, dietIds);
-                query.rating = {
-                    rating: parseInt(rating.dataValues.avgRate),
-                    nRates: query.numberOfRatings = parseInt(
-                        rating.dataValues.nRates
-                    ),
-                };
+                // set virtual fields.
+                // e.g. query can be from findAll or findOne
+                if (Array.isArray(query)){
+                    for (const result of query) {
+                        const { nAthletes, rating } =
+                            await getVirtualFields(sequelize, dietIds);
+
+                        result.nAthletes = nAthletes;
+                        result.rating = rating;
+                    }
+                } else {
+                    const { nAthletes, rating } =
+                        await getVirtualFields(sequelize, dietIds);
+
+                    query.nAthletes = nAthletes;
+                    query.rating = rating;
+                }
             },
         },
     });
@@ -60,6 +65,17 @@ const getDiets = async (sequelize, nutritionistId) => {
     })).map(diet => diet.dataValues.id);
 }
 
+const getVirtualFields = async (sequelize, dietIds) => {
+    const nAthletes = await getNumberOfAthletes(sequelize, dietIds);
+    let rating = await getRating(sequelize, dietIds);
+    rating = {
+        rating: parseInt(rating.avgRate),
+        nRates: parseInt(rating.nRates),
+    };
+
+    return { nAthletes, rating };
+}
+
 const getRating = async (sequelize, dietIds) => {
     // find all comments on dietIds
     // this query returns a list with one member (why?)
@@ -69,7 +85,7 @@ const getRating = async (sequelize, dietIds) => {
             [sequelize.fn('AVG', sequelize.col('rate')), 'avgRate'],
             [sequelize.fn('COUNT', sequelize.col('rate')), 'nRates'],
         ],
-    }))[0];
+    }))[0].dataValues;
 }
 
 const getNumberOfAthletes = async (sequelize, dietIds) => {

@@ -40,27 +40,56 @@ module.exports = (sequelize) => {
                 // skip this hook if no match is found
                 if (!query) return;
 
-                // set virtual fields
-                query.duration = (
-                    await getDuration(sequelize, query.id)
-                ).dataValues.duration;
+                // set virtual fields.
+                // e.g. query can be from findAll or findOne
+                if (Array.isArray(query)){
+                    for (const result of query) {
+                        const { duration, nAthletes, rating } =
+                            await getVirtualFields(sequelize, result.id);
 
-                query.nAthletes = await getNumberOfAthletes(
-                    sequelize,
-                    query.id
+                        result.duration = duration;
+                        result.nAthletes = nAthletes;
+                        result.rating = rating;
+                    }
+                } else {
+                    const { duration, nAthletes, rating } =
+                        await getVirtualFields(sequelize, query.id);
+
+                    query.duration = duration;
+                    query.nAthletes = nAthletes;
+                    query.rating = rating;
+                }
+            },
+            afterCreate: async program => {
+                // delete all coverPicPath fields
+                delete program.dataValues.coverPicPath;
+                program.workouts && program.workouts.map(
+                    workout => delete workout.dataValues.coverPicPath
                 );
-                const rating = await getRating(sequelize, query.id);
-                query.rating = {
-                    rating: parseInt(rating.dataValues.avgRate),
-                    nRates: query.numberOfRatings = parseInt(
-                        rating.dataValues.nRates
-                    ),
-                };
-            }
+            },
+            afterUpdate: async program => {
+                // delete all coverPicPath fields
+                delete program.dataValues.coverPicPath;
+                program.workouts && program.workouts.map(
+                    workout => delete workout.dataValues.coverPicPath
+                );
+            },
         }
     });
 }
 
+
+const getVirtualFields = async (sequelize, id) => {
+    const duration = await getDuration(sequelize, id);
+    const nAthletes = await getNumberOfAthletes(sequelize, id);
+    let rating = await getRating(sequelize, id);
+    rating = {
+        rating: parseInt(rating.avgRate),
+        nRates: parseInt(rating.nRates),
+    };
+
+    return { duration, nAthletes, rating };
+}
 
 const getDuration = async (sequelize, programId) => {
     // get maximum day on workouts that belong to this program
@@ -69,7 +98,7 @@ const getDuration = async (sequelize, programId) => {
         attributes: [
             [sequelize.fn('MAX', sequelize.col('day')), 'duration'],
         ],
-    }))[0];
+    }))[0].dataValues.duration;
 }
 
 const getRating = async (sequelize, programId) => {
@@ -81,7 +110,7 @@ const getRating = async (sequelize, programId) => {
             [sequelize.fn('AVG', sequelize.col('rate')), 'avgRate'],
             [sequelize.fn('COUNT', sequelize.col('rate')), 'nRates'],
         ],
-    }))[0];
+    }))[0].dataValues;
 }
 
 const getNumberOfAthletes = async (sequelize, programId) => {

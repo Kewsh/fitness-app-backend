@@ -46,17 +46,35 @@ module.exports = (sequelize) => {
                 // skip this hook if no match is found
                 if (!query) return;
 
-                // set virtual fields
-                const rating = await getRating(sequelize, query.id);
-                query.rating = {
-                    rating: parseInt(rating.dataValues.avgRate),
-                    nRates: query.numberOfRatings = parseInt(
-                        rating.dataValues.nRates
-                    ),
-                };
+                // set virtual fields.
+                // e.g. query can be from findAll or findOne
+                if (Array.isArray(query)){
+                    for (const result of query) {
+                        const { rating } =
+                            await getVirtualFields(sequelize, result.id);
+
+                        result.rating = rating;
+                    }
+                } else {
+                    const { rating } =
+                        await getVirtualFields(sequelize, query.id);
+
+                    query.rating = rating;
+                }
             }
         }
     });
+}
+
+
+const getVirtualFields = async (sequelize, id) => {
+    let rating = await getRating(sequelize, id);
+    rating = {
+        rating: parseInt(rating.avgRate),
+        nRates: parseInt(rating.nRates),
+    };
+
+    return { rating };
 }
 
 const getRating = async (sequelize, recipeId) => {
@@ -75,5 +93,5 @@ const getRating = async (sequelize, recipeId) => {
             [sequelize.fn('AVG', sequelize.col('rate')), 'avgRate'],
             [sequelize.fn('COUNT', sequelize.col('rate')), 'nRates'],
         ],
-    }))[0];
+    }))[0].dataValues;
 }

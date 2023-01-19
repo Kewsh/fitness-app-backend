@@ -43,15 +43,15 @@ module.exports.findOneById = async (req, res) => {
             attributes: { exclude: ['coverPicPath'] },
         });
 
+        if (!diet) {
+            return res.error(404, 'No diet found with this id');
+        }
+
         //TODO: this can't be done in include, since hooks don't run on
         // included models
         diet.dataValues.nutritionist = await diet.getNutritionist({
             attributes: { exclude: ['picPath'] },
         });
-
-        if (!diet) {
-            return res.error(404, 'No diet found with this id');
-        }
 
         return res.success(200, diet);
     } catch (error) {

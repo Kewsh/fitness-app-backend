@@ -73,19 +73,26 @@ module.exports = (sequelize) => {
                 // get program and event ids that belong to this club
                 const programIds = await getPrograms(sequelize, query.id);
                 const eventIds = await getEvents(sequelize, query.id);
-                
-                // set virtual fields
-                query.nAthletes = await getNumberOfAthletes(
-                    sequelize,
-                    programIds
-                );
-                const rating = await getRating(sequelize, programIds, eventIds);
-                query.rating = {
-                    rating: parseInt(rating.dataValues.avgRate),
-                    nRates: query.numberOfRatings = parseInt(
-                        rating.dataValues.nRates
-                    ),
-                };
+
+                if (Array.isArray(query)) {
+                    for (const result of query) {
+                        const { nAthletes, rating } = await getVirtualFields(
+                            sequelize,
+                            programIds,
+                            eventIds
+                        );
+                        result.nAthletes = nAthletes;
+                        result.rating = rating;
+                    }
+                } else {
+                    const { nAthletes, rating } = await getVirtualFields(
+                        sequelize,
+                        programIds,
+                        eventIds
+                    );
+                    query.nAthletes = nAthletes;
+                    query.rating = rating;
+                }
             },
         },
     });
@@ -108,6 +115,17 @@ const getPrograms = async (sequelize, clubId) => {
     })).map(program => program.dataValues.id);
 }
 
+const getVirtualFields = async (sequelize, programIds, eventIds) => {
+    const nAthletes = await getNumberOfAthletes(sequelize, programIds);
+    let rating = await getRating(sequelize, programIds, eventIds);
+    rating = {
+        rating: parseInt(rating.avgRate),
+        nRates: parseInt(rating.nRates),
+    };
+
+    return { nAthletes, rating };
+}
+
 const getRating = async (sequelize, programIds, eventIds) => {
     // find all comments on this club's programs and events
     //TODO: this query returns a list with one member (why?)
@@ -119,7 +137,7 @@ const getRating = async (sequelize, programIds, eventIds) => {
             [sequelize.fn('AVG', sequelize.col('rate')), 'avgRate'],
             [sequelize.fn('COUNT', sequelize.col('rate')), 'nRates'],
         ],
-    }))[0];
+    }))[0].dataValues;
 }
 
 const getNumberOfAthletes = async (sequelize, programIds) => {

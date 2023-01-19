@@ -4,6 +4,7 @@ const {
     findOneById,
     getPrograms,
     getEvents,
+    getMembers,
     getCoverPicture,
     getLogo,
 } = require('../../controllers/club.controller');
@@ -15,6 +16,8 @@ router.get('/:id', findOneById);
 router.get('/:id/programs', getPrograms);
 
 router.get('/:id/events', getEvents);
+
+router.get('/:id/members', getMembers);
 
 router.get('/:id/cover', getCoverPicture);
 

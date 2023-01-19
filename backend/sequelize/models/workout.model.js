@@ -18,14 +18,14 @@ module.exports = (sequelize) => {
         reps: {
             type: DataTypes.INTEGER,
             validate: {
-                max: 50,
+                max: 1000,
                 min: 1,
             }
         },
         sets: {
             type: DataTypes.INTEGER,
             validate: {
-                max: 100,
+                max: 1000,
                 min: 1,
             },
             allowNull: false,
