@@ -59,7 +59,21 @@ module.exports = (sequelize) => {
                     query.nAthletes = nAthletes;
                     query.rating = rating;
                 }
-            }
+            },
+            afterCreate: async program => {
+                // delete all coverPicPath fields
+                delete program.dataValues.coverPicPath;
+                program.workouts && program.workouts.map(
+                    workout => delete workout.dataValues.coverPicPath
+                );
+            },
+            afterUpdate: async program => {
+                // delete all coverPicPath fields
+                delete program.dataValues.coverPicPath;
+                program.workouts && program.workouts.map(
+                    workout => delete workout.dataValues.coverPicPath
+                );
+            },
         }
     });
 }
