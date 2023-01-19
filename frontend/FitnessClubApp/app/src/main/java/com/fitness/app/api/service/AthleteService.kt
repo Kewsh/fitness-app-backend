@@ -8,6 +8,7 @@ import android.util.Log
 import com.fitness.app.R
 import com.fitness.app.api.APIInterface
 import com.fitness.app.api.ServiceBuilder
+import com.fitness.app.api.endpoint.AthleteEndpoints
 import com.fitness.app.model.api.request.athlete.AthleteLogInRequest
 import com.fitness.app.model.api.request.athlete.AthleteSignUpRequest
 import com.fitness.app.model.api.response.athlete.AthleteLogInResponse
@@ -20,7 +21,7 @@ import retrofit2.Response
 
 class AthleteService(val context: Context) {
     fun signUpAthlete(athleteSignUpRequest: AthleteSignUpRequest, onResult: (AthleteSignUpResponse?) -> Unit){
-        val retrofit = ServiceBuilder.buildService(APIInterface::class.java)
+        val retrofit = ServiceBuilder.buildService(AthleteEndpoints::class.java)
         retrofit.signUpAthlete(athleteSignUpRequest).enqueue(
             object : Callback<AthleteSignUpResponse> {
                 override fun onFailure(call: Call<AthleteSignUpResponse>, t: Throwable) {
@@ -60,7 +61,7 @@ class AthleteService(val context: Context) {
     }
 
     fun logInAthlete(athleteLogInRequest: AthleteLogInRequest, onResult: (AthleteLogInResponse?) -> Unit){
-        val retrofit = ServiceBuilder.buildService(APIInterface::class.java)
+        val retrofit = ServiceBuilder.buildService(AthleteEndpoints::class.java)
         retrofit.logInAthlete(athleteLogInRequest).enqueue(
             object : Callback<AthleteLogInResponse> {
                 override fun onFailure(call: Call<AthleteLogInResponse>, t: Throwable) {

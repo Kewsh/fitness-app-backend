@@ -13,11 +13,6 @@ import retrofit2.http.Body
 import retrofit2.http.POST
 
 interface APIInterface {
-    @POST("user/login")
-    fun logInAthlete(@Body athleteLogInRequest: AthleteLogInRequest) : Call<AthleteLogInResponse>
-
-    @POST("user/signup")
-    fun signUpAthlete(@Body athleteSignUpRequest: AthleteSignUpRequest) : Call<AthleteSignUpResponse>
 
     @POST("club/login")
     fun logInClub(@Body clubLogIn: ClubLogInRequest) : Call<ClubLogInResponse>
