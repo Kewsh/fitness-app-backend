@@ -24,8 +24,15 @@ module.exports.getPicture = async (req, res) => {
 
 module.exports.getDiets = async (req, res) => {
     try {
-        const diets = await dietModel.findAll({
-            where: { nutritionistId: req.params.id },
+        const where = { nutritionistId: req.params.id };
+        if (req.query.exclude) {
+            where.id = { [Op.ne]: req.query.exclude };
+        }
+
+        const diets = await dietModel.findAndCountAll({
+            where,
+            limit: req.query.limit,
+            offset: req.query.offset,
             include: {
                 model: nutritionistModel,
                 attributes: ['fullName'],

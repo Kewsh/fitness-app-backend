@@ -1,3 +1,5 @@
+const _ = require('lodash');
+const { Op } = require('sequelize');
 const { getUploadedFilePath } = require('../file-utils');
 const {
     club: clubModel,
@@ -57,14 +59,36 @@ module.exports.findOneById = async(req, res) => {
 
 module.exports.getPrograms = async (req, res) => {
     try {
-        const programs = await programModel.findAll({
-            where: { clubId: req.params.id },
+        // sequelize doesn't accept where clause keys to be undefined and
+        // there's no way to use || or something to match all entries if
+        // the value is undefined; so we have to build the clause separately
+        const where = { clubId: req.params.id };
+        if (req.query.exclude) {
+            where.id = { [Op.ne]: req.query.exclude };
+        }
+
+        const programs = await programModel.findAndCountAll({
+            where,
+            limit: req.query.limit,
+            offset: req.query.offset,
             attributes: { exclude: ['coverPicPath'] },
             include: {
                 model: clubModel,
                 attributes: ['name'],
             },
         });
+
+        const path = {
+            nAthletes: 'nAthletes',
+            duration: 'duration',
+            price: 'price',
+            rating: 'rating.rating',
+        }[req.query.order];
+
+        // most orderable-by fields are virtual and are set in the afterFind
+        // hook, so we can't use sequelize's order option
+        path && orderBy(programs.rows, req.query.sort == 'desc', path);
+
         return res.success(200, programs);
     } catch (error) {
         return res.error(500, error.message);
@@ -73,14 +97,29 @@ module.exports.getPrograms = async (req, res) => {
 
 module.exports.getEvents = async (req, res) => {
     try {
-        const events = await eventModel.findAll({
+        const events = await eventModel.findAndCountAll({
             where: { clubId: req.params.id },
+            limit: req.query.limit,
+            offset: req.query.limit,
             attributes: { exclude: ['coverPicPath'] },
             include: {
                 model: clubModel,
                 attributes: ['name'],
             },
         });
+
+        const path = {
+            nAttendees: 'nAttendees',
+            price: 'price',
+            startDate: 'startDate',
+            endDate: 'endDate',
+            rating: 'rating.rating',
+        }[req.query.order];
+
+        // most orderable-by fields are virtual and are set in the afterFind
+        // hook, so we can't use sequelize's order option
+        path && orderBy(events.rows, req.query.sort == 'desc', path);
+
         return res.success(200, events);
     } catch (error) {
         return res.error(500, error.message);
@@ -89,18 +128,33 @@ module.exports.getEvents = async (req, res) => {
 
 module.exports.getMembers = async (req, res) => {
     try {
-        // we can't query on clubId since it's a virtual field.
-        // get this club's programs
-        const programIds = (await programModel.findAll({
-            where: { clubId: req.params.id },
-            attributes: ['id'],
-            hooks: false,
-        })).map(program => program.dataValues.id);
+        // if no programId is supplied, get all users of the club
+        let programIds;
 
-        // get all users whose programId is in programIds
-        const members = await userModel.findAll({
-            where: { programId: programIds },
-            attributes: ['id', 'firstName', 'lastName', 'fullName'],
+        if (!req.query.programId) {
+            // we can't query on clubId since it's a virtual field.
+            // get this club's programs
+            programIds = (await programModel.findAll({
+                where: {
+                    clubId: req.params.id,
+                },
+                attributes: ['id'],
+                hooks: false,
+            })).map(program => program.dataValues.id);
+        }
+
+        // get all users with req.body.programId or programIds
+        const members = await userModel.findAndCountAll({
+            where: { programId: req.query.programId || programIds },
+            limit: req.query.limit,
+            offset: req.query.offset,
+            attributes: [
+                'id',
+                'firstName',
+                'lastName',
+                'fullName',
+                'programEnrolmentDate'
+            ],
         });
 
         return res.success(200, members);
@@ -144,4 +198,16 @@ module.exports.getLogo = async (req, res) => {
     } catch (error) {
         return res.error(500, error.message);
     }
+}
+
+
+const orderBy = (list, desc, path) => {
+    list.sort(
+        (a, b) => {
+            // if NaN, treat as 0
+            const aField = _.get(a, path) || 0;
+            const bField = _.get(b, path) || 0;
+            return desc ? bField - aField : aField - bField;
+        }
+    );
 }

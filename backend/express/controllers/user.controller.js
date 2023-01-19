@@ -42,18 +42,21 @@ module.exports.getEvents = async (req, res) => {
         if (!user) {
             return res.error(404, 'No user found with this id');
         }
+
+        // don't have something like getEventsAndCount
+        const count = await user.countEvents({ hooks: false });
         const events = await user.getEvents({
             attributes: ['id', 'title'],
-            include: {
+            limit: req.query.limit,
+            offset: req.query.offset,
+            include: [{
                 model: clubModel,
                 attributes: ['name'],
-                // sequelize bug: https://github.com/sequelize/sequelize/issues/13450
-                push: () => {},
-            },
+            }],
             hooks: false,
         });
 
-        return res.success(200, events);
+        return res.success(200, { count, rows: events });
     } catch (error) {
         return res.error(500, error.message);
     }
