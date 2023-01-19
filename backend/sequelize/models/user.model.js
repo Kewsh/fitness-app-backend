@@ -23,6 +23,31 @@ module.exports = (sequelize) => {
                 return `${this.firstName} ${this.lastName}`;
             },
         },
+        sex: {
+            type: DataTypes.STRING,
+            validate: {
+                isIn: [[
+                    'MALE',
+                    'FEMALE',
+                    'OTHER',
+                ]],
+            },
+        },
+        birthday: {
+            type: DataTypes.DATEONLY,
+        },
+        height: {
+            type: DataTypes.INTEGER,
+            validate: {
+                min: 0
+            },
+        },
+        phoneNumber: {
+            type: DataTypes.STRING,
+            validate: {
+                is: /^\+(?:[0-9] ?){6,14}[0-9]$/,
+            },
+        },
         password: {
             type: DataTypes.STRING,
             allowNull: false,
