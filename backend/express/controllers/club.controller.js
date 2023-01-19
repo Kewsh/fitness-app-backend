@@ -4,43 +4,8 @@ const {
     socialMedia: socialMediaModel,
     program: programModel,
     event: eventModel,
+    email: emailModel,
 } = require('../../sequelize').models;
-
-module.exports.findOne = async (req, res) => {
-    try {
-        if (!req.body.email || !req.body.password) {
-            return res.error(400, 'Missing fields in request body');
-        }
-
-        const club = await clubModel.findOne({
-            where: {
-                email: req.body.email,
-            },
-            attributes: {
-                exclude: ['coverPicPath', 'logoPath'],
-            },
-        });
-
-        if (!club) {
-            return res.error(404, 'No club found with this email');
-        }
-        if (!(await club.isPasswordValid(req.body.password, club.password))) {
-            return res.error(401, 'Invalid password');
-        }
-
-        // exclude some fields from response
-        const {
-            password,
-            coverPicPath,
-            logoPath,
-            ...userResponse
-        } = club.dataValues;
-
-        return res.success(200, userResponse)
-    } catch (error) {
-        return res.error(500, error.message);
-    }
-}
 
 module.exports.createOne = async (req, res) => {
     try {
@@ -48,11 +13,15 @@ module.exports.createOne = async (req, res) => {
             name: req.body.name,
             manager: req.body.manager,
             description: req.body.description,
-            email: req.body.email,
             password: req.body.password,
             phoneNumber: req.body.phoneNumber,
             website: req.body.website,
             address: req.body.address,
+            email: {
+                email: req.body.email,
+            },
+        }, {
+            include: emailModel,
         });
 
         // exclude some fields from response

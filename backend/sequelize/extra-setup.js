@@ -5,6 +5,7 @@ module.exports = (sequelize) => {
         club,
         comment,
         diet,
+        email,
         event,
         food,
         measurement,
@@ -25,6 +26,23 @@ module.exports = (sequelize) => {
     club.prototype.isPasswordValid =
         async (password, hash) => await bcrypt.compare(password, hash);
 
+    user.hasOne(email, {
+        onDelete: 'CASCADE',
+        foreignKey: {
+            name: 'userId',
+            unique: true,
+        },
+    });
+    email.belongsTo(user);
+
+    club.hasOne(email, {
+        onDelete: 'CASCADE',
+        foreignKey: {
+            name: 'clubId',
+            unique: true,
+        },
+    });
+    email.belongsTo(club);
 
     // set up associations in pairs
     club.hasMany(socialMedia, {

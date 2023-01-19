@@ -1,12 +1,9 @@
 const router = require('express').Router();
 const {
-    findOne,
     createOne,
     getEvents,
     getProfilePicture,
 } = require('../../controllers/user.controller');
-
-router.post('/login', findOne);
 
 router.post('/signup', createOne);
 

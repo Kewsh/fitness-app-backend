@@ -3,53 +3,29 @@ const {
     user: userModel,
     measurement: measurementModel,
     club: clubModel,
+    email: emailModel,
 } = require('../../sequelize').models;
-
-module.exports.findOne = async (req, res) => {
-    try {
-        if (!req.body.email || !req.body.password) {
-            return res.error(400, 'Missing fields in request body');
-        }
-
-        const user = await userModel.findOne({
-            where: {
-                email: req.body.email,
-            },
-            include: measurementModel,
-            attributes: {
-                exclude: ['profilePicPath']
-            }
-        });
-
-        if (!user) {
-            return res.error(404, 'No user found with this email');
-        }
-        if (!(await user.isPasswordValid(req.body.password, user.password))) {
-            return res.error(401, 'Invalid password');
-        }
-
-        // exclude some fields from response object
-        const { password, profilePicPath, ...userResponse } = user.dataValues;
-
-        return res.success(200, userResponse);
-    } catch (error) {
-        return res.error(500, error.message);
-    }
-}
 
 module.exports.createOne = async (req, res) => {
     try {
         const user = await userModel.create({
             firstName: req.body.firstName,
             lastName: req.body.lastName,
-            email: req.body.email,
             password: req.body.password,
             measurements: [
                 { type: 'WEIGHT' },
                 { type: 'BICEP' },
                 { type: 'WAIST' },
             ],
-        }, { include: measurementModel });
+            email: {
+                email: req.body.email
+            }
+        }, {
+            include: [
+                measurementModel,
+                emailModel,
+            ]
+        });
 
         // exclude some fields from response object
         const { password, profilePicPath, ...userResponse } = user.dataValues;
