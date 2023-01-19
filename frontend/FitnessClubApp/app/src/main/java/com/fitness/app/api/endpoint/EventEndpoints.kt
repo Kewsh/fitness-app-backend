@@ -4,7 +4,6 @@ import com.fitness.app.model.api.request.diet.DiscoverDietsRequest
 import com.fitness.app.model.api.request.diet.PickDietRequest
 import com.fitness.app.model.api.request.event.DiscoverEventsRequest
 import com.fitness.app.model.api.request.event.ParticipateInEventRequest
-import com.fitness.app.model.api.response.diet.*
 import com.fitness.app.model.api.response.event.DiscoverEventsResponse
 import com.fitness.app.model.api.response.event.GetEventByIdResponse
 import com.fitness.app.model.api.response.event.GetEventCommentsResponse
