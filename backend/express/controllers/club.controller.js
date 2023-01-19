@@ -4,6 +4,7 @@ const {
     socialMedia: socialMediaModel,
     program: programModel,
     event: eventModel,
+    user: userModel,
     email: emailModel,
 } = require('../../sequelize').models;
 
@@ -81,6 +82,28 @@ module.exports.getEvents = async (req, res) => {
             },
         });
         return res.success(200, events);
+    } catch (error) {
+        return res.error(500, error.message);
+    }
+}
+
+module.exports.getMembers = async (req, res) => {
+    try {
+        // we can't query on clubId since it's a virtual field.
+        // get this club's programs
+        const programIds = (await programModel.findAll({
+            where: { clubId: req.params.id },
+            attributes: ['id'],
+            hooks: false,
+        })).map(program => program.dataValues.id);
+
+        // get all users whose programId is in programIds
+        const members = await userModel.findAll({
+            where: { programId: programIds },
+            attributes: ['id', 'firstName', 'lastName', 'fullName'],
+        });
+
+        return res.success(200, members);
     } catch (error) {
         return res.error(500, error.message);
     }

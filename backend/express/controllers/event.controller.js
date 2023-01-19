@@ -1,11 +1,65 @@
 const { Op } = require('sequelize');
-const { getUploadedFilePath } = require('../file-utils');
+const { getUploadedFilePath, deleteFile } = require('../file-utils');
+const upload = require('../multer');
 const {
     event: eventModel,
     club: clubModel,
     user: userModel,
     comment: commentModel,
 } = require('../../sequelize').models;
+
+module.exports.createOne = async (req, res) => {
+    try {
+        const event = await eventModel.create({
+            title: req.body.title,
+            description: req.body.description,
+            price: req.body.price,
+            maxAttendees: req.body.maxAttendees,
+            startDate: req.body.startDate,
+            endDate: req.body.endDate,
+            clubId: req.body.clubId,
+        });
+
+        // for some reason, we can't set include option with create.
+        // so just call findOneById to handle the rest of the job
+        module.exports.findOneById({ params: { id: event.id } }, res);
+    } catch (error) {
+        return res.error(500, error.message);
+    }
+}
+
+module.exports.updateOne = async (req, res) => {
+    try {
+        if (
+            !req.body.title &&
+            !req.body.description &&
+            !req.body.price &&
+            !req.body.maxAttendees &&
+            !req.body.startDate &&
+            !req.body.endDate
+        ) {
+            return res.error(400, 'Missing fields in request body');
+        }
+        const [ affectedRows ] = await eventModel.update({
+            title: req.body.title,
+            description: req.body.description,
+            price: req.body.price,
+            maxAttendees: req.body.maxAttendees,
+            startDate: req.body.startDate,
+            endDate: req.body.endDate,
+        }, {
+            where: { id: req.params.id }
+        });
+
+        if (!affectedRows) {
+            return res.error(404, 'No event found with this id');
+        }
+
+        return res.success(200, {});
+    } catch (error) {
+        return res.error(500, error.message);
+    }
+}
 
 module.exports.discover = async (req, res) => {
     try {
@@ -53,6 +107,7 @@ module.exports.findOneById = async (req, res) => {
         }
         return res.success(200, event);
     } catch (error) {
+        console.log(error);
         return res.error(500, error.message);
     }
 }
@@ -90,6 +145,65 @@ module.exports.getCoverPicture = async (req, res) => {
 
         res.status(200)
            .sendFile(getUploadedFilePath(event.coverPicPath));
+    } catch (error) {
+        return res.error(500, error.message);
+    }
+}
+
+module.exports.setCoverPicture = async (req, res) => {
+    const handler = upload.single('picture');
+
+    handler(req, res, async error => {
+        if (error) {
+            return res.error(500, error.message);
+        }
+        try {
+            const event = await eventModel.findByPk(
+                req.params.id,
+                { attributes: ['id', 'coverPicPath'] },
+            );
+
+            if (!event) {
+                deleteFile(getUploadedFilePath(req.file.filename));
+                throw new Error('No event found with this id');
+            }
+    
+            // delete previous picture from database (if exists)
+            if (event.coverPicPath)
+                deleteFile(getUploadedFilePath(event.coverPicPath));
+    
+            // update picture name in database
+            event.coverPicPath = req.file.filename;
+            await event.save();
+
+            return res.success(200, {});
+        } catch (error) {
+            // abort file upload
+            deleteFile(getUploadedFilePath(req.file.filename));
+
+            return res.error(500, error.message);
+        }
+    });
+}
+
+module.exports.deleteCoverPicture = async (req, res) => {
+    try {
+        const event = await eventModel.findByPk(
+            req.params.id,
+            { attributes: ['id', 'coverPicPath'] }
+        );
+    
+        if (!event || !event.coverPicPath) {
+            return res.error(404, 'No cover picture found');
+        }
+
+        deleteFile(getUploadedFilePath(event.coverPicPath));
+
+        // update picture name in database
+        event.coverPicPath = null;
+        await event.save();
+
+        return res.success(200, {});
     } catch (error) {
         return res.error(500, error.message);
     }
