@@ -15,8 +15,8 @@ import com.fitness.app.viewmodel.AthleteHomeViewModelFactory
 import com.fitness.app.views.fragments.*
 
 class AthleteHomeActivity : AppCompatActivity() {
-    lateinit var binding: ActivityAthleteHomeBinding
     lateinit var viewModel: AthleteHomeViewModel
+    lateinit var binding: ActivityAthleteHomeBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAthleteHomeBinding.inflate(layoutInflater)
