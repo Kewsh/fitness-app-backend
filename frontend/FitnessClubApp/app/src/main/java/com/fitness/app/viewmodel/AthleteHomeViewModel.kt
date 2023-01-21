@@ -1,8 +1,11 @@
 package com.fitness.app.viewmodel
 
+import android.content.Context
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.fitness.app.R
 import com.fitness.app.model.*
+import com.fitness.app.model.api.request.event.DiscoverEventsRequest
 import com.fitness.app.repository.AthleteHomeRepository
 
 class AthleteHomeViewModel(private val athleteHomeRepository: AthleteHomeRepository) : ViewModel() {
@@ -14,8 +17,10 @@ class AthleteHomeViewModel(private val athleteHomeRepository: AthleteHomeReposit
         return athleteHomeRepository.getAllTodayWorkoutItems()
     }
 
-    fun getAllCheckoutEventsItems() : ArrayList<CheckoutEvent> {
-        return athleteHomeRepository.getAllCheckoutEventsItems()
+    fun getAllCheckoutEventsItems(discoverEventsRequest: DiscoverEventsRequest,context: Context,callback:(ArrayList<CheckoutEvent>)->Unit){
+        return athleteHomeRepository.getAllCheckoutEventsItems(discoverEventsRequest,context){checkoutEvents->
+            callback(checkoutEvents)
+        }
     }
 
     fun getAllFoodItems() : ArrayList<Food> {

@@ -1,6 +1,8 @@
 package com.fitness.app.adapters
 
 import android.content.Context
+import android.graphics.drawable.BitmapDrawable
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -39,7 +41,7 @@ class CheckoutEventsAdapter(
         holder.binding.lifecycleOwner = lifecycleOwner
         getItem(position).let { checkoutEvent ->
             holder.apply {
-                image.setBackgroundResource(checkoutEvent.image)
+                image.background = BitmapDrawable(context.resources, checkoutEvent.image)
                 title.text = checkoutEvent.title
                 subtitle.text = checkoutEvent.subTitle
 

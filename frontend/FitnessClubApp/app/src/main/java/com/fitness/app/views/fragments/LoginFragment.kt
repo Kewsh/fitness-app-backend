@@ -87,6 +87,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                     Toast.makeText(context,"Login Successfully",Toast.LENGTH_SHORT).show();
                     val intent = Intent(activity, AthleteHomeActivity::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    intent.putExtra("userId",athlete.data.id)
                     requireContext().startActivity(intent)
                 }
             }

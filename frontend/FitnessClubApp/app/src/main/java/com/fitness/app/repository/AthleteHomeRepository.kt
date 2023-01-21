@@ -1,7 +1,11 @@
 package com.fitness.app.repository
 
+import android.content.Context
+import android.util.Log
 import com.fitness.app.R
+import com.fitness.app.api.service.EventService
 import com.fitness.app.model.*
+import com.fitness.app.model.api.request.event.DiscoverEventsRequest
 
 class AthleteHomeRepository() {
 
@@ -27,25 +31,25 @@ class AthleteHomeRepository() {
 
     }
 
-    fun getAllCheckoutEventsItems(): ArrayList<CheckoutEvent> {
+    fun getAllCheckoutEventsItems(discoverEventsRequest: DiscoverEventsRequest,context: Context,callback:(ArrayList<CheckoutEvent>)->Unit) {
+
+        val apiService = EventService(context)
         val checkoutEvents:ArrayList<CheckoutEvent> = ArrayList()
+        apiService.discoverEvents(discoverEventsRequest){response->
+            if(response!=null) {
+                for (i in 0 until response.data.size){
+                    apiService.getEventCoverPicture(response.data[i].id.toString()){eventPicture->
+                        if (eventPicture != null) {
+                            checkoutEvents.add(CheckoutEvent(eventPicture,response.data[i].title,response.data[i].club.name))
+                        }
+                        if(i==response.data.size-1){
+                            callback(checkoutEvents)
+                        }
+                    }
 
-        var checkoutEvent = CheckoutEvent(R.drawable.athlete_temp_new_events_item_image,"marathon","By Pulse")
-        checkoutEvents.add(checkoutEvent)
-
-        checkoutEvent = CheckoutEvent(R.drawable.athlete_temp_new_events_item_image,"marathon","By Pulse")
-        checkoutEvents.add(checkoutEvent)
-
-        checkoutEvent = CheckoutEvent(R.drawable.athlete_temp_new_events_item_image,"marathon","By Pulse")
-        checkoutEvents.add(checkoutEvent)
-
-        checkoutEvent = CheckoutEvent(R.drawable.athlete_temp_new_events_item_image,"marathon","By Pulse")
-        checkoutEvents.add(checkoutEvent)
-
-        checkoutEvent = CheckoutEvent(R.drawable.athlete_temp_new_events_item_image,"marathon","By Pulse")
-        checkoutEvents.add(checkoutEvent)
-
-        return checkoutEvents
+                }
+            }
+        }
     }
 
     fun getAllFoodItems(): ArrayList<Food> {

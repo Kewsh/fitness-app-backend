@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory
 import android.util.Log
 import com.fitness.app.api.ServiceBuilder
 import com.fitness.app.api.endpoint.EventEndpoints
+import com.fitness.app.model.CheckoutEvent
 import com.fitness.app.model.api.request.event.DiscoverEventsRequest
 import com.fitness.app.model.api.request.event.ParticipateInEventRequest
 import com.fitness.app.model.api.response.event.DiscoverEventsResponse

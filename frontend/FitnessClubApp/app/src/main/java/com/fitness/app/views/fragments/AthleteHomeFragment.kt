@@ -1,5 +1,6 @@
 package com.fitness.app.views.fragments
 
+import android.content.Intent
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
@@ -11,7 +12,9 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.fitness.app.R
 import com.fitness.app.adapters.*
 import com.fitness.app.api.service.AthleteService
+import com.fitness.app.api.service.EventService
 import com.fitness.app.databinding.FragmentAthleteHomeBinding
+import com.fitness.app.model.api.request.event.DiscoverEventsRequest
 import com.fitness.app.viewmodel.AthleteHomeViewModel
 import com.fitness.app.views.activities.AthleteHomeActivity
 import com.squareup.picasso.MemoryPolicy
@@ -30,6 +33,8 @@ class AthleteHomeFragment : Fragment(R.layout.fragment_athlete_home) {
     lateinit var yourEventsAdapter: YourEventsAdapter
     lateinit var checkoutEventsAdapter: CheckoutEventsAdapter
 
+    var userId:Int = -1
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -40,6 +45,11 @@ class AthleteHomeFragment : Fragment(R.layout.fragment_athlete_home) {
         binding = FragmentAthleteHomeBinding.bind(view)
 //        val navigator = Navigation.findNavController(view)
         val activity = activity as AthleteHomeActivity
+
+        val intent: Intent = activity.intent
+
+        userId = intent.getIntExtra("userId",-1)
+        Log.e("userId",userId.toString())
 
         setUpWorkouts()
         setUpDiets()
@@ -133,20 +143,23 @@ class AthleteHomeFragment : Fragment(R.layout.fragment_athlete_home) {
     }
 
     private fun setUpCheckoutEvents(){
-        binding.checkoutEventsRecyclerView.apply {
-            layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL)
-            setHasFixedSize(true)
-            checkoutEventsAdapter = CheckoutEventsAdapter(viewLifecycleOwner, context)
+        val discoverEventRequest = DiscoverEventsRequest(userId)
+
+        viewModel.getAllCheckoutEventsItems(discoverEventRequest,requireContext()){checkoutEvents->
+            binding.checkoutEventsRecyclerView.apply {
+                layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL)
+                setHasFixedSize(true)
+                checkoutEventsAdapter = CheckoutEventsAdapter(viewLifecycleOwner, context)
 //            dietAdapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
-            adapter = checkoutEventsAdapter
-            postponeEnterTransition(300, TimeUnit.MILLISECONDS)
-            viewTreeObserver.addOnPreDrawListener {
-                startPostponedEnterTransition()
-                true
+                adapter = checkoutEventsAdapter
+                postponeEnterTransition(300, TimeUnit.MILLISECONDS)
+                viewTreeObserver.addOnPreDrawListener {
+                    startPostponedEnterTransition()
+                    true
+                }
+
             }
-
+            checkoutEventsAdapter.submitList(checkoutEvents)
         }
-
-        checkoutEventsAdapter.submitList(viewModel.getAllCheckoutEventsItems())
     }
 }

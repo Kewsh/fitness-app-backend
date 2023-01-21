@@ -1,7 +1,9 @@
 package com.fitness.app.model
 
+import android.graphics.Bitmap
+
 data class CheckoutEvent(
-    val image: Int,
-    val title:String,
+    val image: Bitmap,
+    var title:String,
     val subTitle:String,
 )
