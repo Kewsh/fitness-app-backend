@@ -5,6 +5,7 @@ import com.fitness.app.model.api.request.athlete.AthleteSignUpRequest
 import com.fitness.app.model.api.response.athlete.AthleteLogInResponse
 import com.fitness.app.model.api.response.athlete.AthleteSignUpResponse
 import com.fitness.app.model.api.response.athlete.GetAthleteEventsResponse
+import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -21,6 +22,6 @@ interface AthleteEndpoints {
     @GET("user/{user_id}/events")
     fun getAthleteEvents(@Path(value = "user_id", encoded = true) userId:String) : Call<GetAthleteEventsResponse>
 
-//    @GET("user/{user_id}/profile-picture")
-//    fun getAthleteProfilePicture(@Path(value = "user_id", encoded = true) userId:String) : Call<GetAthleteProfilePictureResponse>
+    @GET("user/{user_id}/profile-picture")
+    fun getAthleteProfilePicture(@Path(value = "user_id", encoded = true) userId:String) : Call<ResponseBody>
 }

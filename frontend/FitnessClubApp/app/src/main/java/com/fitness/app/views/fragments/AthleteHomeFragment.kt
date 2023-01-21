@@ -1,6 +1,8 @@
 package com.fitness.app.views.fragments
 
+import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -8,12 +10,14 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.fitness.app.R
 import com.fitness.app.adapters.*
+import com.fitness.app.api.service.AthleteService
 import com.fitness.app.databinding.FragmentAthleteHomeBinding
 import com.fitness.app.viewmodel.AthleteHomeViewModel
 import com.fitness.app.views.activities.AthleteHomeActivity
 import com.squareup.picasso.MemoryPolicy
 import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.Picasso
+import java.io.File
 import java.util.concurrent.TimeUnit
 
 
@@ -42,7 +46,15 @@ class AthleteHomeFragment : Fragment(R.layout.fragment_athlete_home) {
         setUpFoods()
         setUpYourEvents()
         setUpCheckoutEvents()
-        Picasso.get().load(R.drawable.athlete_temp_new_events_item_image).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).into(binding.profilePic)
+
+        // Test for set the retrieved profile pic
+//        val apiService = AthleteService(requireContext())
+//
+//        val userId:String = "1"
+//        apiService.getAthleteProfilePicture(userId) {
+//            binding.profilePic.setImageBitmap(it)
+//        }
+
 
     }
 

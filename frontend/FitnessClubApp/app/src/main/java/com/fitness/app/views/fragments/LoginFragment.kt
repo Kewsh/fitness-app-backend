@@ -3,6 +3,7 @@ package com.fitness.app.views.fragments
 import android.content.DialogInterface
 import com.fitness.app.R
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -40,6 +41,8 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
         binding = FragmentLoginBinding.bind(view)
         navigator = Navigation.findNavController(view)
+
+
 
         binding.forgotPasswordButton.setOnClickListener {
             navigator.navigate(LoginFragmentDirections.actionLoginFragmentToForgotPasswordFragment())
