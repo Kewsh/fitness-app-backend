@@ -1,13 +1,12 @@
 package com.fitness.app.api.endpoint
 
-import com.fitness.app.model.api.request.program.DiscoverProgramsRequest
 import com.fitness.app.model.api.request.recipe_review.CreateRecipeReviewRequest
 import com.fitness.app.model.api.request.recipe_review.UpdateRecipeReviewRequest
-import com.fitness.app.model.api.response.program.DiscoverProgramsResponse
-import com.fitness.app.model.api.response.program.GetProgramByIdResponse
 import com.fitness.app.model.api.response.recipe_review.CreateRecipeReviewResponse
+import com.fitness.app.model.api.response.recipe_review.DeleteRecipeReviewPictureResponse
 import com.fitness.app.model.api.response.recipe_review.DeleteRecipeReviewResponse
 import com.fitness.app.model.api.response.recipe_review.UpdateRecipeReviewResponse
+import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -21,13 +20,13 @@ interface RecipeReviewEndpoints {
     @DELETE("recipe-review/{recipe_review_id}")
     fun deleteRecipeReview(@Path(value = "recipe_review_id", encoded = true) recipeReviewId:String) : Call<DeleteRecipeReviewResponse>
 
-//    @GET("recipe-review/{recipe_review_id}/picture")
-//    fun getRecipeReviewPicture(@Path(value = "recipe_review_id", encoded = true) recipeReviewId:String) : Call<GetRecipeReviewPictureResponse>
+    @GET("recipe-review/{recipe_review_id}/picture")
+    fun getRecipeReviewPicture(@Path(value = "recipe_review_id", encoded = true) recipeReviewId:String) : Call<ResponseBody>
 
 //    @PUT("recipe-review/{recipe_review_id}/picture")
-//    fun setRecipeReviewPicture(@Path(value = "recipe_review_id", encoded = true) recipeReviewId:String , @Body setRecipeReviewPictureRequest: SetRecipeReviewPictureRequest) : Call<SetRecipeReviewPictureResponse>
+//    fun setRecipeReviewPicture(@Path(value = "recipe_review_id", encoded = true) recipeReviewId:String , @Body setRecipeReviewPictureRequest: SetRecipeReviewPictureRequest) : Call<ResponseBody>
 
-//    @DELETE("recipe-review/{recipe_review_id}/picture")
-//    fun deleteRecipeReviewPicture(@Path(value = "recipe_review_id", encoded = true) recipeReviewId:String) : Call<DeleteRecipeReviewPictureResponse>
+    @DELETE("recipe-review/{recipe_review_id}/picture")
+    fun deleteRecipeReviewPicture(@Path(value = "recipe_review_id", encoded = true) recipeReviewId:String) : Call<DeleteRecipeReviewPictureResponse>
 
 }
