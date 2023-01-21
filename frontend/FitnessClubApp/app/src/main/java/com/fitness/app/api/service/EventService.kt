@@ -5,16 +5,9 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.util.Log
 import com.fitness.app.api.ServiceBuilder
-import com.fitness.app.api.endpoint.DietEndpoints
 import com.fitness.app.api.endpoint.EventEndpoints
-import com.fitness.app.model.api.request.diet.DiscoverDietsRequest
-import com.fitness.app.model.api.request.diet.PickDietRequest
 import com.fitness.app.model.api.request.event.DiscoverEventsRequest
 import com.fitness.app.model.api.request.event.ParticipateInEventRequest
-import com.fitness.app.model.api.response.diet.DiscoverDietsResponse
-import com.fitness.app.model.api.response.diet.GetDietByIdResponse
-import com.fitness.app.model.api.response.diet.GetDietsFoodsResponse
-import com.fitness.app.model.api.response.diet.PickDietResponse
 import com.fitness.app.model.api.response.event.DiscoverEventsResponse
 import com.fitness.app.model.api.response.event.GetEventByIdResponse
 import com.fitness.app.model.api.response.event.GetEventCommentsResponse
