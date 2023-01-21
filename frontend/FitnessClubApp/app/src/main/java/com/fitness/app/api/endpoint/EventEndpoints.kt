@@ -8,6 +8,7 @@ import com.fitness.app.model.api.response.event.DiscoverEventsResponse
 import com.fitness.app.model.api.response.event.GetEventByIdResponse
 import com.fitness.app.model.api.response.event.GetEventCommentsResponse
 import com.fitness.app.model.api.response.event.ParticipateInEventResponse
+import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -24,8 +25,8 @@ interface EventEndpoints {
     @GET("event/{event_id}/comments")
     fun getEventComments(@Path(value = "event_id", encoded = true) eventId:String) : Call<GetEventCommentsResponse>
 
-//    @GET("event/{event_id}/cover")
-//    fun getEventCoverPicture(@Path(value = "event_id", encoded = true) eventId:String) : Call<GetEventCoverPictureResponse>
+    @GET("event/{event_id}/cover")
+    fun getEventCoverPicture(@Path(value = "event_id", encoded = true) eventId:String) : Call<ResponseBody>
 
     @POST("event/{event_id}/participate")
     fun participateEvent(@Path(value = "event_id", encoded = true) eventId:String , @Body participateInEventRequest: ParticipateInEventRequest) : Call<ParticipateInEventResponse>
