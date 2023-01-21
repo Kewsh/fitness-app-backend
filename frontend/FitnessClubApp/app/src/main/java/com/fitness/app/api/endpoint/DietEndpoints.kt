@@ -3,6 +3,7 @@ package com.fitness.app.api.endpoint
 import com.fitness.app.model.api.request.diet.DiscoverDietsRequest
 import com.fitness.app.model.api.request.diet.PickDietRequest
 import com.fitness.app.model.api.response.diet.*
+import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -22,8 +23,8 @@ interface DietEndpoints {
     @GET("diet/{diet_id}/comments")
     fun getDietComments(@Path(value = "diet_id", encoded = true) dietId:String) : Call<GetDietsCommentsResponse>
 
-//    @GET("diet/{diet_id}/cover")
-//    fun getDietCoverPicture(@Path(value = "diet_id", encoded = true) dietId:String) : Call<GetDietCoverPictureResponse>
+    @GET("diet/{diet_id}/cover")
+    fun getDietCoverPicture(@Path(value = "diet_id", encoded = true) dietId:String) : Call<ResponseBody>
 
     @POST("diet/{diet_id}/pick")
     fun pickDiet(@Body pickDietRequest: PickDietRequest) : Call<PickDietResponse>
