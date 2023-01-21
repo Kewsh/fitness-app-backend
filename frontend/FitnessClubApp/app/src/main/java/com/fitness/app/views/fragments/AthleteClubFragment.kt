@@ -55,7 +55,7 @@ class AthleteClubFragment : Fragment(R.layout.fragment_athlete_club) {
 
         }
 
-        programAdapter.submitList(viewModel.getAllDiscoverProgramsItems())
+//        programAdapter.submitList(viewModel.getAllDiscoverProgramsItems())
     }
 
     private fun setUpEvents(){

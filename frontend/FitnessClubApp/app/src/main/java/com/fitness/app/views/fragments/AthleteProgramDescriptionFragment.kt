@@ -100,6 +100,6 @@ class AthleteProgramDescriptionFragment : Fragment(R.layout.fragment_athlete_pro
 
         }
 
-        programAdapter.submitList(viewModel.getAllDiscoverProgramsItems())
+//        programAdapter.submitList(viewModel.getAllDiscoverProgramsItems())
     }
 }

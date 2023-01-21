@@ -150,13 +150,7 @@ class AthleteHomeFragment : Fragment(R.layout.fragment_athlete_home) {
                 layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL)
                 setHasFixedSize(true)
                 checkoutEventsAdapter = CheckoutEventsAdapter(viewLifecycleOwner, context)
-//            dietAdapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
                 adapter = checkoutEventsAdapter
-                postponeEnterTransition(300, TimeUnit.MILLISECONDS)
-                viewTreeObserver.addOnPreDrawListener {
-                    startPostponedEnterTransition()
-                    true
-                }
 
             }
             checkoutEventsAdapter.submitList(checkoutEvents)

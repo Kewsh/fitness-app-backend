@@ -4,8 +4,10 @@ import android.content.Context
 import android.util.Log
 import com.fitness.app.R
 import com.fitness.app.api.service.EventService
+import com.fitness.app.api.service.ProgramService
 import com.fitness.app.model.*
 import com.fitness.app.model.api.request.event.DiscoverEventsRequest
+import com.fitness.app.model.api.request.program.DiscoverProgramsRequest
 
 class AthleteHomeRepository() {
 
@@ -32,7 +34,6 @@ class AthleteHomeRepository() {
     }
 
     fun getAllCheckoutEventsItems(discoverEventsRequest: DiscoverEventsRequest,context: Context,callback:(ArrayList<CheckoutEvent>)->Unit) {
-
         val apiService = EventService(context)
         val checkoutEvents:ArrayList<CheckoutEvent> = ArrayList()
         apiService.discoverEvents(discoverEventsRequest){response->
@@ -137,26 +138,24 @@ class AthleteHomeRepository() {
 
     }
 
-    fun getAllDiscoverProgramsItems(): ArrayList<DiscoverProgram> {
+    fun getAllDiscoverProgramsItems(discoverProgramsRequest: DiscoverProgramsRequest,context: Context,callback:(ArrayList<DiscoverProgram>)->Unit) {
         val discoverPrograms:ArrayList<DiscoverProgram> = ArrayList()
+        val apiService = ProgramService(context)
+        apiService.discoverPrograms(discoverProgramsRequest){response->
+            if(response!=null) {
+                for (i in 0 until response.data.size){
+                    apiService.getProgramCoverPicture(response.data[i].id.toString()){programPicture->
+                        if (programPicture != null) {
+                            discoverPrograms.add(DiscoverProgram(programPicture,response.data[i].title,response.data[i].club.name))
+                        }
+                        if(i==response.data.size-1){
+                            callback(discoverPrograms)
+                        }
+                    }
 
-        var discoverProgram = DiscoverProgram(R.drawable.temp_program_image,"Lose belly fat in 30 days","by Pulse Fitness Club")
-        discoverPrograms.add(discoverProgram)
-
-        discoverProgram = DiscoverProgram(R.drawable.temp_program_image,"Lose belly fat in 30 days","by Pulse Fitness Club")
-        discoverPrograms.add(discoverProgram)
-
-        discoverProgram = DiscoverProgram(R.drawable.temp_program_image,"Lose belly fat in 30 days","by Pulse Fitness Club")
-        discoverPrograms.add(discoverProgram)
-
-        discoverProgram = DiscoverProgram(R.drawable.temp_program_image,"Lose belly fat in 30 days","by Pulse Fitness Club")
-        discoverPrograms.add(discoverProgram)
-
-        discoverProgram = DiscoverProgram(R.drawable.temp_program_image,"Lose belly fat in 30 days","by Pulse Fitness Club")
-        discoverPrograms.add(discoverProgram)
-
-        return discoverPrograms
-
+                }
+            }
+        }
     }
 
     fun getAllDietPlanItems(): ArrayList<DietPlan> {

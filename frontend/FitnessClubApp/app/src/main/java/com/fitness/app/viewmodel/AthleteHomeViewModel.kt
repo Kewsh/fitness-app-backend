@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.fitness.app.R
 import com.fitness.app.model.*
 import com.fitness.app.model.api.request.event.DiscoverEventsRequest
+import com.fitness.app.model.api.request.program.DiscoverProgramsRequest
 import com.fitness.app.repository.AthleteHomeRepository
 
 class AthleteHomeViewModel(private val athleteHomeRepository: AthleteHomeRepository) : ViewModel() {
@@ -35,8 +36,10 @@ class AthleteHomeViewModel(private val athleteHomeRepository: AthleteHomeReposit
         return athleteHomeRepository.getAllDayWorkoutItems()
     }
 
-    fun getAllDiscoverProgramsItems(): ArrayList<DiscoverProgram> {
-        return athleteHomeRepository.getAllDiscoverProgramsItems()
+    fun getAllDiscoverProgramsItems(discoverProgramsRequest: DiscoverProgramsRequest,context: Context,callback:(ArrayList<DiscoverProgram>)->Unit) {
+        return athleteHomeRepository.getAllDiscoverProgramsItems(discoverProgramsRequest,context){discoverPrograms->
+            callback(discoverPrograms)
+        }
     }
 
     fun getAllDietPlanItems(): ArrayList<DietPlan> {
