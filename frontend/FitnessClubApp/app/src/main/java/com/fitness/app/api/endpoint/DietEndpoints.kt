@@ -20,6 +20,9 @@ interface DietEndpoints {
     @GET("diet/{diet_id}/foods")
     fun getDietFoods(@Path(value = "diet_id", encoded = true) dietId:String) : Call<GetDietsFoodsResponse>
 
+    @GET("diet/{diet_id}/recipes")
+    fun getDietRecipes(@Path(value = "diet_id", encoded = true) dietId:String) : Call<GetDietsRecipesResponse>
+
     @GET("diet/{diet_id}/comments")
     fun getDietComments(@Path(value = "diet_id", encoded = true) dietId:String) : Call<GetDietsCommentsResponse>
 

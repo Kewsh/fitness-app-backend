@@ -72,6 +72,20 @@ class DietService (val context: Context) {
         )
     }
 
+    fun getDietRecipes(dietId: String, onResult: (GetDietsRecipesResponse?) -> Unit){
+        val retrofit = ServiceBuilder.buildService(DietEndpoints::class.java)
+        retrofit.getDietRecipes(dietId).enqueue(
+            object : Callback<GetDietsRecipesResponse> {
+                override fun onFailure(call: Call<GetDietsRecipesResponse>, t: Throwable) {
+                    onResult(null)
+                }
+                override fun onResponse(call: Call<GetDietsRecipesResponse>, response: Response<GetDietsRecipesResponse>) {
+                    onResult(response.body())
+                }
+            }
+        )
+    }
+
     fun getDietFoods(dietId: String, onResult: (GetDietsFoodsResponse?) -> Unit){
         val retrofit = ServiceBuilder.buildService(DietEndpoints::class.java)
         retrofit.getDietFoods(dietId).enqueue(
