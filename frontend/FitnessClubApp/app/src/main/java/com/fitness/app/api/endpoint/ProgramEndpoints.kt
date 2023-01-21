@@ -1,14 +1,9 @@
 package com.fitness.app.api.endpoint
 
-import com.fitness.app.model.api.request.event.DiscoverEventsRequest
-import com.fitness.app.model.api.request.event.ParticipateInEventRequest
 import com.fitness.app.model.api.request.program.DiscoverProgramsRequest
 import com.fitness.app.model.api.request.program.EnrollInProgramRequest
-import com.fitness.app.model.api.response.event.DiscoverEventsResponse
-import com.fitness.app.model.api.response.event.GetEventByIdResponse
-import com.fitness.app.model.api.response.event.GetEventCommentsResponse
-import com.fitness.app.model.api.response.event.ParticipateInEventResponse
 import com.fitness.app.model.api.response.program.*
+import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -26,10 +21,10 @@ interface ProgramEndpoints {
     fun getProgramWorkouts(@Path(value = "program_id", encoded = true) programId:String) : Call<GetProgramWorkoutsResponse>
 
     @GET("program/{program_id}/comments")
-    fun getEventComments(@Path(value = "program_id", encoded = true) programId:String) : Call<GetProgramCommentsResponse>
+    fun getProgramComments(@Path(value = "program_id", encoded = true) programId:String) : Call<GetProgramCommentsResponse>
 
-//    @GET("program/{program_id}/cover")
-//    fun getProgramCoverPicture(@Path(value = "program_id", encoded = true) programId:String) : Call<GetProgramCoverPictureResponse>
+    @GET("program/{program_id}/cover")
+    fun getProgramCoverPicture(@Path(value = "program_id", encoded = true) programId:String) : Call<ResponseBody>
 
     @POST("program/{program_id}/enroll")
     fun enrollProgram(@Path(value = "program_id", encoded = true) programId:String , @Body enrollInProgramRequest: EnrollInProgramRequest) : Call<EnrollInProgramResponse>
