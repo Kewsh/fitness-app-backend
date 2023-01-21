@@ -5,7 +5,6 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.util.Log
 import com.fitness.app.api.ServiceBuilder
-import com.fitness.app.api.endpoint.DietEndpoints
 import com.fitness.app.api.endpoint.RecipeEndpoints
 import com.fitness.app.model.api.response.recipe.GetRecipeByIdResponse
 import com.fitness.app.model.api.response.recipe.GetRecipeReviewsResponse
