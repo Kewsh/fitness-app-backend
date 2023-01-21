@@ -3,9 +3,11 @@ package com.fitness.app.repository
 import android.content.Context
 import android.util.Log
 import com.fitness.app.R
+import com.fitness.app.api.service.DietService
 import com.fitness.app.api.service.EventService
 import com.fitness.app.api.service.ProgramService
 import com.fitness.app.model.*
+import com.fitness.app.model.api.request.diet.DiscoverDietsRequest
 import com.fitness.app.model.api.request.event.DiscoverEventsRequest
 import com.fitness.app.model.api.request.program.DiscoverProgramsRequest
 
@@ -38,14 +40,13 @@ class AthleteHomeRepository() {
         val checkoutEvents:ArrayList<CheckoutEvent> = ArrayList()
         apiService.discoverEvents(discoverEventsRequest){response->
             if(response!=null) {
+                Log.e("listSize",response.data.size.toString())
                 for (i in 0 until response.data.size){
                     apiService.getEventCoverPicture(response.data[i].id.toString()){eventPicture->
                         if (eventPicture != null) {
                             checkoutEvents.add(CheckoutEvent(eventPicture,response.data[i].title,response.data[i].club.name))
                         }
-                        if(i==response.data.size-1){
-                            callback(checkoutEvents)
-                        }
+                        callback(checkoutEvents)
                     }
 
                 }
@@ -148,9 +149,43 @@ class AthleteHomeRepository() {
                         if (programPicture != null) {
                             discoverPrograms.add(DiscoverProgram(programPicture,response.data[i].title,response.data[i].club.name))
                         }
-                        if(i==response.data.size-1){
-                            callback(discoverPrograms)
+                        callback(discoverPrograms)
+                    }
+
+                }
+            }
+        }
+    }
+
+    fun getAllDiscoverEventsItems(discoverEventsRequest: DiscoverEventsRequest,context: Context,callback:(ArrayList<DiscoverEvent>)->Unit) {
+        val apiService = EventService(context)
+        val discoverEvents:ArrayList<DiscoverEvent> = ArrayList()
+        apiService.discoverEvents(discoverEventsRequest){response->
+            if(response!=null) {
+                for (i in 0 until response.data.size){
+                    apiService.getEventCoverPicture(response.data[i].id.toString()){eventPicture->
+                        if (eventPicture != null) {
+                            discoverEvents.add(DiscoverEvent(eventPicture,response.data[i].title,response.data[i].club.name))
                         }
+                        callback(discoverEvents)
+                    }
+
+                }
+            }
+        }
+    }
+
+    fun getAllDiscoverDietsItems(discoverDietsRequest: DiscoverDietsRequest,context: Context,callback:(ArrayList<DiscoverDiet>)->Unit) {
+        val discoverDiets:ArrayList<DiscoverDiet> = ArrayList()
+        val apiService = DietService(context)
+        apiService.discoverDiets(discoverDietsRequest){response->
+            if(response!=null) {
+                for (i in 0 until response.data.size){
+                    apiService.getDietCoverPicture(response.data[i].id.toString()){dietPicture->
+                        if (dietPicture != null) {
+                            discoverDiets.add(DiscoverDiet(dietPicture,response.data[i].title,response.data[i].nutritionist.fullName))
+                        }
+                        callback(discoverDiets)
                     }
 
                 }
