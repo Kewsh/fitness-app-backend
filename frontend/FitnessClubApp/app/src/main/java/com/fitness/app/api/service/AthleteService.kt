@@ -10,21 +10,20 @@ import android.util.Log
 import com.fitness.app.R
 import com.fitness.app.api.ServiceBuilder
 import com.fitness.app.api.endpoint.AthleteEndpoints
-import com.fitness.app.api.endpoint.ClubEndpoints
 import com.fitness.app.model.api.request.athlete.AthleteLogInRequest
 import com.fitness.app.model.api.request.athlete.AthleteSignUpRequest
+import com.fitness.app.model.api.response.ErrorResponse
 import com.fitness.app.model.api.response.athlete.AthleteLogInResponse
 import com.fitness.app.model.api.response.athlete.AthleteSignUpResponse
 import com.fitness.app.model.api.response.athlete.GetAthleteEventsResponse
-import com.fitness.app.model.api.response.club.GetClubProgramsResponse
 import com.fitness.app.views.activities.AthleteHomeActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.gson.Gson
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.io.File
-import java.io.FileOutputStream
+
 
 class AthleteService(val context: Context) {
     fun getAthleteEvents(userId: String, onResult: (GetAthleteEventsResponse?) -> Unit){
@@ -80,26 +79,25 @@ class AthleteService(val context: Context) {
                     onResult(null)
                 }
                 override fun onResponse(call: Call<AthleteSignUpResponse>, response: Response<AthleteSignUpResponse>) {
-                    val statusCode = response.code()
-                    Log.e("status code : ",statusCode.toString())
-                    if(statusCode==201){
-                        // success -> go to home
-                        val activity = context as Activity
-                        val intent = Intent(activity, AthleteHomeActivity::class.java)
-                        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                        context.startActivity(intent)
+                    val body = response.body()
+                    if(body!=null){
+                        onResult(body)
                     }
                     else{
+                        val gson = Gson()
+                        val error: ErrorResponse = gson.fromJson(
+                            response.errorBody()!!.charStream(),
+                            ErrorResponse::class.java
+                        )
                         MaterialAlertDialogBuilder(context, R.style.AlertDialogTheme)
-                            .setTitle("Failed!")
-                            .setMessage("SignUp failed , check your information and try again.")
+                            .setTitle("Signup Failed")
+                            .setMessage(error.message)
                             .setPositiveButton("OK",
                                 DialogInterface.OnClickListener { dialogInterface, i ->  })
                             .show()
+                        onResult(null)
                     }
-                    val body = response.body()
                     Log.e("onResponse",body.toString())
-                    onResult(body)
                 }
             }
         )
@@ -120,28 +118,26 @@ class AthleteService(val context: Context) {
                     onResult(null)
                 }
                 override fun onResponse(call: Call<AthleteLogInResponse>, response: Response<AthleteLogInResponse>) {
-                    val statusCode = response.code()
-                    Log.e("status code : ",statusCode.toString())
-                    if(statusCode==200){
-                        // success -> go to home
-                        val activity = context as Activity
-                        val intent = Intent(activity, AthleteHomeActivity::class.java)
-                        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                        context.startActivity(intent)
-
+                    val body = response.body()
+                    if(body!=null){
+                        onResult(body)
                     }
                     else{
+                        val gson = Gson()
+                        val error: ErrorResponse = gson.fromJson(
+                            response.errorBody()!!.charStream(),
+                            ErrorResponse::class.java
+                        )
                         MaterialAlertDialogBuilder(context, R.style.AlertDialogTheme)
-                            .setTitle("Failed!")
-                            .setMessage("Login failed , check your information and try again.")
+                            .setTitle("Login Failed")
+                            .setMessage(error.message)
                             .setPositiveButton("OK",
                                 DialogInterface.OnClickListener { dialogInterface, i ->  })
                             .show()
+                        onResult(null)
                     }
-                    val body = response.body()
 
                     Log.e("onResponse",body.toString())
-                    onResult(body)
                 }
             }
         )

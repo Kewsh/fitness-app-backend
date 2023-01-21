@@ -1,11 +1,13 @@
 package com.fitness.app.views.fragments
 
 import android.content.DialogInterface
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -15,6 +17,7 @@ import com.fitness.app.databinding.FragmentAthleteSignUpBinding
 import com.fitness.app.model.api.request.athlete.AthleteSignUpRequest
 import com.fitness.app.util.constructSignUpTerms
 import com.fitness.app.viewmodel.AthleteHomeViewModel
+import com.fitness.app.views.activities.AthleteHomeActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 
@@ -86,7 +89,15 @@ class AthleteSignUpFragment : Fragment(R.layout.fragment_athlete_sign_up) {
 
     private fun athleteSignUp(athlete: AthleteSignUpRequest) {
         val apiService = AthleteService(requireContext())
-        apiService.signUpAthlete(athlete) {
+        apiService.signUpAthlete(athlete) {athlete->
+            if(athlete!=null){
+                if(athlete.code==201){
+                    Toast.makeText(context,"Signup Successfully", Toast.LENGTH_SHORT).show();
+                    val intent = Intent(activity, AthleteHomeActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    requireContext().startActivity(intent)
+                }
+            }
 
         }
     }
