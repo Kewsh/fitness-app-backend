@@ -49,25 +49,22 @@ class AthleteHomeRepository() {
         }
     }
 
-    fun getAllFoodItems(): ArrayList<Food> {
-        val foods:ArrayList<Food> = ArrayList()
-
-        var food = Food(R.drawable.athlete_temp_food_item_image,"Chicken")
-        foods.add(food)
-
-        food = Food(R.drawable.athlete_temp_food_item_image,"pasta")
-        foods.add(food)
-
-        food = Food(R.drawable.athlete_temp_food_item_image,"Masala")
-        foods.add(food)
-
-        food = Food(R.drawable.athlete_temp_food_item_image,"broccoli")
-        foods.add(food)
-
-        food = Food(R.drawable.athlete_temp_food_item_image,"pasta")
-        foods.add(food)
-
-        return foods
+    fun getAllRecipeItems(dietId:String, context: Context, callback:(ArrayList<Recipe>)->Unit){
+        val apiService = DietService(context)
+        val dietRecipes:ArrayList<Recipe> = ArrayList()
+        apiService.getDietRecipes(dietId){response->
+            if(response!=null) {
+                for (i in 0 until response.data.size){
+                    val recipeService = RecipeService(context)
+                    recipeService.getRecipeCoverPicture(response.data[i].id.toString()){recipePicture->
+                        if (recipePicture != null) {
+                            dietRecipes.add(Recipe(recipePicture,response.data[i].title))
+                        }
+                        callback(dietRecipes)
+                    }
+                }
+            }
+        }
     }
 
     fun getAllUserEventsItems(userId:String, context: Context, callback:(ArrayList<YourEvent>)->Unit){

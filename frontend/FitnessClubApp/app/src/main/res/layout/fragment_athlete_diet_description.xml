@@ -254,7 +254,7 @@ healthy, while letting you enjoy all the meals you love. Much study has been don
                             android:textColor="@color/black" />
 
                         <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/foodsRecyclerView"
+                            android:id="@+id/recipesRecyclerView"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
@@ -265,7 +265,7 @@ healthy, while letting you enjoy all the meals you love. Much study has been don
                             android:paddingStart="20dp"
                             android:paddingEnd="10dp"
                             tools:itemCount="15"
-                            tools:listitem="@layout/athlete_food_item" />
+                            tools:listitem="@layout/athlete_recipe_item" />
 
                     </LinearLayout>
 

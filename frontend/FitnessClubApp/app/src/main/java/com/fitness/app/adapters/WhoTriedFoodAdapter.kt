@@ -26,7 +26,7 @@ class WhoTriedFoodAdapter(
 
     inner class WhoTriedFoodViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val binding: WhoTriedFoodItemBinding = WhoTriedFoodItemBinding.bind(itemView)
-        val foodImage: ImageView = binding.foodImage
+        val foodImage: ImageView = binding.recipeImage
         val name: TextView = binding.name
         val rating: TextView = binding.rating
         val description: TextView = binding.description

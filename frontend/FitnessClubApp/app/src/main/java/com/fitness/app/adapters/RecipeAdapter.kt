@@ -1,6 +1,7 @@
 package com.fitness.app.adapters
 
 import android.content.Context
+import android.graphics.drawable.BitmapDrawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,39 +13,37 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.fitness.app.R
-import com.fitness.app.databinding.AthleteFoodItemBinding
-import com.fitness.app.databinding.AthleteTodayDietItemBinding
-import com.fitness.app.model.Food
+import com.fitness.app.databinding.AthleteRecipeItemBinding
+import com.fitness.app.model.Recipe
 import com.fitness.app.util.FoodDiffUtilCallback
-import com.fitness.app.views.fragments.AthleteDietDescriptionFragment
 import com.fitness.app.views.fragments.AthleteFoodDescriptionFragment
 
-class FoodAdapter(
+class RecipeAdapter(
     private val lifecycleOwner: LifecycleOwner,
     private val context: Context
-): ListAdapter<Food, FoodAdapter.FoodViewHolder>(FoodDiffUtilCallback()) {
+): ListAdapter<Recipe, RecipeAdapter.FoodViewHolder>(FoodDiffUtilCallback()) {
 
     inner class FoodViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val binding: AthleteFoodItemBinding = AthleteFoodItemBinding.bind(itemView)
-        val image: ImageView = binding.foodImage
-        val title: TextView = binding.foodTitle
+        val binding: AthleteRecipeItemBinding = AthleteRecipeItemBinding.bind(itemView)
+        val image: ImageView = binding.recipeImage
+        val title: TextView = binding.recipeTitle
 
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FoodViewHolder {
         return FoodViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.athlete_food_item, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.athlete_recipe_item, parent, false)
         )
     }
 
     override fun onBindViewHolder(holder: FoodViewHolder, position: Int) {
         holder.binding.lifecycleOwner = lifecycleOwner
-        getItem(position).let { diet ->
+        getItem(position).let { recipe ->
             holder.apply {
-                image.setBackgroundResource(diet.image)
-                title.text = diet.title
+                image.background = BitmapDrawable(context.resources, recipe.image)
+                title.text = recipe.title
 
-                binding.food.setOnClickListener {
+                binding.recipe.setOnClickListener {
                     val athleteFoodDescriptionFragment = AthleteFoodDescriptionFragment()
                     val fragmentManager = (context as AppCompatActivity).supportFragmentManager.beginTransaction()
                     fragmentManager.replace(R.id.athleteHomeMainParentFragment, athleteFoodDescriptionFragment)

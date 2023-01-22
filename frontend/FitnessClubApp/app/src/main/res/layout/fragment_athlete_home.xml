@@ -141,7 +141,7 @@
                                     android:textColor="@color/black" />
 
                                 <androidx.recyclerview.widget.RecyclerView
-                                    android:id="@+id/foodsRecyclerView"
+                                    android:id="@+id/recipesRecyclerView"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="10dp"
@@ -152,7 +152,7 @@
                                     android:paddingEnd="10dp"
                                     app:reverseLayout="true"
                                     tools:itemCount="15"
-                                    tools:listitem="@layout/athlete_food_item" />
+                                    tools:listitem="@layout/athlete_recipe_item" />
 
                                 <TextView
                                     android:layout_width="match_parent"

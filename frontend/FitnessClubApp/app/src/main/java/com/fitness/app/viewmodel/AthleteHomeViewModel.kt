@@ -25,8 +25,10 @@ class AthleteHomeViewModel(private val athleteHomeRepository: AthleteHomeReposit
         }
     }
 
-    fun getAllFoodItems() : ArrayList<Food> {
-        return athleteHomeRepository.getAllFoodItems()
+    fun getAllDietRecipeItems(dietId:String, context: Context, callback:(ArrayList<Recipe>)->Unit){
+        return athleteHomeRepository.getAllRecipeItems(dietId,context){dietRecipes->
+            callback(dietRecipes)
+        }
     }
 
     fun getAllUserEventsItems(userId:String, context: Context, callback:(ArrayList<YourEvent>)->Unit){
