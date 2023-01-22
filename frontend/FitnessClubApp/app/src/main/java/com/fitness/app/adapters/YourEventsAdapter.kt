@@ -13,7 +13,6 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.fitness.app.R
-import com.fitness.app.databinding.AthleteTodayDietItemBinding
 import com.fitness.app.databinding.AthleteYourEventsItemBinding
 import com.fitness.app.model.YourEvent
 import com.fitness.app.util.YourEventDiffUtilCallback

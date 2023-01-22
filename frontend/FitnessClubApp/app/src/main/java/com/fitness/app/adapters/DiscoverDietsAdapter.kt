@@ -28,8 +28,8 @@ class DiscoverDietsAdapter(
 
     inner class DiscoverDietViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val binding: AthleteDiscoverDietItemBinding = AthleteDiscoverDietItemBinding.bind(itemView)
-        val image: ImageView = binding.dietImage
-        val title: TextView = binding.dietTitle
+        val image: ImageView = binding.foodImage
+        val title: TextView = binding.foodTitle
         var subTitle: TextView = binding.dietSubtitle
 
     }
@@ -48,7 +48,7 @@ class DiscoverDietsAdapter(
                 title.text = discoverDiet.title
                 subTitle.text = discoverDiet.subTitle
 
-                binding.diet.setOnClickListener {
+                binding.food.setOnClickListener {
                     val programDescriptionFragment = AthleteProgramDescriptionFragment()
                     val fragmentManager = (context as AppCompatActivity).supportFragmentManager.beginTransaction()
                     fragmentManager.replace(R.id.athleteHomeMainParentFragment, programDescriptionFragment)

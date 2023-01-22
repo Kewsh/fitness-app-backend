@@ -85,25 +85,22 @@ class AthleteHomeRepository() {
         }
     }
 
-    fun getAllTodayDietItems(): ArrayList<Diet> {
-        val diets:ArrayList<Diet> = ArrayList()
-
-        var diet = Diet(R.drawable.athlete_temp_diet_item_image,"2x Chicken")
-        diets.add(diet)
-
-        diet = Diet(R.drawable.athlete_temp_diet_item_image,"5x Broccoli")
-        diets.add(diet)
-
-        diet = Diet(R.drawable.athlete_temp_diet_item_image,"200g rice")
-        diets.add(diet)
-
-        diet = Diet(R.drawable.athlete_temp_diet_item_image,"2x Chicken")
-        diets.add(diet)
-
-        diet = Diet(R.drawable.athlete_temp_diet_item_image,"200g rice")
-        diets.add(diet)
-
-        return diets
+    fun getAllDietFoodItems(dietId:String, context: Context, callback:(ArrayList<Food>)->Unit) {
+        val apiService = DietService(context)
+        val dietFoods:ArrayList<Food> = ArrayList()
+        apiService.getDietFoods(dietId){response->
+            if(response!=null) {
+                for (i in 0 until response.data.size){
+                    val foodService = FoodService(context)
+                    foodService.getFoodCoverPicture(response.data[i].id.toString()){foodPicture->
+                        if (foodPicture != null) {
+                            dietFoods.add(Food(foodPicture,response.data[i].amountAndTitle))
+                        }
+                        callback(dietFoods)
+                    }
+                }
+            }
+        }
     }
 
     fun getAllDayWorkoutItems(): ArrayList<DayWorkout> {
@@ -185,14 +182,14 @@ class AthleteHomeRepository() {
     fun getAllDietPlanItems(): ArrayList<DietPlan> {
         val dietPlans:ArrayList<DietPlan> = ArrayList()
 
-        var dietPlan = DietPlan("Day 1",R.drawable.ic_checked,getAllTodayDietItems())
-        dietPlans.add(dietPlan)
-
-        dietPlan = DietPlan("Day 2",R.drawable.ic_checked,getAllTodayDietItems())
-        dietPlans.add(dietPlan)
-
-        dietPlan = DietPlan("Day 3",R.drawable.ic_checked,getAllTodayDietItems())
-        dietPlans.add(dietPlan)
+//        var dietPlan = DietPlan("Day 1",R.drawable.ic_checked,getAllDietFoodItems())
+//        dietPlans.add(dietPlan)
+//
+//        dietPlan = DietPlan("Day 2",R.drawable.ic_checked,getAllDietFoodItems())
+//        dietPlans.add(dietPlan)
+//
+//        dietPlan = DietPlan("Day 3",R.drawable.ic_checked,getAllDietFoodItems())
+//        dietPlans.add(dietPlan)
 
         return dietPlans
 

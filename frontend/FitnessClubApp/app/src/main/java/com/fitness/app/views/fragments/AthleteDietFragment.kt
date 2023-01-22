@@ -20,7 +20,7 @@ import java.util.concurrent.TimeUnit
 class AthleteDietFragment : Fragment(R.layout.fragment_athlete_diet) {
     val viewModel: AthleteHomeViewModel by activityViewModels()
     lateinit var binding: FragmentAthleteDietBinding
-    lateinit var dietAdapter: DietAdapter
+    lateinit var foodAdapter: FoodAdapter
     lateinit var recipeAdapter: RecipeAdapter
     lateinit var dietPlansAdapter: DietPlansAdapter
 
@@ -39,7 +39,7 @@ class AthleteDietFragment : Fragment(R.layout.fragment_athlete_diet) {
         Picasso.get().load(R.drawable.athlete_temp_new_events_item_image).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(
             NetworkPolicy.NO_CACHE).into(binding.profilePic)
 
-        binding.dietLayout.diet.setOnClickListener {
+        binding.dietLayout.food.setOnClickListener {
             val athleteDietDescriptionFragment = AthleteDietDescriptionFragment()
             val fragmentManager = (context as AppCompatActivity).supportFragmentManager.beginTransaction()
             fragmentManager.replace(R.id.athleteHomeMainParentFragment, athleteDietDescriptionFragment)
@@ -69,22 +69,22 @@ class AthleteDietFragment : Fragment(R.layout.fragment_athlete_diet) {
     }
 
     private fun setUpDiets(){
-        binding.dietsRecyclerView.apply {
-            layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL)
-            setHasFixedSize(true)
-            dietAdapter =
-                DietAdapter(viewLifecycleOwner, context)
-//            dietAdapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
-            adapter = dietAdapter
-            postponeEnterTransition(300, TimeUnit.MILLISECONDS)
-            viewTreeObserver.addOnPreDrawListener {
-                startPostponedEnterTransition()
-                true
-            }
-
-        }
-
-        dietAdapter.submitList(viewModel.getAllTodayDietItems())
+//        binding.dietsRecyclerView.apply {
+//            layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL)
+//            setHasFixedSize(true)
+//            foodAdapter =
+//                FoodAdapter(viewLifecycleOwner, context)
+////            dietAdapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
+//            adapter = foodAdapter
+//            postponeEnterTransition(300, TimeUnit.MILLISECONDS)
+//            viewTreeObserver.addOnPreDrawListener {
+//                startPostponedEnterTransition()
+//                true
+//            }
+//
+//        }
+//
+//        foodAdapter.submitList(viewModel.getAllDietFoodItems())
     }
 
     private fun setUpDietPlans(){

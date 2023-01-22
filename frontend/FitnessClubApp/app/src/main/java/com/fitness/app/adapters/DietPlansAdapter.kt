@@ -19,13 +19,13 @@ class DietPlansAdapter(
     private val lifecycleOwner: LifecycleOwner,
     private val context: Context,
 ) : ListAdapter<DietPlan, DietPlansAdapter.DietPlanViewHolder>(DietPlanDiffUtilCallback()) {
-    lateinit var dietAdapter: DietAdapter
+    lateinit var foodAdapter: FoodAdapter
 
     inner class DietPlanViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val binding: AthleteDietPlanItemBinding = AthleteDietPlanItemBinding.bind(itemView)
         val dietPlanIsCheckedImage: ImageView = binding.dietPlanIsCheckedImage
         val title: TextView = binding.dietPlanTitle
-        var dietsRecyclerView: RecyclerView = binding.dietsRecyclerView
+        var foodsRecyclerView: RecyclerView = binding.foodsRecyclerView
 
     }
 
@@ -41,19 +41,19 @@ class DietPlansAdapter(
             holder.apply {
                 dietPlanIsCheckedImage.setBackgroundResource(R.drawable.ic_checked)
                 title.text = dietPlan.title
-                dietsRecyclerView.apply {
+                foodsRecyclerView.apply {
                     layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL)
                     setHasFixedSize(true)
-                    dietAdapter = DietAdapter(lifecycleOwner, context)
+                    foodAdapter = FoodAdapter(lifecycleOwner, context)
 //            dietAdapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
-                    adapter = dietAdapter
+                    adapter = foodAdapter
 //                    postponeEnterTransition(300, TimeUnit.MILLISECONDS)
 //                    viewTreeObserver.addOnPreDrawListener {
 //                        startPostponedEnterTransition()
 //                        true
 //                    }
                 }
-                dietAdapter.submitList(dietPlan.diets)
+                foodAdapter.submitList(dietPlan.foods)
 
             }
 

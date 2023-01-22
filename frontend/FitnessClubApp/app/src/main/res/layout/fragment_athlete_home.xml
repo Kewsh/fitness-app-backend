@@ -70,14 +70,32 @@
                                 android:layout_marginEnd="20dp"
                                 android:orientation="vertical">
 
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="20dp"
-                                    android:text="Good morning, Reza!"
+                                    android:text="Good morning,"
                                     android:textColor="@color/black"
                                     android:textSize="20sp"
+                                    android:layout_marginEnd="5dp"
                                     android:textStyle="bold" />
+
+                                    <TextView
+                                        android:id="@+id/userFirstName"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="20dp"
+                                        android:text=""
+                                        android:textColor="@color/black"
+                                        android:textSize="20sp"
+                                        android:textStyle="bold" />
+
+                                </LinearLayout>
 
                                 <TextView
                                     android:layout_width="wrap_content"
@@ -118,7 +136,7 @@
                                     android:textColor="@color/black" />
 
                                 <androidx.recyclerview.widget.RecyclerView
-                                    android:id="@+id/dietsRecyclerView"
+                                    android:id="@+id/foodsRecyclerView"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="10dp"
@@ -129,7 +147,7 @@
                                     android:paddingStart="20dp"
                                     android:paddingEnd="10dp"
                                     tools:itemCount="15"
-                                    tools:listitem="@layout/athlete_today_diet_item" />
+                                    tools:listitem="@layout/athlete_food_item" />
 
                                 <TextView
                                     android:layout_width="match_parent"

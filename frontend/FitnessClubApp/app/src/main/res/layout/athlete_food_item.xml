@@ -7,7 +7,7 @@
     </data>
 
     <RelativeLayout
-        android:id="@+id/diet"
+        android:id="@+id/food"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
@@ -27,7 +27,7 @@
 
 
                 <ImageView
-                    android:id="@+id/dietImage"
+                    android:id="@+id/foodImage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/athlete_temp_diet_item_image" />
@@ -41,7 +41,7 @@
                     android:textAlignment="center">
 
                     <TextView
-                        android:id="@+id/dietTitle"
+                        android:id="@+id/foodTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"

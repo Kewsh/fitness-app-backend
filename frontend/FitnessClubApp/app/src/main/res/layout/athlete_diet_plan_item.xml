@@ -40,7 +40,7 @@
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/dietsRecyclerView"
+            android:id="@+id/foodsRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -51,7 +51,7 @@
             android:paddingStart="20dp"
             android:paddingEnd="10dp"
             tools:itemCount="15"
-            tools:listitem="@layout/athlete_today_diet_item" />
+            tools:listitem="@layout/athlete_food_item" />
 
 
     </LinearLayout>
