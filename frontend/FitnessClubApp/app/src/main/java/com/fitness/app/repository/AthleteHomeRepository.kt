@@ -3,10 +3,7 @@ package com.fitness.app.repository
 import android.content.Context
 import android.util.Log
 import com.fitness.app.R
-import com.fitness.app.api.service.DietService
-import com.fitness.app.api.service.EventService
-import com.fitness.app.api.service.ProgramService
-import com.fitness.app.api.service.WorkoutService
+import com.fitness.app.api.service.*
 import com.fitness.app.model.*
 import com.fitness.app.model.api.request.diet.DiscoverDietsRequest
 import com.fitness.app.model.api.request.event.DiscoverEventsRequest
@@ -30,25 +27,6 @@ class AthleteHomeRepository() {
                 }
             }
         }
-
-//        val workouts:ArrayList<Workout> = ArrayList()
-
-//        var workout = Workout(R.drawable.athlete_temp_workout_item_image,"2x10 Arm")
-//        workouts.add(workout)
-//
-//        workout = Workout(R.drawable.athlete_temp_workout_item_image,"2x8 chest")
-//        workouts.add(workout)
-//
-//        workout = Workout(R.drawable.athlete_temp_workout_item_image,"1x5 dumbbell")
-//        workouts.add(workout)
-//
-//        workout = Workout(R.drawable.athlete_temp_workout_item_image,"2x8 chest")
-//        workouts.add(workout)
-//
-//        workout = Workout(R.drawable.athlete_temp_workout_item_image,"2x10 Arm")
-//        workouts.add(workout)
-//
-//        return workouts
 
     }
 
@@ -92,25 +70,22 @@ class AthleteHomeRepository() {
         return foods
     }
 
-    fun getAllYourEventsItems(): ArrayList<YourEvent> {
-        val yourEvents:ArrayList<YourEvent> = ArrayList()
-
-        var yourEvent = YourEvent(R.drawable.athlete_temp_your_event_item_image,"marathon","By Pulse")
-        yourEvents.add(yourEvent)
-
-        yourEvent = YourEvent(R.drawable.athlete_temp_your_event_item_image,"marathon","By Pulse")
-        yourEvents.add(yourEvent)
-
-        yourEvent = YourEvent(R.drawable.athlete_temp_your_event_item_image,"marathon","By Pulse")
-        yourEvents.add(yourEvent)
-
-        yourEvent = YourEvent(R.drawable.athlete_temp_your_event_item_image,"marathon","By Pulse")
-        yourEvents.add(yourEvent)
-
-        yourEvent = YourEvent(R.drawable.athlete_temp_your_event_item_image,"marathon","By Pulse")
-        yourEvents.add(yourEvent)
-
-        return yourEvents
+    fun getAllUserEventsItems(userId:String, context: Context, callback:(ArrayList<YourEvent>)->Unit){
+        val apiService = AthleteService(context)
+        val userEvents:ArrayList<YourEvent> = ArrayList()
+        apiService.getAthleteEvents(userId){response->
+            if(response!=null) {
+                for (i in 0 until response.data.size){
+                    val eventService = EventService(context)
+                    eventService.getEventCoverPicture(response.data[i].id.toString()){eventPicture->
+                        if (eventPicture != null) {
+                            userEvents.add(YourEvent(eventPicture,response.data[i].title,response.data[i].club.name))
+                        }
+                        callback(userEvents)
+                    }
+                }
+            }
+        }
     }
 
     fun getAllTodayDietItems(): ArrayList<Diet> {

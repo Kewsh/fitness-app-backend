@@ -1,6 +1,7 @@
 package com.fitness.app.adapters
 
 import android.content.Context
+import android.graphics.drawable.BitmapDrawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -41,7 +42,7 @@ class YourEventsAdapter(
         holder.binding.lifecycleOwner = lifecycleOwner
         getItem(position).let { yourEvent ->
             holder.apply {
-                image.setBackgroundResource(yourEvent.image)
+                image.background = BitmapDrawable(context.resources, yourEvent.image)
                 title.text = yourEvent.title
                 subtitle.text = yourEvent.subTitle
 

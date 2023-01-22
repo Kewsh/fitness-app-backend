@@ -109,21 +109,16 @@ class AthleteHomeFragment : Fragment(R.layout.fragment_athlete_home) {
     }
 
     private fun setUpYourEvents(){
-        binding.yourEventsRecyclerView.apply {
-            layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL)
-            setHasFixedSize(true)
-            yourEventsAdapter = YourEventsAdapter(viewLifecycleOwner, context)
-//            dietAdapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
-            adapter = yourEventsAdapter
-            postponeEnterTransition(300, TimeUnit.MILLISECONDS)
-            viewTreeObserver.addOnPreDrawListener {
-                startPostponedEnterTransition()
-                true
+        viewModel.getAllUserEventsItems(userId = userId.toString(), context = requireContext()){ userEvents->
+            binding.yourEventsRecyclerView.apply {
+                layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL)
+                setHasFixedSize(true)
+                yourEventsAdapter = YourEventsAdapter(viewLifecycleOwner, context)
+                adapter = yourEventsAdapter
+
             }
-
+            yourEventsAdapter.submitList(userEvents)
         }
-
-        yourEventsAdapter.submitList(viewModel.getAllYourEventsItems())
     }
 
     private fun setUpCheckoutEvents(){

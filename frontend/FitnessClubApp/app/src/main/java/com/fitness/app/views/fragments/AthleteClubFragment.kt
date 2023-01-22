@@ -2,17 +2,13 @@ package com.fitness.app.views.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.fitness.app.R
 import com.fitness.app.adapters.DiscoverProgramsAdapter
 import com.fitness.app.adapters.YourEventsAdapter
 import com.fitness.app.databinding.FragmentAthleteClubBinding
-import com.fitness.app.databinding.FragmentAthleteDiscoverBinding
-import com.fitness.app.databinding.FragmentAthleteHomeBinding
 import com.fitness.app.viewmodel.AthleteHomeViewModel
 import com.fitness.app.views.activities.AthleteHomeActivity
 import java.util.concurrent.TimeUnit
@@ -73,7 +69,7 @@ class AthleteClubFragment : Fragment(R.layout.fragment_athlete_club) {
 
         }
 
-        eventsAdapter.submitList(viewModel.getAllYourEventsItems())
+//        eventsAdapter.submitList(viewModel.getAllUserEventsItems())
     }
 
 }
