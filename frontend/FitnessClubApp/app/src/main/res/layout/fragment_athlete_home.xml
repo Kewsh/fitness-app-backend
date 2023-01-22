@@ -193,15 +193,26 @@
                                                     android:textColor="@color/black" />
 
                                                 <TextView
+                                                    android:id="@+id/targetWeightKG"
                                                     android:layout_width="wrap_content"
                                                     android:layout_height="wrap_content"
                                                     android:layout_marginStart="5dp"
                                                     android:text="75kg"
                                                     android:textColor="@color/black" />
 
+                                                <ImageView
+                                                    android:id="@+id/targetWeightIsDoneImage"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_gravity="center"
+                                                    android:layout_marginStart="10dp"
+                                                    android:visibility="invisible"
+                                                    android:background="@drawable/ic_checked" />
+
                                             </LinearLayout>
 
                                             <com.google.android.material.progressindicator.LinearProgressIndicator
+                                                android:id="@+id/targetWeightProgress"
                                                 android:layout_width="match_parent"
                                                 android:layout_height="wrap_content"
                                                 android:layout_marginTop="10dp"
@@ -231,6 +242,7 @@
                                                     android:textColor="@color/black" />
 
                                                 <TextView
+                                                    android:id="@+id/targetWaistWidth"
                                                     android:layout_width="wrap_content"
                                                     android:layout_height="wrap_content"
                                                     android:layout_marginStart="5dp"
@@ -238,16 +250,18 @@
                                                     android:textColor="@color/black" />
 
                                                 <ImageView
-                                                    android:id="@+id/dayWorkoutIsCheckedImage"
+                                                    android:id="@+id/targetWaistIsDoneImage"
                                                     android:layout_width="wrap_content"
                                                     android:layout_height="wrap_content"
                                                     android:layout_gravity="center"
                                                     android:layout_marginStart="10dp"
+                                                    android:visibility="invisible"
                                                     android:background="@drawable/ic_checked" />
 
                                             </LinearLayout>
 
                                             <com.google.android.material.progressindicator.LinearProgressIndicator
+                                                android:id="@+id/targetWaistProgress"
                                                 android:layout_width="match_parent"
                                                 android:layout_height="wrap_content"
                                                 android:layout_marginTop="10dp"
@@ -276,15 +290,26 @@
                                                     android:textColor="@color/black" />
 
                                                 <TextView
+                                                    android:id="@+id/targetBicepSize"
                                                     android:layout_width="wrap_content"
                                                     android:layout_height="wrap_content"
                                                     android:layout_marginStart="5dp"
                                                     android:text="38cm"
                                                     android:textColor="@color/black" />
 
+                                                <ImageView
+                                                    android:id="@+id/targetBicepIsDoneImage"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_gravity="center"
+                                                    android:layout_marginStart="10dp"
+                                                    android:visibility="invisible"
+                                                    android:background="@drawable/ic_checked" />
+
                                             </LinearLayout>
 
                                             <com.google.android.material.progressindicator.LinearProgressIndicator
+                                                android:id="@+id/targetBicepProgress"
                                                 android:layout_width="match_parent"
                                                 android:layout_height="wrap_content"
                                                 android:layout_marginTop="10dp"

@@ -1,5 +1,6 @@
 package com.fitness.app.model.api.response.athlete
 
+import com.fitness.app.model.Measurement
 import com.google.gson.annotations.SerializedName
 
 data class AthleteSignUpResponse(
@@ -22,13 +23,13 @@ data class AthleteSignUpData(
     @SerializedName("dietId") val dietId:Int?,
 )
 
-data class Measurement(
-    @SerializedName("id") val id: Int,
-    @SerializedName("type") val type:String,
-    @SerializedName("userId") val userId:String,
-    @SerializedName("updatedAt") val updatedAt:String,
-    @SerializedName("createdAt") val createdAt:String,
-    @SerializedName("current") val current:String?,
-    @SerializedName("start") val start:String?,
-    @SerializedName("target") val target:String?,
-)
+//data class Measurement(
+//    @SerializedName("id") val id: Int,
+//    @SerializedName("type") val type:String,
+//    @SerializedName("userId") val userId:String,
+//    @SerializedName("updatedAt") val updatedAt:String,
+//    @SerializedName("createdAt") val createdAt:String,
+//    @SerializedName("current") val current:String?,
+//    @SerializedName("start") val start:String?,
+//    @SerializedName("target") val target:String?,
+//)

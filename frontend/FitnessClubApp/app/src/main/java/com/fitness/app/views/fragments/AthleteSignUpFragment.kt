@@ -19,6 +19,7 @@ import com.fitness.app.util.constructSignUpTerms
 import com.fitness.app.viewmodel.AthleteHomeViewModel
 import com.fitness.app.views.activities.AthleteHomeActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import java.io.Serializable
 
 
 class AthleteSignUpFragment : Fragment(R.layout.fragment_athlete_sign_up) {
@@ -97,9 +98,13 @@ class AthleteSignUpFragment : Fragment(R.layout.fragment_athlete_sign_up) {
                     val userId = athlete.data.id
                     val dietId = athlete.data.dietId
                     val programId = athlete.data.programId
+                    val measurements = athlete.data.measurements
+                    val args = Bundle()
                     intent.putExtra("userId",userId)
                     intent.putExtra("dietId",dietId)
                     intent.putExtra("programId",programId)
+                    args.putSerializable("measurements",measurements as Serializable)
+                    intent.putExtra("bundle",args)
                     intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                     requireContext().startActivity(intent)
                 }

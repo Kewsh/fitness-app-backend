@@ -1,6 +1,7 @@
 package com.fitness.app.views.fragments
 
 import android.content.Intent
+import android.opengl.Visibility
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.fitness.app.R
 import com.fitness.app.adapters.*
 import com.fitness.app.databinding.FragmentAthleteHomeBinding
+import com.fitness.app.model.Measurement
 import com.fitness.app.model.api.request.event.DiscoverEventsRequest
 import com.fitness.app.viewmodel.AthleteHomeViewModel
 import com.fitness.app.views.activities.AthleteHomeActivity
@@ -25,9 +27,9 @@ class AthleteHomeFragment : Fragment(R.layout.fragment_athlete_home) {
     lateinit var yourEventsAdapter: YourEventsAdapter
     lateinit var checkoutEventsAdapter: CheckoutEventsAdapter
 
-    var userId:Int = -1
-    var dietId:Int = -1
-    var programId:Int = -1
+    var userId: Int = -1
+    var dietId: Int = -1
+    var programId: Int = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,12 +44,52 @@ class AthleteHomeFragment : Fragment(R.layout.fragment_athlete_home) {
 
         val intent: Intent = activity.intent
 
-        userId = intent.getIntExtra("userId",-1)
-        dietId = intent.getIntExtra("dietId",-1)
-        programId = intent.getIntExtra("programId",-1)
-        Log.e("userId",userId.toString())
-        Log.e("dietId",dietId.toString())
-        Log.e("programId",programId.toString())
+        userId = intent.getIntExtra("userId", -1)
+        dietId = intent.getIntExtra("dietId", -1)
+        programId = intent.getIntExtra("programId", -1)
+
+        Log.e("userId", userId.toString())
+        Log.e("dietId", dietId.toString())
+        Log.e("programId", programId.toString())
+        val args = intent.getBundleExtra("bundle")
+        val measurements = args?.getSerializable("measurements") as ArrayList<Measurement>
+        Log.e("measurements", measurements.toString())
+
+        for (measurement in measurements) {
+            when (measurement.type) {
+                "WEIGHT" -> {
+                    measurement.progressPercentage?.let {
+                        binding.targetWeightProgress.progress = it
+                    }
+                    binding.targetWeightKG.text = measurement.target.toString() + " kg"
+                    Log.e("meas",measurement.progressPercentage.toString())
+                    if(measurement.progressPercentage==100) binding.targetWeightIsDoneImage.visibility = View.VISIBLE
+                    else binding.targetWeightIsDoneImage.visibility = View.INVISIBLE
+                }
+                "BICEP" -> {
+                    measurement.progressPercentage?.let {
+                        binding.targetBicepProgress.progress = it
+                    }
+                    binding.targetBicepSize.text = measurement.target.toString()+" cm"
+                    if(measurement.progressPercentage==100) binding.targetBicepIsDoneImage.visibility = View.VISIBLE
+                    else binding.targetBicepIsDoneImage.visibility = View.INVISIBLE
+
+                }
+                "WAIST" -> {
+                    measurement.progressPercentage?.let {
+                        binding.targetWaistProgress.progress = it
+                    }
+                    binding.targetWaistWidth.text = measurement.target.toString()+" cm"
+                    if(measurement.progressPercentage==100) binding.targetWaistIsDoneImage.visibility = View.VISIBLE
+                    else binding.targetWaistIsDoneImage.visibility = View.INVISIBLE
+
+                }
+            }
+        }
+
+
+
+
 
         setUpWorkouts()
         setUpDiets()
@@ -55,10 +97,19 @@ class AthleteHomeFragment : Fragment(R.layout.fragment_athlete_home) {
         setUpYourEvents()
         setUpCheckoutEvents()
 
+        setUserTargets()
+
     }
 
-    private fun setUpWorkouts(){
-        viewModel.getAllProgramWorkoutItems(programId = programId.toString(), context = requireContext()){workouts->
+    private fun setUserTargets() {
+
+    }
+
+    private fun setUpWorkouts() {
+        viewModel.getAllProgramWorkoutItems(
+            programId = programId.toString(),
+            context = requireContext()
+        ) { workouts ->
             binding.workoutsRecyclerView.apply {
                 layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL)
                 setHasFixedSize(true)
@@ -71,7 +122,7 @@ class AthleteHomeFragment : Fragment(R.layout.fragment_athlete_home) {
         }
     }
 
-    private fun setUpDiets(){
+    private fun setUpDiets() {
         binding.dietsRecyclerView.apply {
             layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL)
             setHasFixedSize(true)
@@ -90,7 +141,7 @@ class AthleteHomeFragment : Fragment(R.layout.fragment_athlete_home) {
         dietAdapter.submitList(viewModel.getAllTodayDietItems())
     }
 
-    private fun setUpFoods(){
+    private fun setUpFoods() {
         binding.foodsRecyclerView.apply {
             layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL)
             setHasFixedSize(true)
@@ -108,8 +159,11 @@ class AthleteHomeFragment : Fragment(R.layout.fragment_athlete_home) {
         foodAdapter.submitList(viewModel.getAllFoodItems())
     }
 
-    private fun setUpYourEvents(){
-        viewModel.getAllUserEventsItems(userId = userId.toString(), context = requireContext()){ userEvents->
+    private fun setUpYourEvents() {
+        viewModel.getAllUserEventsItems(
+            userId = userId.toString(),
+            context = requireContext()
+        ) { userEvents ->
             binding.yourEventsRecyclerView.apply {
                 layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL)
                 setHasFixedSize(true)
@@ -121,10 +175,13 @@ class AthleteHomeFragment : Fragment(R.layout.fragment_athlete_home) {
         }
     }
 
-    private fun setUpCheckoutEvents(){
+    private fun setUpCheckoutEvents() {
         val discoverEventRequest = DiscoverEventsRequest(userId)
 
-        viewModel.getAllCheckoutEventsItems(discoverEventRequest,requireContext()){checkoutEvents->
+        viewModel.getAllCheckoutEventsItems(
+            discoverEventRequest,
+            requireContext()
+        ) { checkoutEvents ->
             binding.checkoutEventsRecyclerView.apply {
                 layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL)
                 setHasFixedSize(true)

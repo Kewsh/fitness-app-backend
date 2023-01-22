@@ -1,5 +1,6 @@
 package com.fitness.app.model.api.response.athlete
 
+import com.fitness.app.model.Measurement
 import com.google.gson.annotations.SerializedName
 
 data class AthleteLogInResponse(
