@@ -1,26 +1,18 @@
 package com.fitness.app.views.fragments
 
 import android.content.Intent
-import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.Navigation
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.fitness.app.R
 import com.fitness.app.adapters.*
-import com.fitness.app.api.service.AthleteService
-import com.fitness.app.api.service.EventService
 import com.fitness.app.databinding.FragmentAthleteHomeBinding
 import com.fitness.app.model.api.request.event.DiscoverEventsRequest
 import com.fitness.app.viewmodel.AthleteHomeViewModel
 import com.fitness.app.views.activities.AthleteHomeActivity
-import com.squareup.picasso.MemoryPolicy
-import com.squareup.picasso.NetworkPolicy
-import com.squareup.picasso.Picasso
-import java.io.File
 import java.util.concurrent.TimeUnit
 
 
@@ -34,6 +26,8 @@ class AthleteHomeFragment : Fragment(R.layout.fragment_athlete_home) {
     lateinit var checkoutEventsAdapter: CheckoutEventsAdapter
 
     var userId:Int = -1
+    var dietId:Int = -1
+    var programId:Int = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,7 +43,11 @@ class AthleteHomeFragment : Fragment(R.layout.fragment_athlete_home) {
         val intent: Intent = activity.intent
 
         userId = intent.getIntExtra("userId",-1)
+        dietId = intent.getIntExtra("dietId",-1)
+        programId = intent.getIntExtra("programId",-1)
         Log.e("userId",userId.toString())
+        Log.e("dietId",dietId.toString())
+        Log.e("programId",programId.toString())
 
         setUpWorkouts()
         setUpDiets()
@@ -57,34 +55,20 @@ class AthleteHomeFragment : Fragment(R.layout.fragment_athlete_home) {
         setUpYourEvents()
         setUpCheckoutEvents()
 
-        // Test for set the retrieved profile pic
-//        val apiService = AthleteService(requireContext())
-//
-//        val userId:String = "1"
-//        apiService.getAthleteProfilePicture(userId) {
-//            binding.profilePic.setImageBitmap(it)
-//        }
-
-
     }
 
     private fun setUpWorkouts(){
-        binding.workoutsRecyclerView.apply {
-            layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL)
-            setHasFixedSize(true)
-            workoutAdapter =
-                WorkoutAdapter(viewLifecycleOwner, context)
-//            dietAdapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
-            adapter = workoutAdapter
-            postponeEnterTransition(300, TimeUnit.MILLISECONDS)
-            viewTreeObserver.addOnPreDrawListener {
-                startPostponedEnterTransition()
-                true
+        viewModel.getAllProgramWorkoutItems(programId = programId.toString(), context = requireContext()){workouts->
+            binding.workoutsRecyclerView.apply {
+                layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL)
+                setHasFixedSize(true)
+                workoutAdapter =
+                    WorkoutAdapter(viewLifecycleOwner, context)
+                adapter = workoutAdapter
+
             }
-
+            workoutAdapter.submitList(workouts)
         }
-
-        workoutAdapter.submitList(viewModel.getAllTodayWorkoutItems())
     }
 
     private fun setUpDiets(){

@@ -1,6 +1,7 @@
 package com.fitness.app.adapters
 
 import android.content.Context
+import android.graphics.drawable.BitmapDrawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -40,7 +41,7 @@ class WorkoutAdapter(
         holder.binding.lifecycleOwner = lifecycleOwner
         getItem(position).let { workout ->
             holder.apply {
-                image.setBackgroundResource(workout.image)
+                image.background = BitmapDrawable(context.resources, workout.image)
                 title.text = workout.title
 
                 binding.workout.setOnClickListener {

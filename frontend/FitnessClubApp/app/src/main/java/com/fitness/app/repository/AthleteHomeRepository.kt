@@ -6,6 +6,7 @@ import com.fitness.app.R
 import com.fitness.app.api.service.DietService
 import com.fitness.app.api.service.EventService
 import com.fitness.app.api.service.ProgramService
+import com.fitness.app.api.service.WorkoutService
 import com.fitness.app.model.*
 import com.fitness.app.model.api.request.diet.DiscoverDietsRequest
 import com.fitness.app.model.api.request.event.DiscoverEventsRequest
@@ -13,25 +14,41 @@ import com.fitness.app.model.api.request.program.DiscoverProgramsRequest
 
 class AthleteHomeRepository() {
 
-    fun getAllTodayWorkoutItems(): ArrayList<Workout> {
+    fun getAllProgramWorkoutItems(programId:String,context: Context,callback:(ArrayList<Workout>)->Unit) {
+        val apiService = ProgramService(context)
         val workouts:ArrayList<Workout> = ArrayList()
+        apiService.getProgramWorkouts(programId){response->
+            if(response!=null) {
+                for (i in 0 until response.data.size){
+                    val workoutService = WorkoutService(context)
+                    workoutService.getWorkoutCoverPicture(response.data[i].id.toString()){workoutPicture->
+                        if (workoutPicture != null) {
+                            workouts.add(Workout(workoutPicture,response.data[i].setsAndReps))
+                        }
+                        callback(workouts)
+                    }
+                }
+            }
+        }
 
-        var workout = Workout(R.drawable.athlete_temp_workout_item_image,"2x10 Arm")
-        workouts.add(workout)
+//        val workouts:ArrayList<Workout> = ArrayList()
 
-        workout = Workout(R.drawable.athlete_temp_workout_item_image,"2x8 chest")
-        workouts.add(workout)
-
-        workout = Workout(R.drawable.athlete_temp_workout_item_image,"1x5 dumbbell")
-        workouts.add(workout)
-
-        workout = Workout(R.drawable.athlete_temp_workout_item_image,"2x8 chest")
-        workouts.add(workout)
-
-        workout = Workout(R.drawable.athlete_temp_workout_item_image,"2x10 Arm")
-        workouts.add(workout)
-
-        return workouts
+//        var workout = Workout(R.drawable.athlete_temp_workout_item_image,"2x10 Arm")
+//        workouts.add(workout)
+//
+//        workout = Workout(R.drawable.athlete_temp_workout_item_image,"2x8 chest")
+//        workouts.add(workout)
+//
+//        workout = Workout(R.drawable.athlete_temp_workout_item_image,"1x5 dumbbell")
+//        workouts.add(workout)
+//
+//        workout = Workout(R.drawable.athlete_temp_workout_item_image,"2x8 chest")
+//        workouts.add(workout)
+//
+//        workout = Workout(R.drawable.athlete_temp_workout_item_image,"2x10 Arm")
+//        workouts.add(workout)
+//
+//        return workouts
 
     }
 
@@ -120,20 +137,20 @@ class AthleteHomeRepository() {
     fun getAllDayWorkoutItems(): ArrayList<DayWorkout> {
         val dayWorkouts:ArrayList<DayWorkout> = ArrayList()
 
-        var dayWorkout = DayWorkout("Day 1",R.drawable.ic_checked,getAllTodayWorkoutItems())
-        dayWorkouts.add(dayWorkout)
-
-        dayWorkout = DayWorkout("Day 2",R.drawable.ic_checked,getAllTodayWorkoutItems())
-        dayWorkouts.add(dayWorkout)
-
-        dayWorkout = DayWorkout("Day 3",R.drawable.ic_checked,getAllTodayWorkoutItems())
-        dayWorkouts.add(dayWorkout)
-
-        dayWorkout = DayWorkout("Day 4",R.drawable.ic_checked,getAllTodayWorkoutItems())
-        dayWorkouts.add(dayWorkout)
-
-        dayWorkout = DayWorkout("Day 5",R.drawable.ic_checked,getAllTodayWorkoutItems())
-        dayWorkouts.add(dayWorkout)
+//        var dayWorkout = DayWorkout("Day 1",R.drawable.ic_checked,getAllProgramWorkoutItems())
+//        dayWorkouts.add(dayWorkout)
+//
+//        dayWorkout = DayWorkout("Day 2",R.drawable.ic_checked,getAllProgramWorkoutItems())
+//        dayWorkouts.add(dayWorkout)
+//
+//        dayWorkout = DayWorkout("Day 3",R.drawable.ic_checked,getAllProgramWorkoutItems())
+//        dayWorkouts.add(dayWorkout)
+//
+//        dayWorkout = DayWorkout("Day 4",R.drawable.ic_checked,getAllProgramWorkoutItems())
+//        dayWorkouts.add(dayWorkout)
+//
+//        dayWorkout = DayWorkout("Day 5",R.drawable.ic_checked,getAllProgramWorkoutItems())
+//        dayWorkouts.add(dayWorkout)
 
         return dayWorkouts
 

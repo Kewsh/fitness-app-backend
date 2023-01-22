@@ -94,6 +94,12 @@ class AthleteSignUpFragment : Fragment(R.layout.fragment_athlete_sign_up) {
                 if(athlete.code==201){
                     Toast.makeText(context,"Signup Successfully", Toast.LENGTH_SHORT).show();
                     val intent = Intent(activity, AthleteHomeActivity::class.java)
+                    val userId = athlete.data.id
+                    val dietId = athlete.data.dietId
+                    val programId = athlete.data.programId
+                    intent.putExtra("userId",userId)
+                    intent.putExtra("dietId",dietId)
+                    intent.putExtra("programId",programId)
                     intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                     requireContext().startActivity(intent)
                 }

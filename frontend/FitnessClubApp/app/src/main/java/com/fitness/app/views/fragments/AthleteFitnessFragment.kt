@@ -1,11 +1,8 @@
 package com.fitness.app.views.fragments
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
@@ -14,7 +11,6 @@ import com.fitness.app.R
 import com.fitness.app.adapters.DayWorkoutAdapter
 import com.fitness.app.adapters.WorkoutAdapter
 import com.fitness.app.databinding.FragmentAthleteFitnessBinding
-import com.fitness.app.databinding.FragmentAthleteHomeBinding
 import com.fitness.app.viewmodel.AthleteHomeViewModel
 import com.fitness.app.views.activities.AthleteHomeActivity
 import com.squareup.picasso.MemoryPolicy
@@ -70,7 +66,7 @@ class AthleteFitnessFragment : Fragment(R.layout.fragment_athlete_fitness) {
 
         }
 
-        workoutAdapter.submitList(viewModel.getAllTodayWorkoutItems())
+//        workoutAdapter.submitList(viewModel.getAllProgramWorkoutItems())
     }
 
     private fun setUpDayWorkouts(){
