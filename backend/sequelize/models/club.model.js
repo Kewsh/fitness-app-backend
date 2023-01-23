@@ -63,8 +63,11 @@ module.exports = (sequelize) => {
                 club.password = await bcrypt.hash(club.password, salt);
             },
             beforeUpdate: async club => {
-                const salt = await bcrypt.genSalt();
-                club.password = await bcrypt.hash(club.password, salt);
+                // hash password only if it's been updated
+                if (club.password != club.previous('password')) {
+                    const salt = await bcrypt.genSalt();
+                    club.password = await bcrypt.hash(club.password, salt);
+                }
             },
             afterFind: async query => {
                 // skip this hook if no match is found

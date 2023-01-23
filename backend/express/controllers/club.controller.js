@@ -20,11 +20,22 @@ module.exports.createOne = async (req, res) => {
             phoneNumber: req.body.phoneNumber,
             website: req.body.website,
             address: req.body.address,
+            socialMedia: [
+                { type: 'TWITTER' },
+                { type: 'INSTAGRAM' },
+                { type: 'FACEBOOK' },
+                { type: 'TIKTOK' },
+                { type: 'TELEGRAM' },
+                { type: 'YOUTUBE' },
+            ],
             email: {
                 email: req.body.email,
             },
         }, {
-            include: emailModel,
+            include: [
+                socialMediaModel,
+                emailModel,
+            ],
         });
 
         // exclude some fields from response
@@ -34,7 +45,7 @@ module.exports.createOne = async (req, res) => {
             logoPath,
             ...userResponse
         } = club.dataValues;
-        
+
         return res.success(201, userResponse);
     } catch (error) {
         return res.error(500, error.message);
@@ -52,6 +63,61 @@ module.exports.findOneById = async(req, res) => {
             return res.error(404, 'No club found with this id');
         }
         return res.success(200, club);
+    } catch (error) {
+        return res.error(500, error.message);
+    }
+}
+
+module.exports.updateOne = async (req, res) => {
+    try {
+        const club = await clubModel.findByPk(req.params.id, {
+            include: [emailModel, socialMediaModel]
+        });
+
+        if (!club) {
+            return res.error(404, 'No club found with this id');
+        }
+
+        if (req.body.email) {
+            club.email.email = req.body.email;
+            await club.email.save();
+        }
+
+        if (Array.isArray(req.body.socialMedia)) {
+            for (const { url, type } of req.body.socialMedia) {
+                await socialMediaModel.update({
+                    url,
+                }, {
+                    where: {
+                        clubId: club.id,
+                        type,
+                    },
+                });
+            }
+        }
+
+        // update password only if old password is correct
+        let updatedPassword;
+        if (
+            req.newPassword &&
+            req.oldPassword &&
+            club.isPasswordValid(req.body.oldPassword, club.password)
+        ) {
+            updatedPassword = req.body.newPassword;
+        }
+
+        await club.update({
+            name: req.body.name,
+            manager: req.body.manager,
+            description: req.body.description,
+            since: req.body.since,
+            password: updatedPassword,
+            phoneNumber: req.body.phoneNumber,
+            website: req.body.website,
+            address: req.body.address,
+        });
+
+        return res.success(200, {});
     } catch (error) {
         return res.error(500, error.message);
     }
