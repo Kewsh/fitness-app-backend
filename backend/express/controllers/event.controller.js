@@ -20,9 +20,16 @@ module.exports.createOne = async (req, res) => {
             clubId: req.body.clubId,
         });
 
-        // for some reason, we can't set include option with create.
-        // so just call findOneById to handle the rest of the job
-        module.exports.findOneById({ params: { id: event.id } }, res);
+        // can't do this in include
+        event.dataValues.club = await event.getClub({
+            attributes: ['id', 'name'],
+            hooks: false,
+        });
+
+        // exclude coverPicPath from result;
+        const { coverPicPath, ...response } = event.dataValues;
+
+        return res.success(201, response);
     } catch (error) {
         return res.error(500, error.message);
     }

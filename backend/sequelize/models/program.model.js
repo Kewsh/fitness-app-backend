@@ -64,14 +64,20 @@ module.exports = (sequelize) => {
                 // delete all coverPicPath fields
                 delete program.dataValues.coverPicPath;
                 program.workouts && program.workouts.map(
-                    workout => delete workout.dataValues.coverPicPath
+                    workout => {
+                        delete workout.dataValues.coverPicPath;
+                        delete workout.dataValues.videoPath;
+                    }
                 );
             },
             afterUpdate: async program => {
                 // delete all coverPicPath fields
                 delete program.dataValues.coverPicPath;
                 program.workouts && program.workouts.map(
-                    workout => delete workout.dataValues.coverPicPath
+                    workout => {
+                        delete workout.dataValues.coverPicPath;
+                        delete workout.dataValues.videoPath;
+                    }
                 );
             },
         }
