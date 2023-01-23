@@ -65,8 +65,10 @@ module.exports.updateOne = async (req, res) => {
                 burntCalories: workout.burntCalories,
                 day: workout.day,
                 programId: program.id,
-            })
-        ));
+            }),
+        ), {
+            individualHooks: true,
+        });
 
         await program.update({
             title: req.body.title,

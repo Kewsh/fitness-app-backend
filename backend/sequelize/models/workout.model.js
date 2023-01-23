@@ -60,19 +60,47 @@ module.exports = (sequelize) => {
     }, {
         hooks: {
             beforeCreate: workout => {
-                if ((!workout.reps && !workout.setTimeInSeconds) ||
-                    (workout.reps && workout.setTimeInSeconds))
-                {
+                if (!hasEitherRepsOrSetTime.beforeCreate(workout)) {
                     throw new Error("Workout must have either reps or set time");
                 }
             },
             beforeUpdate: workout => {
-                if ((!workout.reps && !workout.setTimeInSeconds) ||
-                    (workout.reps && workout.setTimeInSeconds))
-                {
+                if (!hasEitherRepsOrSetTime.beforeUpdate(workout)) {
                     throw new Error("Workout must have either reps or set time");
                 }
             },
         }
     });
 }
+
+
+const hasEitherRepsOrSetTime = {
+    beforeCreate: (workout) => {
+        return (
+            (
+                workout.reps ||
+                workout.setTimeInSeconds
+            ) &&
+            (
+                !workout.reps ||
+                !workout.setTimeInSeconds
+            )
+        );
+    },
+    beforeUpdate: (workout) => {
+        return (
+            (
+                !workout.reps ||
+                !workout.setTimeInSeconds
+            ) &&
+            (
+                !workout.previous('reps') ||
+                !workout.setTimeInSeconds
+            ) &&
+            (
+                !workout.previous('setTimeInSeconds') ||
+                !workout.reps
+            )
+        );
+    },
+};
