@@ -5,5 +5,5 @@ import android.graphics.Bitmap
 data class DiscoverProgram(
     val image: Bitmap,
     val title:String,
-    val subTitle:String,
+    val clubName:String,
 )

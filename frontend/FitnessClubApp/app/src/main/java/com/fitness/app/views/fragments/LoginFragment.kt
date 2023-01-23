@@ -92,12 +92,14 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                     val userId = athlete.data.id
                     val dietId = athlete.data.dietId
                     val programId = athlete.data.programId
+                    val clubId = athlete.data.clubId
                     val measurements = athlete.data.measurements
                     val args = Bundle()
                     intent.putExtra("firstName",firstName)
                     intent.putExtra("userId",userId)
                     intent.putExtra("dietId",dietId)
                     intent.putExtra("programId",programId)
+                    intent.putExtra("clubId",clubId)
                     args.putSerializable("measurements",measurements as Serializable)
                     intent.putExtra("bundle",args)
                     requireContext().startActivity(intent)

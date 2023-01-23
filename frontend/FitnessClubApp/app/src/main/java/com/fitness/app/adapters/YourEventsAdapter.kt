@@ -16,7 +16,6 @@ import com.fitness.app.R
 import com.fitness.app.databinding.AthleteYourEventsItemBinding
 import com.fitness.app.model.YourEvent
 import com.fitness.app.util.YourEventDiffUtilCallback
-import com.fitness.app.views.fragments.AthleteDietDescriptionFragment
 import com.fitness.app.views.fragments.AthleteEventDescriptionFragment
 
 class YourEventsAdapter(
@@ -43,7 +42,7 @@ class YourEventsAdapter(
             holder.apply {
                 image.background = BitmapDrawable(context.resources, yourEvent.image)
                 title.text = yourEvent.title
-                subtitle.text = yourEvent.subTitle
+                subtitle.text = yourEvent.clubName
 
                 binding.event.setOnClickListener {
                     val athleteEventDescriptionFragment = AthleteEventDescriptionFragment()

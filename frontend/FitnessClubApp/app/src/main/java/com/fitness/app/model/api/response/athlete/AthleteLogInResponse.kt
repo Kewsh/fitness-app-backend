@@ -19,6 +19,7 @@ data class AthleteLogInData(
     @SerializedName("updatedAt") val updatedAt:String,
     @SerializedName("createdAt") val createdAt:String,
     @SerializedName("programId") val programId:Int?,
+    @SerializedName("clubId") val clubId:Int?,
     @SerializedName("dietId") val dietId:Int?,
     @SerializedName("measurements") val measurements:ArrayList<Measurement>,
 )

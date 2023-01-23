@@ -44,7 +44,7 @@ class DiscoverProgramsAdapter(
             holder.apply {
                 image.background = BitmapDrawable(context.resources, discoverProgram.image)
                 title.text = discoverProgram.title
-                subTitle.text = discoverProgram.subTitle
+                subTitle.text = discoverProgram.clubName
 
                 binding.program.setOnClickListener {
                     val programDescriptionFragment = AthleteProgramDescriptionFragment()

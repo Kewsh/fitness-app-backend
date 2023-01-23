@@ -5,5 +5,5 @@ import android.graphics.Bitmap
 data class YourEvent(
     val image: Bitmap,
     val title:String,
-    val subTitle:String,
+    val clubName:String,
 )

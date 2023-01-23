@@ -11,6 +11,45 @@ import com.fitness.app.model.api.request.event.DiscoverEventsRequest
 import com.fitness.app.model.api.request.program.DiscoverProgramsRequest
 
 class AthleteHomeRepository() {
+    fun getClubPrograms(clubId: String,
+                      context: Context,
+                      callback: (ArrayList<DiscoverProgram>) -> Unit){
+        val clubService = ClubService(context)
+        val clubPrograms: ArrayList<DiscoverProgram> = ArrayList()
+        clubService.getClubPrograms(clubId) { response ->
+            if (response != null) {
+                for (i in 0 until response.data.size) {
+                    val programService = ProgramService(context)
+                    programService.getProgramCoverPicture(response.data[i].id.toString()) { programPicture ->
+                        if (programPicture != null) {
+                            clubPrograms.add(DiscoverProgram(programPicture, response.data[i].title,response.data[i].club.name))
+                        }
+                        callback(clubPrograms)
+                    }
+                }
+            }
+        }
+    }
+
+    fun getClubEvents(clubId: String,
+                      context: Context,
+                      callback: (ArrayList<YourEvent>) -> Unit){
+        val clubService = ClubService(context)
+        val clubEvents: ArrayList<YourEvent> = ArrayList()
+        clubService.getClubEvents(clubId) { response ->
+            if (response != null) {
+                for (i in 0 until response.data.size) {
+                    val eventService = EventService(context)
+                    eventService.getEventCoverPicture(response.data[i].id.toString()) { eventPicture ->
+                        if (eventPicture != null) {
+                            clubEvents.add(YourEvent(eventPicture, response.data[i].title,response.data[i].club.name))
+                        }
+                        callback(clubEvents)
+                    }
+                }
+            }
+        }
+    }
 
     fun getAllProgramWorkoutItems(
         programId: String,
