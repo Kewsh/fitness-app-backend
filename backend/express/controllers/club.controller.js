@@ -20,11 +20,22 @@ module.exports.createOne = async (req, res) => {
             phoneNumber: req.body.phoneNumber,
             website: req.body.website,
             address: req.body.address,
+            socialMedia: [
+                { type: 'TWITTER' },
+                { type: 'INSTAGRAM' },
+                { type: 'FACEBOOK' },
+                { type: 'TIKTOK' },
+                { type: 'TELEGRAM' },
+                { type: 'YOUTUBE' },
+            ],
             email: {
                 email: req.body.email,
             },
         }, {
-            include: emailModel,
+            include: [
+                socialMediaModel,
+                emailModel,
+            ],
         });
 
         // exclude some fields from response
@@ -34,7 +45,7 @@ module.exports.createOne = async (req, res) => {
             logoPath,
             ...userResponse
         } = club.dataValues;
-        
+
         return res.success(201, userResponse);
     } catch (error) {
         return res.error(500, error.message);
