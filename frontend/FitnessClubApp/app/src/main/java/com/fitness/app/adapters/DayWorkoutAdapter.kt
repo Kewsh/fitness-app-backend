@@ -45,13 +45,7 @@ class DayWorkoutAdapter(
                     layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL)
                     setHasFixedSize(true)
                     workoutAdapter = WorkoutAdapter(lifecycleOwner, context)
-//            dietAdapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
                     adapter = workoutAdapter
-//                    postponeEnterTransition(300, TimeUnit.MILLISECONDS)
-//                    viewTreeObserver.addOnPreDrawListener {
-//                        startPostponedEnterTransition()
-//                        true
-//                    }
                 }
                 workoutAdapter.submitList(dayWorkout.workouts)
 

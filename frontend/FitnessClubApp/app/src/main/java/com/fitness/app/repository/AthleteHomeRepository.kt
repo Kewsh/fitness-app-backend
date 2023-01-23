@@ -21,7 +21,7 @@ class AthleteHomeRepository() {
                     val workoutService = WorkoutService(context)
                     workoutService.getWorkoutCoverPicture(response.data[i].id.toString()){workoutPicture->
                         if (workoutPicture != null) {
-                            workouts.add(Workout(workoutPicture,response.data[i].setsAndReps))
+                            workouts.add(Workout(workoutPicture,response.data[i].id,response.data[i].setsAndReps,response.data[i].title,response.data[i].sets,response.data[i].reps,response.data[i].setTimeInSeconds,response.data[i].day))
                         }
                         callback(workouts)
                     }
@@ -127,26 +127,36 @@ class AthleteHomeRepository() {
         }
     }
 
-    fun getAllDayWorkoutItems(): ArrayList<DayWorkout> {
-        val dayWorkouts:ArrayList<DayWorkout> = ArrayList()
+    fun getAllDayProgramWorkoutItems(programId: String, context: Context, callback:(ArrayList<DayWorkout>)->Unit){
+        val apiService = ProgramService(context)
+        val dayWorkouts = ArrayList<DayWorkout>()
+        apiService.getProgramWorkouts(programId){ response->
+            if(response!=null) {
+                for (i in 0 until response.data.size){
+                    if(!dayWorkouts.any { dayWorkout -> dayWorkout.title == "Day "+response.data[i].day.toString() }) {
 
-//        var dayWorkout = DayWorkout("Day 1",R.drawable.ic_checked,getAllProgramWorkoutItems())
-//        dayWorkouts.add(dayWorkout)
-//
-//        dayWorkout = DayWorkout("Day 2",R.drawable.ic_checked,getAllProgramWorkoutItems())
-//        dayWorkouts.add(dayWorkout)
-//
-//        dayWorkout = DayWorkout("Day 3",R.drawable.ic_checked,getAllProgramWorkoutItems())
-//        dayWorkouts.add(dayWorkout)
-//
-//        dayWorkout = DayWorkout("Day 4",R.drawable.ic_checked,getAllProgramWorkoutItems())
-//        dayWorkouts.add(dayWorkout)
-//
-//        dayWorkout = DayWorkout("Day 5",R.drawable.ic_checked,getAllProgramWorkoutItems())
-//        dayWorkouts.add(dayWorkout)
-
-        return dayWorkouts
-
+                        dayWorkouts.add(
+                            DayWorkout(
+                                "Day " + response.data[i].day.toString(),
+                                R.drawable.ic_checked,
+                                response.data.filter { workout ->
+                                    workout.day == response.data[i].day
+                                }.map {workout->
+                                    val workoutService = WorkoutService(context)
+                                    workoutService.getWorkoutCoverPicture(workout.id.toString()){ workoutPicture->
+                                        if (workoutPicture != null) {
+                                            workout.image = workoutPicture
+                                        }
+                                        callback(dayWorkouts)
+                                    }
+                                    Log.e("workout",workout.toString())
+                                    workout
+                                }
+                        ))
+                    }
+                }
+            }
+        }
     }
 
     fun getAllDiscoverProgramsItems(discoverProgramsRequest: DiscoverProgramsRequest,context: Context,callback:(ArrayList<DiscoverProgram>)->Unit) {

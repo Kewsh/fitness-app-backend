@@ -66,22 +66,22 @@ class AthleteProgramDescriptionFragment : Fragment(R.layout.fragment_athlete_pro
     }
 
     private fun setUpDayWorkouts(){
-        binding.dayWorkoutsRecyclerView.apply {
-            layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
-            setHasFixedSize(true)
-            dayWorkoutAdapter =
-                DayWorkoutAdapter(viewLifecycleOwner, context)
-//            dietAdapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
-            adapter = dayWorkoutAdapter
-            postponeEnterTransition(300, TimeUnit.MILLISECONDS)
-            viewTreeObserver.addOnPreDrawListener {
-                startPostponedEnterTransition()
-                true
-            }
-
-        }
-
-        dayWorkoutAdapter.submitList(viewModel.getAllDayWorkoutItems())
+//        binding.dayWorkoutsRecyclerView.apply {
+//            layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
+//            setHasFixedSize(true)
+//            dayWorkoutAdapter =
+//                DayWorkoutAdapter(viewLifecycleOwner, context)
+////            dietAdapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
+//            adapter = dayWorkoutAdapter
+//            postponeEnterTransition(300, TimeUnit.MILLISECONDS)
+//            viewTreeObserver.addOnPreDrawListener {
+//                startPostponedEnterTransition()
+//                true
+//            }
+//
+//        }
+//
+//        dayWorkoutAdapter.submitList(viewModel.getAllDayWorkoutItems())
     }
 
     private fun setUpPrograms(){

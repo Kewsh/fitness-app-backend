@@ -52,8 +52,10 @@ class AthleteHomeViewModel(private val athleteHomeRepository: AthleteHomeReposit
         }
     }
 
-    fun getAllDayWorkoutItems(): ArrayList<DayWorkout> {
-        return athleteHomeRepository.getAllDayWorkoutItems()
+    fun getAllDayProgramWorkoutItems(programId: String, context: Context, callback:(ArrayList<DayWorkout>)->Unit){
+        return athleteHomeRepository.getAllDayProgramWorkoutItems(programId,context){ dayWorkouts->
+            callback(dayWorkouts)
+        }
     }
 
     fun getAllDiscoverProgramsItems(discoverProgramsRequest: DiscoverProgramsRequest,context: Context,callback:(ArrayList<DiscoverProgram>)->Unit) {
