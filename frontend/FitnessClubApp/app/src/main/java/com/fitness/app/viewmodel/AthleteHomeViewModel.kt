@@ -9,6 +9,12 @@ import com.fitness.app.model.api.request.program.DiscoverProgramsRequest
 import com.fitness.app.repository.AthleteHomeRepository
 
 class AthleteHomeViewModel(private val athleteHomeRepository: AthleteHomeRepository) : ViewModel() {
+    fun getProgram(programId: String,context: Context,callback:(Program)->Unit){
+        return athleteHomeRepository.getProgram(programId,context){program->
+            callback(program)
+        }
+    }
+
     fun getAllDietFoodItems(dietId: String,context: Context,callback:(ArrayList<Food>)->Unit) {
         return athleteHomeRepository.getAllDietFoodItems(dietId,context){dietFoods->
             callback(dietFoods)

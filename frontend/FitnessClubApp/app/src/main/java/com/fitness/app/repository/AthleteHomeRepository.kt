@@ -103,6 +103,20 @@ class AthleteHomeRepository() {
         }
     }
 
+    fun getProgram(programId: String, context: Context, callback:(Program)->Unit){
+        val apiService = ProgramService(context)
+        apiService.getProgramById(programId){response->
+            if(response!=null) {
+                val programService = ProgramService(context)
+                programService.getProgramCoverPicture(response.data.id.toString()){programPicture->
+                    if (programPicture != null) {
+                        callback(Program(programPicture,response.data.title,response.data.club.name, response.data.description.toString()))
+                    }
+                }
+            }
+        }
+    }
+
     fun getAllDayWorkoutItems(): ArrayList<DayWorkout> {
         val dayWorkouts:ArrayList<DayWorkout> = ArrayList()
 

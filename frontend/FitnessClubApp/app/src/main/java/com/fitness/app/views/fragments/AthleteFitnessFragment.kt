@@ -1,5 +1,7 @@
 package com.fitness.app.views.fragments
 
+import android.content.Intent
+import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
@@ -24,6 +26,8 @@ class AthleteFitnessFragment : Fragment(R.layout.fragment_athlete_fitness) {
     lateinit var workoutAdapter: WorkoutAdapter
     lateinit var dayWorkoutAdapter: DayWorkoutAdapter
 
+    var programId: Int = -1
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -34,8 +38,14 @@ class AthleteFitnessFragment : Fragment(R.layout.fragment_athlete_fitness) {
 
         binding = FragmentAthleteFitnessBinding.bind(view)
         val activity = activity as AthleteHomeActivity
+
+        val intent: Intent = activity.intent
+        programId = intent.getIntExtra("programId", -1)
+
         setUpWorkouts()
         setUpDayWorkouts()
+        setUpCurrentProgram()
+
         Picasso.get().load(R.drawable.athlete_temp_new_events_item_image).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(
             NetworkPolicy.NO_CACHE).into(binding.profilePic)
 
@@ -50,23 +60,30 @@ class AthleteFitnessFragment : Fragment(R.layout.fragment_athlete_fitness) {
 
     }
 
-    private fun setUpWorkouts(){
-        binding.workoutsRecyclerView.apply {
-            layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL)
-            setHasFixedSize(true)
-            workoutAdapter =
-                WorkoutAdapter(viewLifecycleOwner, context)
-//            dietAdapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
-            adapter = workoutAdapter
-            postponeEnterTransition(300, TimeUnit.MILLISECONDS)
-            viewTreeObserver.addOnPreDrawListener {
-                startPostponedEnterTransition()
-                true
-            }
-
+    private fun setUpCurrentProgram() {
+        viewModel.getProgram(programId = programId.toString(), context = requireContext()){program->
+            binding.programLayout.programImage.background = BitmapDrawable(resources,program.image)
+            binding.programLayout.programTitle.text = program.title
+            binding.programLayout.programClubName.text = program.clubName
+            binding.programLayout.programDescription.text = program.description
         }
+    }
 
-//        workoutAdapter.submitList(viewModel.getAllProgramWorkoutItems())
+    private fun setUpWorkouts(){
+        viewModel.getAllProgramWorkoutItems(
+            programId = programId.toString(),
+            context = requireContext()
+        ) { workouts ->
+            binding.workoutsRecyclerView.apply {
+                layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL)
+                setHasFixedSize(true)
+                workoutAdapter =
+                    WorkoutAdapter(viewLifecycleOwner, context)
+                adapter = workoutAdapter
+
+            }
+            workoutAdapter.submitList(workouts)
+        }
     }
 
     private fun setUpDayWorkouts(){
