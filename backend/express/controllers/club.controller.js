@@ -1,6 +1,7 @@
 const _ = require('lodash');
 const { Op } = require('sequelize');
-const { getUploadedFilePath } = require('../file-utils');
+const { getUploadedFilePath, deleteFile } = require('../file-utils');
+const upload = require('../multer');
 const {
     club: clubModel,
     socialMedia: socialMediaModel,
@@ -247,6 +248,65 @@ module.exports.getCoverPicture = async (req, res) => {
     }
 }
 
+module.exports.setCoverPicture = async (req, res) => {
+    const handler = upload.single('picture');
+
+    handler(req, res, async error => {
+        if (error) {
+            return res.error(500, error.message);
+        }
+        try {
+            const club = await clubModel.findByPk(
+                req.params.id,
+                { attributes: ['id', 'coverPicPath'] },
+            );
+
+            if (!club) {
+                deleteFile(getUploadedFilePath(req.file.filename));
+                throw new Error('No club found with this id');
+            }
+
+            // delete previous picture from database (if exists)
+            if (club.coverPicPath)
+                deleteFile(getUploadedFilePath(club.coverPicPath));
+
+            // update picture name in database
+            club.coverPicPath = req.file.filename;
+            await club.save();
+
+            return res.success(200, {});
+        } catch (error) {
+            // abort file upload
+            deleteFile(getUploadedFilePath(req.file.filename));
+
+            return res.error(500, error.message);
+        }
+    });
+}
+
+module.exports.deleteCoverPicture = async (req, res) => {
+    try {
+        const club = await clubModel.findByPk(
+            req.params.id,
+            { attributes: ['id', 'coverPicPath'] }
+        );
+
+        if (!club || !club.coverPicPath) {
+            return res.error(404, 'No cover picture found');
+        }
+
+        deleteFile(getUploadedFilePath(club.coverPicPath));
+
+        // update picture name in database
+        club.coverPicPath = null;
+        await club.save();
+
+        return res.success(200, {});
+    } catch (error) {
+        return res.error(500, error.message);
+    }
+}
+
 module.exports.getLogo = async (req, res) => {
     try {
         const club = await clubModel.findByPk(
@@ -265,6 +325,64 @@ module.exports.getLogo = async (req, res) => {
     }
 }
 
+module.exports.setLogo = async (req, res) => {
+    const handler = upload.single('picture');
+
+    handler(req, res, async error => {
+        if (error) {
+            return res.error(500, error.message);
+        }
+        try {
+            const club = await clubModel.findByPk(
+                req.params.id,
+                { attributes: ['id', 'logoPath'] },
+            );
+
+            if (!club) {
+                deleteFile(getUploadedFilePath(req.file.filename));
+                throw new Error('No club found with this id');
+            }
+
+            // delete previous logo from database (if exists)
+            if (club.logoPath)
+                deleteFile(getUploadedFilePath(club.logoPath));
+
+            // update logo name in database
+            club.logoPath = req.file.filename;
+            await club.save();
+
+            return res.success(200, {});
+        } catch (error) {
+            // abort file upload
+            deleteFile(getUploadedFilePath(req.file.filename));
+
+            return res.error(500, error.message);
+        }
+    });
+}
+
+module.exports.deleteLogo = async (req, res) => {
+    try {
+        const club = await clubModel.findByPk(
+            req.params.id,
+            { attributes: ['id', 'logoPath'] }
+        );
+
+        if (!club || !club.logoPath) {
+            return res.error(404, 'No logo found');
+        }
+
+        deleteFile(getUploadedFilePath(club.logoPath));
+
+        // update logo name in database
+        club.logoPath = null;
+        await club.save();
+
+        return res.success(200, {});
+    } catch (error) {
+        return res.error(500, error.message);
+    }
+}
 
 const orderBy = (list, desc, path) => {
     list.sort(
