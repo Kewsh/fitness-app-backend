@@ -166,7 +166,7 @@ module.exports.getEvents = async (req, res) => {
         const events = await eventModel.findAndCountAll({
             where: { clubId: req.params.id },
             limit: req.query.limit,
-            offset: req.query.limit,
+            offset: req.query.offset,
             attributes: { exclude: ['coverPicPath'] },
             include: {
                 model: clubModel,
@@ -240,7 +240,6 @@ module.exports.getCoverPicture = async (req, res) => {
             return res.error(404, 'No cover picture found');
         }
 
-        //TODO: send both body and file? how?
         res.status(200)
            .sendFile(getUploadedFilePath(club.coverPicPath));
     } catch (error) {
