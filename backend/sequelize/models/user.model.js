@@ -73,11 +73,7 @@ module.exports = (sequelize) => {
             beforeUpdate: async user => {
                 // programId and programEnrolmentDate must be set together
                 // same goes for dietId and dietPickDate
-                if ((user.programId != user.previous('programId') &&
-                    !user.programEnrolmentDate) ||
-                    (user.dietId != user.previous('dietId') &&
-                    !user.dietPickDate))
-                {
+                if (!isDateSupplied(user)) {
                     throw new Error("Date of program/diet pick must be given");
                 }
 
@@ -103,4 +99,20 @@ module.exports = (sequelize) => {
             }
         }
     });
+}
+
+
+const isDateSupplied = (user) => {
+    return (
+        (
+            !user.programId ||
+            user.programId == user.previous('programId') ||
+            user.programEnrolmentDate
+        ) &&
+        (
+            !user.dietId ||
+            user.dietId == user.previous('dietId') ||
+            user.dietPickDate
+        )
+    );
 }

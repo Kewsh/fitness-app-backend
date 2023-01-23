@@ -23,16 +23,15 @@ module.exports = (sequelize) => {
                 }
 
                 // see if comment belongs to only one thing (program, diet, etc)
-                if ([
-                        programId ? 1 : 0,
-                        eventId ? 1 : 0,
-                        dietId ? 1 : 0,
-                        recipeReviewId ? 1 : 0
-                    ].reduce((a,b) => a+b, 0) != 1)
-                {
+                if (onlyOneIsSet(programId, eventId, dietId, recipeReviewId)) {
                     throw new Error('Comment must belong to either a program, event, diet, or recipe review');
                 }
             },
         },
     });
+}
+
+
+const onlyOneIsSet = (...args) => {
+    return args.map(arg => arg ? 1 : 0).reduce((a, b) => a+b, 0) != 1;
 }

@@ -13,12 +13,16 @@ module.exports = (sequelize) => {
     }, {
         hooks: {
             beforeCreate: email => {
-                if ((email.userId && email.clubId) ||
-                    (!email.userId && !email.clubId))
-                {
+                if (!hasEitherUserIdOrClubId(email)) {
                     throw new Error("Email must belong either to a user or to a club");
                 }
             },
         },
     });
+}
+
+
+const hasEitherUserIdOrClubId = (email) => {
+    return (!email.userId || !email.clubId) &&
+        (email.userId || email.clubId)
 }

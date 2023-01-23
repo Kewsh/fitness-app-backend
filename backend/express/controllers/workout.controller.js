@@ -48,7 +48,8 @@ module.exports.updateOne = async (req, res) => {
             burntCalories: req.body.burntCalories,
             day: req.body.day,
         }, {
-            where: { id: req.params.id }
+            where: { id: req.params.id },
+            individualHooks: true,
         });
 
         if (!affectedRows) {
