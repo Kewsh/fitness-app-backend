@@ -36,6 +36,62 @@ module.exports.createOne = async (req, res) => {
     }
 }
 
+module.exports.updateOne = async (req, res) => {
+    try {
+        const user = await userModel.findByPk(req.params.id, {
+            include: [emailModel, measurementModel]
+        });
+
+        if (!user) {
+            return res.error(404, 'No user found with this id');
+        }
+
+        if (req.body.email) {
+            user.email.email = req.body.email;
+            await user.email.save();
+        }
+
+        if (Array.isArray(req.body.measurements)) {
+            for (const { current, start, target, type } of req.body.measurements) {
+                await measurementModel.update({
+                    current,
+                    start,
+                    target,
+                }, {
+                    where: {
+                        userId: user.id,
+                        type,
+                    },
+                });
+            }
+        }
+
+        // update password only if old password is correct
+        let updatedPassword;
+        if (
+            req.newPassword &&
+            req.oldPassword &&
+            user.isPasswordValid(req.body.oldPassword, user.password)
+        ) {
+            updatedPassword = req.body.newPassword;
+        }
+
+        await user.update({
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+            sex: req.body.sex,
+            birthday: req.body.birthday,
+            height: req.body.height,
+            phoneNumber: req.body.phoneNumber,
+            password: updatedPassword,
+        })
+
+        return res.success(200, {});
+    } catch (error) {
+        return res.error(500, error.message);
+    }
+}
+
 module.exports.getEvents = async (req, res) => {
     try {   
         const user = await userModel.findByPk(req.params.id);
