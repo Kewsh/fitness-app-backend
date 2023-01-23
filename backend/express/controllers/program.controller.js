@@ -30,6 +30,19 @@ module.exports.createOne = async (req, res) => {
             include: workoutModel,
         });
 
+        // this can't be done in include, since hooks don't run on
+        // included models
+        program.dataValues.club = await program.getClub({
+            attributes: { exclude: [
+                'coverPicPath',
+                'logoPath',
+                'password',
+                'email',
+                'createdAt',
+                'updatedAt',
+            ]},
+        });
+
         return res.success(201, program);
     } catch (error) {
         return res.error(500, error.message);
