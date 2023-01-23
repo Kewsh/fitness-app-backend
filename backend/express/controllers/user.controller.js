@@ -1,4 +1,5 @@
-const { getUploadedFilePath } = require('../file-utils');
+const { getUploadedFilePath, deleteFile } = require('../file-utils');
+const upload = require('../multer');
 const {
     user: userModel,
     measurement: measurementModel,
@@ -131,6 +132,65 @@ module.exports.getProfilePicture = async (req, res) => {
 
         res.status(200)
            .sendFile(getUploadedFilePath(user.profilePicPath));
+    } catch (error) {
+        return res.error(500, error.message);
+    }
+}
+
+module.exports.setProfilePicture = async (req, res) => {
+    const handler = upload.single('picture');
+
+    handler(req, res, async error => {
+        if (error) {
+            return res.error(500, error.message);
+        }
+        try {
+            const user = await userModel.findByPk(
+                req.params.id,
+                { attributes: ['id', 'profilePicPath'] },
+            );
+
+            if (!user) {
+                deleteFile(getUploadedFilePath(req.file.filename));
+                throw new Error('No user found with this id');
+            }
+
+            // delete previous picture from database (if exists)
+            if (user.profilePicPath)
+                deleteFile(getUploadedFilePath(user.profilePicPath));
+
+            // update picture name in database
+            user.profilePicPath = req.file.filename;
+            await user.save();
+
+            return res.success(200, {});
+        } catch (error) {
+            // abort file upload
+            deleteFile(getUploadedFilePath(req.file.filename));
+
+            return res.error(500, error.message);
+        }
+    });
+}
+
+module.exports.deleteProfilePicture = async (req, res) => {
+    try {
+        const user = await userModel.findByPk(
+            req.params.id,
+            { attributes: ['id', 'profilePicPath'] }
+        );
+
+        if (!user || !user.profilePicPath) {
+            return res.error(404, 'No profile picture found');
+        }
+
+        deleteFile(getUploadedFilePath(user.profilePicPath));
+
+        // update picture name in database
+        user.profilePicPath = null;
+        await user.save();
+
+        return res.success(200, {});
     } catch (error) {
         return res.error(500, error.message);
     }
