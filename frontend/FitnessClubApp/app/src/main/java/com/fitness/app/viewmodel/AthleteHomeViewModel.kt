@@ -10,6 +10,12 @@ import com.fitness.app.model.api.request.program.DiscoverProgramsRequest
 import com.fitness.app.repository.AthleteHomeRepository
 
 class AthleteHomeViewModel(private val athleteHomeRepository: AthleteHomeRepository) : ViewModel() {
+    fun getDiet(dietId: String,context: Context,callback:(Diet)->Unit){
+        return athleteHomeRepository.getDiet(dietId,context){diet->
+            callback(diet)
+        }
+    }
+
     fun getUserProfilePicture(userId: String,context: Context,callback:(Bitmap)->Unit){
         return athleteHomeRepository.getUserProfilePicture(userId,context){userProfilePicture->
             callback(userProfilePicture)
@@ -76,8 +82,10 @@ class AthleteHomeViewModel(private val athleteHomeRepository: AthleteHomeReposit
         }
     }
 
-    fun getAllDietPlanItems(): ArrayList<DietPlan> {
-        return athleteHomeRepository.getAllDietPlanItems()
+    fun getAllDietPlanItems(dietId: String, context: Context, callback:(ArrayList<DietPlan>)->Unit){
+        return athleteHomeRepository.getAllDietPlanItems(dietId,context){dietPlans->
+            callback(dietPlans)
+        }
     }
 
     fun getAllUserCommentItems():ArrayList<UserComment>{

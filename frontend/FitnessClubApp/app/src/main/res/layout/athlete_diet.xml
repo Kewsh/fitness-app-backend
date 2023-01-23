@@ -7,7 +7,7 @@
     </data>
 
     <RelativeLayout
-        android:id="@+id/food"
+        android:id="@+id/diet"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -26,7 +26,7 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:id="@+id/foodImage"
+                    android:id="@+id/dietImage"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/temp_diet_big_image" />
@@ -45,7 +45,7 @@
                     android:textAlignment="center">
 
                     <TextView
-                        android:id="@+id/foodTitle"
+                        android:id="@+id/dietTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
@@ -57,7 +57,7 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/dietSubtitle"
+                        android:id="@+id/dietNutritionistFullName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"

@@ -78,22 +78,22 @@ class AthleteDietDescriptionFragment : Fragment(R.layout.fragment_athlete_diet_d
     }
 
     private fun setUpDietPlans(){
-        binding.dietPlansRecyclerView.apply {
-            layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
-            setHasFixedSize(true)
-            dietPlansAdapter =
-                DietPlansAdapter(viewLifecycleOwner, context)
-//            dietAdapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
-            adapter = dietPlansAdapter
-            postponeEnterTransition(300, TimeUnit.MILLISECONDS)
-            viewTreeObserver.addOnPreDrawListener {
-                startPostponedEnterTransition()
-                true
-            }
-
-        }
-
-        dietPlansAdapter.submitList(viewModel.getAllDietPlanItems())
+//        binding.dietPlansRecyclerView.apply {
+//            layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
+//            setHasFixedSize(true)
+//            dietPlansAdapter =
+//                DietPlansAdapter(viewLifecycleOwner, context)
+////            dietAdapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
+//            adapter = dietPlansAdapter
+//            postponeEnterTransition(300, TimeUnit.MILLISECONDS)
+//            viewTreeObserver.addOnPreDrawListener {
+//                startPostponedEnterTransition()
+//                true
+//            }
+//
+//        }
+//
+//        dietPlansAdapter.submitList(viewModel.getAllDietPlanItems())
     }
 
     private fun setUpFoods(){

@@ -1,6 +1,7 @@
 package com.fitness.app.views.fragments
 
 import android.content.Intent
+import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
@@ -25,6 +26,7 @@ class AthleteDietFragment : Fragment(R.layout.fragment_athlete_diet) {
     lateinit var recipeAdapter: RecipeAdapter
     lateinit var dietPlansAdapter: DietPlansAdapter
     var userId: Int = -1
+    var dietId: Int = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,13 +40,15 @@ class AthleteDietFragment : Fragment(R.layout.fragment_athlete_diet) {
 
         val intent: Intent = activity.intent
         userId = intent.getIntExtra("userId", -1)
+        dietId = intent.getIntExtra("dietId", -1)
 
-        setUpDiets()
+        setUpRecipes()
         setUpFoods()
         setUpDietPlans()
         setUpUserProfilePic()
+        setUpCurrentProgram()
 
-        binding.dietLayout.food.setOnClickListener {
+        binding.dietLayout.diet.setOnClickListener {
             val athleteDietDescriptionFragment = AthleteDietDescriptionFragment()
             val fragmentManager = (context as AppCompatActivity).supportFragmentManager.beginTransaction()
             fragmentManager.replace(R.id.athleteHomeMainParentFragment, athleteDietDescriptionFragment)
@@ -61,60 +65,58 @@ class AthleteDietFragment : Fragment(R.layout.fragment_athlete_diet) {
         }
     }
 
-    private fun setUpFoods(){
-//        binding.foodsRecyclerView.apply {
-//            layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL)
-//            setHasFixedSize(true)
-//            recipeAdapter = RecipeAdapter(viewLifecycleOwner, context)
-////            dietAdapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
-//            adapter = recipeAdapter
-//            postponeEnterTransition(300, TimeUnit.MILLISECONDS)
-//            viewTreeObserver.addOnPreDrawListener {
-//                startPostponedEnterTransition()
-//                true
-//            }
-//
-//        }
-//
-//        recipeAdapter.submitList(viewModel.getAllDietRecipeItems())
+    private fun setUpCurrentProgram() {
+        viewModel.getDiet(dietId = dietId.toString(), context = requireContext()){diet->
+            binding.dietLayout.dietImage.background = BitmapDrawable(resources,diet.image)
+            binding.dietLayout.dietTitle.text = diet.title
+            binding.dietLayout.dietNutritionistFullName.text = diet.nutritionist.fullName
+            binding.dietLayout.dietDescription.text = diet.description
+        }
     }
 
-    private fun setUpDiets(){
-//        binding.dietsRecyclerView.apply {
-//            layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL)
-//            setHasFixedSize(true)
-//            foodAdapter =
-//                FoodAdapter(viewLifecycleOwner, context)
-////            dietAdapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
-//            adapter = foodAdapter
-//            postponeEnterTransition(300, TimeUnit.MILLISECONDS)
-//            viewTreeObserver.addOnPreDrawListener {
-//                startPostponedEnterTransition()
-//                true
-//            }
-//
-//        }
-//
-//        foodAdapter.submitList(viewModel.getAllDietFoodItems())
+    private fun setUpFoods() {
+        viewModel.getAllDietFoodItems(
+            dietId = dietId.toString(),
+            context = requireContext()
+        ) { foodRecipes ->
+            binding.foodsRecyclerView.apply {
+                layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL)
+                setHasFixedSize(true)
+                foodAdapter =
+                    FoodAdapter(viewLifecycleOwner, context)
+                adapter = foodAdapter
+            }
+            foodAdapter.submitList(foodRecipes)
+        }
+    }
+
+    private fun setUpRecipes() {
+        viewModel.getAllDietRecipeItems(
+            dietId = dietId.toString(),
+            context = requireContext()
+        ) { dietRecipes ->
+            binding.recipesRecyclerView.apply {
+                layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL)
+                setHasFixedSize(true)
+                recipeAdapter = RecipeAdapter(viewLifecycleOwner, context)
+                adapter = recipeAdapter
+
+            }
+            recipeAdapter.submitList(dietRecipes)
+        }
     }
 
     private fun setUpDietPlans(){
-        binding.dietPlansRecyclerView.apply {
-            layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
-            setHasFixedSize(true)
-            dietPlansAdapter =
-                DietPlansAdapter(viewLifecycleOwner, context)
-//            dietAdapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
-            adapter = dietPlansAdapter
-            postponeEnterTransition(300, TimeUnit.MILLISECONDS)
-            viewTreeObserver.addOnPreDrawListener {
-                startPostponedEnterTransition()
-                true
+        viewModel.getAllDietPlanItems(dietId = dietId.toString(), context = requireContext()){ dietPlans->
+            binding.dietPlansRecyclerView.apply {
+                layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
+                setHasFixedSize(true)
+                dietPlansAdapter =
+                    DietPlansAdapter(viewLifecycleOwner, context)
+                adapter = dietPlansAdapter
             }
-
+            dietPlansAdapter.submitList(dietPlans)
         }
-
-        dietPlansAdapter.submitList(viewModel.getAllDietPlanItems())
     }
 
 }

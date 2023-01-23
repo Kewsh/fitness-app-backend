@@ -1,11 +1,12 @@
 package com.fitness.app.model.api.response.diet
 
+import com.fitness.app.model.Food
 import com.google.gson.annotations.SerializedName
 
 data class GetDietsFoodsResponse(
     @SerializedName("status") val status:String,
     @SerializedName("code") val code:Int,
-    @SerializedName("data") val data: ArrayList<GetDietsFoodsData>,
+    @SerializedName("data") val data: ArrayList<Food>,
 )
 
 data class GetDietsFoodsData(
