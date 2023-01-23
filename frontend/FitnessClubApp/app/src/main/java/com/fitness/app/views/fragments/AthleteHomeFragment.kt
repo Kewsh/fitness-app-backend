@@ -1,6 +1,7 @@
 package com.fitness.app.views.fragments
 
 import android.content.Intent
+import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -29,6 +30,7 @@ class AthleteHomeFragment : Fragment(R.layout.fragment_athlete_home) {
     var firstName: String = ""
     var dietId: Int = -1
     var programId: Int = -1
+    var measurements:ArrayList<Measurement> = ArrayList<Measurement>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,9 +55,28 @@ class AthleteHomeFragment : Fragment(R.layout.fragment_athlete_home) {
         Log.e("dietId", dietId.toString())
         Log.e("programId", programId.toString())
         val args = intent.getBundleExtra("bundle")
-        val measurements = args?.getSerializable("measurements") as ArrayList<Measurement>
+        measurements = args?.getSerializable("measurements") as ArrayList<Measurement>
         Log.e("measurements", measurements.toString())
 
+        binding.userFirstName.text = firstName
+
+        setUpUserProfilePic()
+        setUpWorkouts()
+        setUpFoods()
+        setUpRecipes()
+        setUpYourEvents()
+        setUpCheckoutEvents()
+        setUserTargets()
+
+    }
+
+    private fun setUpUserProfilePic() {
+        viewModel.getUserProfilePicture(userId = userId.toString(), context = requireContext()){profilePicture->
+            binding.profilePic.setImageBitmap(profilePicture)
+        }
+    }
+
+    private fun setUserTargets() {
         for (measurement in measurements) {
             when (measurement.type) {
                 "WEIGHT" -> {
@@ -87,23 +108,6 @@ class AthleteHomeFragment : Fragment(R.layout.fragment_athlete_home) {
                 }
             }
         }
-
-
-        binding.userFirstName.text = firstName
-
-
-        setUpWorkouts()
-        setUpFoods()
-        setUpRecipes()
-        setUpYourEvents()
-        setUpCheckoutEvents()
-
-        setUserTargets()
-
-    }
-
-    private fun setUserTargets() {
-
     }
 
     private fun setUpWorkouts() {

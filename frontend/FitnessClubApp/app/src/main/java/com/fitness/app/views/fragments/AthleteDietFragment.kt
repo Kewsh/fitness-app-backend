@@ -1,5 +1,6 @@
 package com.fitness.app.views.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
@@ -23,6 +24,7 @@ class AthleteDietFragment : Fragment(R.layout.fragment_athlete_diet) {
     lateinit var foodAdapter: FoodAdapter
     lateinit var recipeAdapter: RecipeAdapter
     lateinit var dietPlansAdapter: DietPlansAdapter
+    var userId: Int = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,11 +35,14 @@ class AthleteDietFragment : Fragment(R.layout.fragment_athlete_diet) {
 
         binding = FragmentAthleteDietBinding.bind(view)
         val activity = activity as AthleteHomeActivity
+
+        val intent: Intent = activity.intent
+        userId = intent.getIntExtra("userId", -1)
+
         setUpDiets()
         setUpFoods()
         setUpDietPlans()
-        Picasso.get().load(R.drawable.athlete_temp_new_events_item_image).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(
-            NetworkPolicy.NO_CACHE).into(binding.profilePic)
+        setUpUserProfilePic()
 
         binding.dietLayout.food.setOnClickListener {
             val athleteDietDescriptionFragment = AthleteDietDescriptionFragment()
@@ -48,6 +53,12 @@ class AthleteDietFragment : Fragment(R.layout.fragment_athlete_diet) {
             fragmentManager.commit()
         }
 
+    }
+
+    private fun setUpUserProfilePic() {
+        viewModel.getUserProfilePicture(userId = userId.toString(), context = requireContext()){profilePicture->
+            binding.profilePic.setImageBitmap(profilePicture)
+        }
     }
 
     private fun setUpFoods(){

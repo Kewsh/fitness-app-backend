@@ -26,6 +26,7 @@ class AthleteFitnessFragment : Fragment(R.layout.fragment_athlete_fitness) {
     lateinit var workoutAdapter: WorkoutAdapter
     lateinit var dayWorkoutAdapter: DayWorkoutAdapter
 
+    var userId: Int = -1
     var programId: Int = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,14 +41,13 @@ class AthleteFitnessFragment : Fragment(R.layout.fragment_athlete_fitness) {
         val activity = activity as AthleteHomeActivity
 
         val intent: Intent = activity.intent
+        userId = intent.getIntExtra("userId", -1)
         programId = intent.getIntExtra("programId", -1)
 
         setUpWorkouts()
         setUpDayWorkouts()
         setUpCurrentProgram()
-
-        Picasso.get().load(R.drawable.athlete_temp_new_events_item_image).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(
-            NetworkPolicy.NO_CACHE).into(binding.profilePic)
+        setUpUserProfilePic()
 
         binding.programLayout.program.setOnClickListener {
             val programDescriptionFragment = AthleteProgramDescriptionFragment()
@@ -58,6 +58,12 @@ class AthleteFitnessFragment : Fragment(R.layout.fragment_athlete_fitness) {
             fragmentManager.commit()
         }
 
+    }
+
+    private fun setUpUserProfilePic() {
+        viewModel.getUserProfilePicture(userId = userId.toString(), context = requireContext()){profilePicture->
+            binding.profilePic.setImageBitmap(profilePicture)
+        }
     }
 
     private fun setUpCurrentProgram() {

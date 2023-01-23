@@ -1,6 +1,7 @@
 package com.fitness.app.repository
 
 import android.content.Context
+import android.graphics.Bitmap
 import android.util.Log
 import com.fitness.app.R
 import com.fitness.app.api.service.*
@@ -99,6 +100,15 @@ class AthleteHomeRepository() {
                         callback(dietFoods)
                     }
                 }
+            }
+        }
+    }
+
+    fun getUserProfilePicture(userId: String,context: Context, callback:(Bitmap)->Unit){
+        val apiService = AthleteService(context)
+        apiService.getAthleteProfilePicture(userId){profilePicture->
+            if(profilePicture!=null) {
+                callback(profilePicture)
             }
         }
     }
