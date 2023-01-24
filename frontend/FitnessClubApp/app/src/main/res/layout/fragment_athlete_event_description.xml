@@ -22,10 +22,9 @@
                 android:layout_height="wrap_content">
 
                 <ImageView
-                    android:id="@+id/image"
+                    android:id="@+id/eventCoverPicture"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/temp_event_description_image" />
+                    android:layout_height="wrap_content"/>
 
                 <ImageButton
                     android:id="@+id/backButton"
@@ -39,7 +38,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignBottom="@id/image"
+                    android:layout_alignBottom="@id/eventCoverPicture"
                     android:layout_marginStart="15dp"
                     android:layout_marginBottom="10dp"
                     android:orientation="vertical">
@@ -54,7 +53,7 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/eventDescription"
+                        android:id="@+id/eventClubName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="By Pulse Fitness Club"
@@ -99,11 +98,10 @@
                             android:text="Description" />
 
                         <TextView
+                            android:id="@+id/eventDescription"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
-                            android:text="The Red County triathlon consists of 700m swim lanes, 150m climbing, and a 13km cycling course at
-the end. The triathlon is for people of ..."
                             android:textColor="@color/black" />
 
                     </LinearLayout>
@@ -127,10 +125,10 @@ the end. The triathlon is for people of ..."
                                 android:text="Attendees" />
 
                             <TextView
+                                android:id="@+id/eventAttendees"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="5dp"
-                                android:text="211"
                                 android:textColor="@color/black" />
 
                         </LinearLayout>
@@ -147,10 +145,10 @@ the end. The triathlon is for people of ..."
                                 android:text="Max. Attendees" />
 
                             <TextView
+                                android:id="@+id/eventMaxAttendees"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="5dp"
-                                android:text="250"
                                 android:textColor="@color/black" />
 
                         </LinearLayout>
@@ -167,10 +165,10 @@ the end. The triathlon is for people of ..."
                                 android:text="Cost" />
 
                             <TextView
+                                android:id="@+id/eventCost"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="5dp"
-                                android:text="Free"
                                 android:textColor="@color/black" />
 
                         </LinearLayout>
@@ -197,10 +195,10 @@ the end. The triathlon is for people of ..."
                                 android:text="Starts" />
 
                             <TextView
+                                android:id="@+id/eventStartDate"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="5dp"
-                                android:text="Dec 28, 2021 at 13:30"
                                 android:textColor="@color/black" />
 
                         </LinearLayout>
@@ -218,10 +216,10 @@ the end. The triathlon is for people of ..."
                                 android:text="Ends" />
 
                             <TextView
+                                android:id="@+id/eventEndDate"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="5dp"
-                                android:text="Jan 1, 2022 at 13:30"
                                 android:textColor="@color/black" />
 
                         </LinearLayout>

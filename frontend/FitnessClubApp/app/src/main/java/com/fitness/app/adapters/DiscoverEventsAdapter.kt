@@ -14,15 +14,14 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.fitness.app.R
 import com.fitness.app.databinding.AthleteDiscoverEventItemBinding
-import com.fitness.app.databinding.AthleteDiscoverProgramItemBinding
-import com.fitness.app.model.DiscoverEvent
+import com.fitness.app.model.Event
 import com.fitness.app.util.DiscoverEventDiffUtilCallback
 import com.fitness.app.views.fragments.AthleteProgramDescriptionFragment
 
 class DiscoverEventsAdapter(
     private val lifecycleOwner: LifecycleOwner,
     private val context: Context,
-) : ListAdapter<DiscoverEvent, DiscoverEventsAdapter.DiscoverEventViewHolder>(
+) : ListAdapter<Event, DiscoverEventsAdapter.DiscoverEventViewHolder>(
     DiscoverEventDiffUtilCallback()
 ) {
 
@@ -46,7 +45,7 @@ class DiscoverEventsAdapter(
             holder.apply {
                 image.background = BitmapDrawable(context.resources, discoverEvent.image)
                 title.text = discoverEvent.title
-                subTitle.text = discoverEvent.subTitle
+                subTitle.text = discoverEvent.club.name
 
                 binding.event.setOnClickListener {
                     val programDescriptionFragment = AthleteProgramDescriptionFragment()

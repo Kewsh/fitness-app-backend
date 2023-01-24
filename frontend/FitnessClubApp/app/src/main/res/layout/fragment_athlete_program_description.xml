@@ -22,9 +22,9 @@
                 android:layout_height="wrap_content">
 
                 <ImageView
-                    android:id="@+id/coverPicture"
+                    android:id="@+id/programCoverPicture"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content" />
 
                 <ImageButton
                     android:id="@+id/backButton"
@@ -38,13 +38,13 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignBottom="@id/coverPicture"
+                    android:layout_alignBottom="@id/programCoverPicture"
                     android:layout_marginStart="15dp"
                     android:layout_marginBottom="10dp"
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/title"
+                        android:id="@+id/programTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/white"
@@ -96,7 +96,7 @@
                             android:text="Description" />
 
                         <TextView
-                            android:id="@+id/description"
+                            android:id="@+id/programDescription"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
@@ -123,7 +123,7 @@
                                 android:text="Duration" />
 
                             <TextView
-                                android:id="@+id/duration"
+                                android:id="@+id/programDuration"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="5dp"
@@ -143,7 +143,7 @@
                                 android:text="Athletes" />
 
                             <TextView
-                                android:id="@+id/nAthletes"
+                                android:id="@+id/programNAthletes"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="5dp"
@@ -168,14 +168,14 @@
                                 android:orientation="horizontal">
 
                                 <TextView
-                                    android:id="@+id/rating"
+                                    android:id="@+id/programRating"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="5dp"
                                     android:textColor="@color/black" />
 
                                 <TextView
-                                    android:id="@+id/nRates"
+                                    android:id="@+id/programNRates"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="10dp"
@@ -207,7 +207,7 @@
                                 android:text="Coach" />
 
                             <TextView
-                                android:id="@+id/coachName"
+                                android:id="@+id/programCoachName"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="5dp"
@@ -227,7 +227,7 @@
                                 android:text="Price" />
 
                             <TextView
-                                android:id="@+id/price"
+                                android:id="@+id/programPrice"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="5dp"
@@ -284,7 +284,7 @@
                             android:text="User Comments" />
 
                         <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/userCommentsRecyclerView"
+                            android:id="@+id/programCommentsRecyclerView"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
@@ -346,20 +346,34 @@
                         android:layout_marginTop="20dp"
                         android:layout_marginEnd="20dp">
 
-                        <TextView
-                            android:id="@+id/aboutClubName"
+                        <LinearLayout
+                            android:id="@+id/about"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="About Pulse Fitness Club" />
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="About" />
+
+                            <TextView
+                                android:id="@+id/aboutClubName"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="5dp"
+                                android:text="Pulse Fitness Club" />
+
+                        </LinearLayout>
 
                         <RelativeLayout
                             android:id="@+id/clubInfo"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_below="@id/aboutClubName">
+                            android:layout_below="@id/about">
 
                             <de.hdodenhof.circleimageview.CircleImageView
-                                android:id="@+id/profilePic"
+                                android:id="@+id/clubProfilePicture"
                                 android:layout_width="55dp"
                                 android:layout_height="55dp"
                                 android:layout_marginTop="10dp"
@@ -374,7 +388,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="10dp"
-                                android:layout_toEndOf="@id/profilePic"
+                                android:layout_toEndOf="@id/clubProfilePicture"
                                 android:orientation="vertical">
 
                                 <LinearLayout
@@ -391,9 +405,9 @@
                                         android:textSize="12sp" />
 
                                     <TextView
+                                        android:id="@+id/clubNAthletes"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="16,788"
                                         android:textColor="@color/black"
                                         android:textSize="12sp" />
 
@@ -413,14 +427,27 @@
                                         android:textColor="@color/black"
                                         android:textSize="12sp" />
 
-                                    <TextView
-                                        android:layout_width="wrap_content"
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:text="4.3"
-                                        android:textColor="@color/black"
-                                        android:textSize="12sp" />
+                                        android:orientation="horizontal">
 
+                                        <TextView
+                                            android:id="@+id/clubRating"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:textColor="@color/black"
+                                            android:textSize="12sp" />
 
+                                        <TextView
+                                            android:id="@+id/clubNRates"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="10dp"
+                                            android:textColor="@color/black"
+                                            android:textSize="12sp" />
+
+                                    </LinearLayout>
                                 </LinearLayout>
 
                                 <LinearLayout
@@ -437,9 +464,9 @@
                                         android:textSize="12sp" />
 
                                     <TextView
+                                        android:id="@+id/clubSince"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Jan 1, 2022"
                                         android:textColor="@color/black"
                                         android:textSize="12sp" />
 
@@ -452,11 +479,11 @@
                         </RelativeLayout>
 
                         <TextView
+                            android:id="@+id/clubDescription"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@id/clubInfo"
                             android:layout_marginTop="10dp"
-                            android:text="Gold's Gym International, Inc. is an American chain of international co-ed fitness centers originally started by Joe Gold in Venice Beach, California. Each gym offers a variety of cardio ..."
                             android:textColor="@color/black"
                             android:textSize="13sp" />
 
@@ -468,12 +495,25 @@
                         android:layout_marginTop="20dp"
                         android:orientation="vertical">
 
-                        <TextView
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="20dp"
                             android:layout_marginEnd="20dp"
-                            android:text="More by Pulse Fitness Club" />
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="More by" />
+
+                            <TextView
+                                android:id="@+id/moreClubName"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="5dp" />
+
+                        </LinearLayout>
 
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/programsRecyclerView"

@@ -1,14 +1,14 @@
 package com.fitness.app.util
 
 import androidx.recyclerview.widget.DiffUtil
-import com.fitness.app.model.DiscoverEvent
+import com.fitness.app.model.Event
 
-class DiscoverEventDiffUtilCallback: DiffUtil.ItemCallback<DiscoverEvent>() {
-    override fun areItemsTheSame(oldItem: DiscoverEvent, newItem: DiscoverEvent): Boolean {
-        return oldItem.title == newItem.title
+class DiscoverEventDiffUtilCallback: DiffUtil.ItemCallback<Event>() {
+    override fun areItemsTheSame(oldItem: Event, newItem: Event): Boolean {
+        return oldItem.id == newItem.id
     }
 
-    override fun areContentsTheSame(oldItem: DiscoverEvent, newItem: DiscoverEvent): Boolean {
-        return oldItem.title == newItem.title
+    override fun areContentsTheSame(oldItem: Event, newItem: Event): Boolean {
+        return oldItem.id == newItem.id
     }
 }

@@ -12,6 +12,80 @@ import com.fitness.app.model.api.request.event.DiscoverEventsRequest
 import com.fitness.app.model.api.request.program.DiscoverProgramsRequest
 
 class AthleteHomeRepository() {
+    fun getEventComments(
+        eventId: String,
+        context: Context,
+        callback: (ArrayList<Comment>) -> Unit
+    ) {
+        val eventService = EventService(context)
+        val eventComments: ArrayList<Comment> = ArrayList()
+        eventService.getEventComments(eventId) { response ->
+            if (response != null) {
+                for (i in 0 until response.data.size) {
+                    val athleteService = AthleteService(context)
+                    athleteService.getAthleteProfilePicture(response.data[i].userId.toString()) { athleteProfilePicture ->
+                        if (athleteProfilePicture != null) {
+                            eventComments.add(
+                                Comment(
+                                    athleteProfilePicture,
+                                    response.data[i].id,
+                                    response.data[i].text,
+                                    response.data[i].rate,
+                                    response.data[i].programId,
+                                    response.data[i].eventId,
+                                    response.data[i].dietId,
+                                    response.data[i].recipeReviewId,
+                                    response.data[i].userId,
+                                    response.data[i].updatedAt,
+                                    response.data[i].createdAt,
+                                    response.data[i].user
+                                )
+                            )
+                            callback(eventComments)
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    fun getProgramComments(
+        programId: String,
+        context: Context,
+        callback: (ArrayList<Comment>) -> Unit
+    ) {
+        val programService = ProgramService(context)
+        val programComments: ArrayList<Comment> = ArrayList()
+        programService.getProgramComments(programId) { response ->
+            if (response != null) {
+                for (i in 0 until response.data.size) {
+                    val athleteService = AthleteService(context)
+                    athleteService.getAthleteProfilePicture(response.data[i].userId.toString()) { athleteProfilePicture ->
+                        if (athleteProfilePicture != null) {
+                            programComments.add(
+                                Comment(
+                                    athleteProfilePicture,
+                                    response.data[i].id,
+                                    response.data[i].text,
+                                    response.data[i].rate,
+                                    response.data[i].programId,
+                                    response.data[i].eventId,
+                                    response.data[i].dietId,
+                                    response.data[i].recipeReviewId,
+                                    response.data[i].userId,
+                                    response.data[i].updatedAt,
+                                    response.data[i].createdAt,
+                                    response.data[i].user
+                                )
+                            )
+                            callback(programComments)
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     fun getClubById(
         clubId: String,
         context: Context,
@@ -80,10 +154,10 @@ class AthleteHomeRepository() {
     fun getClubEvents(
         clubId: String,
         context: Context,
-        callback: (ArrayList<YourEvent>) -> Unit
+        callback: (ArrayList<Event>) -> Unit
     ) {
         val clubService = ClubService(context)
-        val clubEvents: ArrayList<YourEvent> = ArrayList()
+        val clubEvents: ArrayList<Event> = ArrayList()
         clubService.getClubEvents(clubId) { response ->
             if (response != null) {
                 for (i in 0 until response.data.size) {
@@ -91,10 +165,21 @@ class AthleteHomeRepository() {
                     eventService.getEventCoverPicture(response.data[i].id.toString()) { eventPicture ->
                         if (eventPicture != null) {
                             clubEvents.add(
-                                YourEvent(
+                                Event(
                                     eventPicture,
+                                    response.data[i].id,
                                     response.data[i].title,
-                                    response.data[i].club.name
+                                    response.data[i].description,
+                                    response.data[i].price,
+                                    response.data[i].maxAttendees,
+                                    response.data[i].startDate,
+                                    response.data[i].endDate,
+                                    response.data[i].createdAt,
+                                    response.data[i].updatedAt,
+                                    response.data[i].clubId,
+                                    response.data[i].club,
+                                    response.data[i].nAttendees,
+                                    response.data[i].rating
                                 )
                             )
                         }
@@ -142,10 +227,10 @@ class AthleteHomeRepository() {
     fun getAllCheckoutEventsItems(
         discoverEventsRequest: DiscoverEventsRequest,
         context: Context,
-        callback: (ArrayList<CheckoutEvent>) -> Unit
+        callback: (ArrayList<Event>) -> Unit
     ) {
         val apiService = EventService(context)
-        val checkoutEvents: ArrayList<CheckoutEvent> = ArrayList()
+        val checkoutEvents: ArrayList<Event> = ArrayList()
         apiService.discoverEvents(discoverEventsRequest) { response ->
             if (response != null) {
                 Log.e("listSize", response.data.size.toString())
@@ -153,10 +238,21 @@ class AthleteHomeRepository() {
                     apiService.getEventCoverPicture(response.data[i].id.toString()) { eventPicture ->
                         if (eventPicture != null) {
                             checkoutEvents.add(
-                                CheckoutEvent(
+                                Event(
                                     eventPicture,
+                                    response.data[i].id,
                                     response.data[i].title,
-                                    response.data[i].club.name
+                                    response.data[i].description,
+                                    response.data[i].price,
+                                    response.data[i].maxAttendees,
+                                    response.data[i].startDate,
+                                    response.data[i].endDate,
+                                    response.data[i].createdAt,
+                                    response.data[i].updatedAt,
+                                    response.data[i].clubId,
+                                    response.data[i].club,
+                                    response.data[i].nAttendees,
+                                    response.data[i].rating
                                 )
                             )
                         }
@@ -189,10 +285,10 @@ class AthleteHomeRepository() {
     fun getAllUserEventsItems(
         userId: String,
         context: Context,
-        callback: (ArrayList<YourEvent>) -> Unit
+        callback: (ArrayList<Event>) -> Unit
     ) {
         val apiService = AthleteService(context)
-        val userEvents: ArrayList<YourEvent> = ArrayList()
+        val userEvents: ArrayList<Event> = ArrayList()
         apiService.getAthleteEvents(userId) { response ->
             if (response != null) {
                 for (i in 0 until response.data.size) {
@@ -200,10 +296,21 @@ class AthleteHomeRepository() {
                     eventService.getEventCoverPicture(response.data[i].id.toString()) { eventPicture ->
                         if (eventPicture != null) {
                             userEvents.add(
-                                YourEvent(
+                                Event(
                                     eventPicture,
+                                    response.data[i].id,
                                     response.data[i].title,
-                                    response.data[i].club.name
+                                    response.data[i].description,
+                                    response.data[i].price,
+                                    response.data[i].maxAttendees,
+                                    response.data[i].startDate,
+                                    response.data[i].endDate,
+                                    response.data[i].createdAt,
+                                    response.data[i].updatedAt,
+                                    response.data[i].clubId,
+                                    response.data[i].club,
+                                    response.data[i].nAttendees,
+                                    response.data[i].rating
                                 )
                             )
                         }
@@ -309,6 +416,37 @@ class AthleteHomeRepository() {
         }
     }
 
+    fun getEvent(eventId: String, context: Context, callback: (Event) -> Unit) {
+        val apiService = EventService(context)
+        apiService.getEventById(eventId) { response ->
+            if (response != null) {
+                val eventService = EventService(context)
+                eventService.getEventCoverPicture(response.data.id.toString()) { eventPicture ->
+                    if (eventPicture != null) {
+                        callback(
+                            Event(
+                                eventPicture,
+                                response.data.id,
+                                response.data.title,
+                                response.data.description,
+                                response.data.price,
+                                response.data.maxAttendees,
+                                response.data.startDate,
+                                response.data.endDate,
+                                response.data.createdAt,
+                                response.data.updatedAt,
+                                response.data.clubId,
+                                response.data.club,
+                                response.data.nAttendees,
+                                response.data.rating
+                            )
+                        )
+                    }
+                }
+            }
+        }
+    }
+
     fun getAllDayProgramWorkoutItems(
         programId: String,
         context: Context,
@@ -376,20 +514,31 @@ class AthleteHomeRepository() {
     fun getAllDiscoverEventsItems(
         discoverEventsRequest: DiscoverEventsRequest,
         context: Context,
-        callback: (ArrayList<DiscoverEvent>) -> Unit
+        callback: (ArrayList<Event>) -> Unit
     ) {
         val apiService = EventService(context)
-        val discoverEvents: ArrayList<DiscoverEvent> = ArrayList()
+        val discoverEvents: ArrayList<Event> = ArrayList()
         apiService.discoverEvents(discoverEventsRequest) { response ->
             if (response != null) {
                 for (i in 0 until response.data.size) {
                     apiService.getEventCoverPicture(response.data[i].id.toString()) { eventPicture ->
                         if (eventPicture != null) {
                             discoverEvents.add(
-                                DiscoverEvent(
+                                Event(
                                     eventPicture,
+                                    response.data[i].id,
                                     response.data[i].title,
-                                    response.data[i].club.name
+                                    response.data[i].description,
+                                    response.data[i].price,
+                                    response.data[i].maxAttendees,
+                                    response.data[i].startDate,
+                                    response.data[i].endDate,
+                                    response.data[i].createdAt,
+                                    response.data[i].updatedAt,
+                                    response.data[i].clubId,
+                                    response.data[i].club,
+                                    response.data[i].nAttendees,
+                                    response.data[i].rating
                                 )
                             )
                         }
@@ -465,37 +614,37 @@ class AthleteHomeRepository() {
         }
     }
 
-    fun getAllUserCommentItems(): ArrayList<UserComment> {
-        val userComments: ArrayList<UserComment> = ArrayList()
-
-        var userComment = UserComment(
-            R.drawable.temp_mona_lisa_image,
-            "Mona Lisa",
-            "4.3",
-            "This program focuses on burning as much belly fat as\n" +
-                    "one could possibly take, in a span of 30 days."
-        )
-        userComments.add(userComment)
-
-        userComment = UserComment(
-            R.drawable.temp_mona_lisa_image,
-            "Mona Lisa",
-            "4.3",
-            "This program focuses on burning as much belly fat as\n" +
-                    "one could possibly take, in a span of 30 days."
-        )
-        userComments.add(userComment)
-
-        userComment = UserComment(
-            R.drawable.temp_mona_lisa_image,
-            "Mona Lisa",
-            "4.3",
-            "This program focuses on burning as much belly fat as\n" +
-                    "one could possibly take, in a span of 30 days."
-        )
-        userComments.add(userComment)
-
-        return userComments
+    fun getAllUserCommentItems(): ArrayList<Comment> {
+        val comments: ArrayList<Comment> = ArrayList()
+//
+//        var comment = Comment(
+//            R.drawable.temp_mona_lisa_image,
+//            "Mona Lisa",
+//            "4.3",
+//            "This program focuses on burning as much belly fat as\n" +
+//                    "one could possibly take, in a span of 30 days."
+//        )
+//        comments.add(comment)
+//
+//        comment = Comment(
+//            R.drawable.temp_mona_lisa_image,
+//            "Mona Lisa",
+//            "4.3",
+//            "This program focuses on burning as much belly fat as\n" +
+//                    "one could possibly take, in a span of 30 days."
+//        )
+//        comments.add(comment)
+//
+//        comment = Comment(
+//            R.drawable.temp_mona_lisa_image,
+//            "Mona Lisa",
+//            "4.3",
+//            "This program focuses on burning as much belly fat as\n" +
+//                    "one could possibly take, in a span of 30 days."
+//        )
+//        comments.add(comment)
+//
+        return comments
 
     }
 

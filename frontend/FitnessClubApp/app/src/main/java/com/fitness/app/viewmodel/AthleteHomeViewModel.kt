@@ -11,6 +11,19 @@ import com.fitness.app.model.api.request.program.DiscoverProgramsRequest
 import com.fitness.app.repository.AthleteHomeRepository
 
 class AthleteHomeViewModel(private val athleteHomeRepository: AthleteHomeRepository) : ViewModel() {
+
+    fun getEventComments(eventId:String,context: Context,callback:(ArrayList<Comment>)->Unit){
+        return athleteHomeRepository.getEventComments(eventId,context){eventComments->
+            callback(eventComments)
+        }
+    }
+
+    fun getProgramComments(programId:String,context: Context,callback:(ArrayList<Comment>)->Unit){
+        return athleteHomeRepository.getProgramComments(programId,context){programComments->
+            callback(programComments)
+        }
+    }
+
     fun getClubById(clubId:String,context: Context,callback:(Club)->Unit){
         return athleteHomeRepository.getClubById(clubId,context){club->
             callback(club)
@@ -23,7 +36,7 @@ class AthleteHomeViewModel(private val athleteHomeRepository: AthleteHomeReposit
         }
     }
 
-    fun getClubEvents(clubId:String,context: Context,callback:(ArrayList<YourEvent>)->Unit){
+    fun getClubEvents(clubId:String,context: Context,callback:(ArrayList<Event>)->Unit){
         return athleteHomeRepository.getClubEvents(clubId,context){clubEvents->
             callback(clubEvents)
         }
@@ -38,6 +51,12 @@ class AthleteHomeViewModel(private val athleteHomeRepository: AthleteHomeReposit
     fun getUserProfilePicture(userId: String,context: Context,callback:(Bitmap)->Unit){
         return athleteHomeRepository.getUserProfilePicture(userId,context){userProfilePicture->
             callback(userProfilePicture)
+        }
+    }
+
+    fun getEvent(eventId: String,context: Context,callback:(Event)->Unit){
+        return athleteHomeRepository.getEvent(eventId,context){event->
+            callback(event)
         }
     }
 
@@ -59,7 +78,7 @@ class AthleteHomeViewModel(private val athleteHomeRepository: AthleteHomeReposit
         }
     }
 
-    fun getAllCheckoutEventsItems(discoverEventsRequest: DiscoverEventsRequest,context: Context,callback:(ArrayList<CheckoutEvent>)->Unit){
+    fun getAllCheckoutEventsItems(discoverEventsRequest: DiscoverEventsRequest,context: Context,callback:(ArrayList<Event>)->Unit){
         return athleteHomeRepository.getAllCheckoutEventsItems(discoverEventsRequest,context){checkoutEvents->
             callback(checkoutEvents)
         }
@@ -71,7 +90,7 @@ class AthleteHomeViewModel(private val athleteHomeRepository: AthleteHomeReposit
         }
     }
 
-    fun getAllUserEventsItems(userId:String, context: Context, callback:(ArrayList<YourEvent>)->Unit){
+    fun getAllUserEventsItems(userId:String, context: Context, callback:(ArrayList<Event>)->Unit){
         return athleteHomeRepository.getAllUserEventsItems(userId,context){userEvents->
             callback(userEvents)
         }
@@ -89,7 +108,7 @@ class AthleteHomeViewModel(private val athleteHomeRepository: AthleteHomeReposit
         }
     }
 
-    fun getAllDiscoverEventsItems(discoverEventsRequest: DiscoverEventsRequest,context: Context,callback:(ArrayList<DiscoverEvent>)->Unit) {
+    fun getAllDiscoverEventsItems(discoverEventsRequest: DiscoverEventsRequest,context: Context,callback:(ArrayList<Event>)->Unit) {
         return athleteHomeRepository.getAllDiscoverEventsItems(discoverEventsRequest,context){discoverEvents->
             callback(discoverEvents)
         }
@@ -107,7 +126,7 @@ class AthleteHomeViewModel(private val athleteHomeRepository: AthleteHomeReposit
         }
     }
 
-    fun getAllUserCommentItems():ArrayList<UserComment>{
+    fun getAllUserCommentItems():ArrayList<Comment>{
         return athleteHomeRepository.getAllUserCommentItems()
     }
 

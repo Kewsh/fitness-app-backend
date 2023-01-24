@@ -19,7 +19,7 @@ import java.util.concurrent.TimeUnit
 class AthleteProgramDescriptionFragment : Fragment(R.layout.fragment_athlete_program_description) {
     val viewModel: AthleteHomeViewModel by activityViewModels()
     lateinit var binding: FragmentAthleteProgramDescriptionBinding
-    lateinit var userCommentAdapter: UserCommentAdapter
+    lateinit var commentAdapter: UserCommentAdapter
     lateinit var dayWorkoutAdapter: DayWorkoutAdapter
     lateinit var programAdapter: DiscoverProgramsAdapter
 
@@ -42,8 +42,9 @@ class AthleteProgramDescriptionFragment : Fragment(R.layout.fragment_athlete_pro
         clubId = intent.getIntExtra("clubId", -1)
 
         setUpProgramData()
-        setUpUserComments()
+        setUpProgramComments()
         setUpDayWorkouts()
+        setUpClubData()
         setUpClubPrograms()
 
         binding.backButton.setOnClickListener {
@@ -67,38 +68,47 @@ class AthleteProgramDescriptionFragment : Fragment(R.layout.fragment_athlete_pro
 
     private fun setUpProgramData() {
         viewModel.getProgram(programId = programId.toString(),context = requireContext()){program->
-            binding.coverPicture.background = BitmapDrawable(resources,program.image)
-            binding.title.text = program.title
-            binding.description.text = program.description
+            binding.programCoverPicture.background = BitmapDrawable(resources,program.image)
+            binding.programTitle.text = program.title
+            binding.programDescription.text = program.description
             binding.clubName.text = program.club.name
-            binding.coachName.text = program.coachName
-            binding.rating.text = program.rating.rating
-            binding.nRates.text = program.rating.nRates.toString()
-            binding.duration.text = program.duration.toString()
-            binding.price.text = program.price.toString()
-            binding.nAthletes.text = program.nAthletes.toString()
-
+            binding.programCoachName.text = program.coachName
+            binding.programRating.text = program.rating.rating
+            binding.programNRates.text = program.rating.nRates.toString()
+            binding.programDuration.text = program.duration.toString()
+            binding.programPrice.text = program.price.toString()
+            binding.programNAthletes.text = program.nAthletes.toString()
         }
 
     }
 
-    private fun setUpUserComments(){
-        binding.userCommentsRecyclerView.apply {
-            layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
-            setHasFixedSize(true)
-            userCommentAdapter =
-                UserCommentAdapter(viewLifecycleOwner, context)
-//            dietAdapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
-            adapter = userCommentAdapter
-            postponeEnterTransition(300, TimeUnit.MILLISECONDS)
-            viewTreeObserver.addOnPreDrawListener {
-                startPostponedEnterTransition()
-                true
-            }
+    private fun setUpClubData() {
+        viewModel.getClubById(clubId = clubId.toString(), context = requireContext()){club->
+            binding.clubProfilePicture.setImageBitmap(club.image)
+            binding.clubName.text = club.name
+            binding.clubDescription.text = club.description
+            binding.clubNAthletes.text = club.nAthletes.toString()
+            binding.clubRating.text = club.rating.rating
+            binding.clubNRates.text = club.rating.nRates.toString()
+            binding.clubSince.text = club.since
+            binding.aboutClubName.text = club.name
+            binding.moreClubName.text = club.name
+        }
+    }
 
+    private fun setUpProgramComments(){
+        viewModel.getProgramComments(programId = programId.toString(), context = requireContext()){programComments->
+            binding.programCommentsRecyclerView.apply {
+                layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
+                setHasFixedSize(true)
+                commentAdapter =
+                    UserCommentAdapter(viewLifecycleOwner, context)
+                adapter = commentAdapter
+
+            }
+            commentAdapter.submitList(programComments)
         }
 
-        userCommentAdapter.submitList(viewModel.getAllUserCommentItems())
     }
 
     private fun setUpClubPrograms(){

@@ -25,7 +25,6 @@
                 android:layout_marginEnd="15dp"
                 android:background="@drawable/ic_profilepic"
                 app:civ_border_color="@color/white"
-                android:src="@drawable/temp_mona_lisa_image"
                 app:civ_border_overlay="true"
                 app:civ_border_width="1.5dp" />
 
@@ -40,7 +39,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="15dp"
-                    android:text="Mona Lisa"
                     android:textColor="@color/black"
                     android:textSize="12sp" />
 
@@ -48,7 +46,6 @@
                     android:id="@+id/rating"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="4.3"
                     android:textSize="12sp" />
 
             </LinearLayout>
@@ -62,9 +59,6 @@
             android:layout_below="@id/userInformation"
             android:layout_marginStart="15dp"
             android:layout_marginTop="5dp"
-            android:text="This program focuses on burning as much belly fat as
-one could possibly take, in a span of 30 days. Fully
-analyzed by our coaches and  ..."
             android:textColor="@color/black"
             android:textSize="12sp" />
 
