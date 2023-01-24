@@ -1,5 +1,6 @@
 package com.fitness.app.model.api.response.event
 
+import com.fitness.app.model.api.Club
 import com.fitness.app.model.api.response.club.Rating
 import com.google.gson.annotations.SerializedName
 
@@ -20,7 +21,7 @@ data class GetEventByIdData(
     @SerializedName("createdAt") val createdAt:String,
     @SerializedName("updatedAt") val updatedAt:String,
     @SerializedName("clubId") val clubId:Int,
-    @SerializedName("club") val club:Club,
+    @SerializedName("club") val club: Club,
     @SerializedName("nAttendees") val nAttendees:Int,
     @SerializedName("rating") val rating:Rating,
 )

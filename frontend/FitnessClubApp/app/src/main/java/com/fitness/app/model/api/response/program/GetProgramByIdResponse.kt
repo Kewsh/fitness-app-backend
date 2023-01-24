@@ -1,7 +1,7 @@
 package com.fitness.app.model.api.response.program
 
+import com.fitness.app.model.api.Club
 import com.fitness.app.model.api.response.club.Rating
-import com.fitness.app.model.api.response.event.Club
 import com.google.gson.annotations.SerializedName
 
 data class GetProgramByIdResponse(
@@ -22,5 +22,5 @@ data class GetProgramByIdData(
     @SerializedName("duration") val duration:Int,
     @SerializedName("nAthletes") val nAthletes:Int,
     @SerializedName("rating") val rating:Rating,
-    @SerializedName("club") val club:Club,
+    @SerializedName("club") val club: Club,
 )

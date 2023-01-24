@@ -1,6 +1,6 @@
 package com.fitness.app.model.api.response.athlete
 
-import com.fitness.app.model.api.response.event.Club
+import com.fitness.app.model.api.Club
 import com.google.gson.annotations.SerializedName
 
 data class GetAthleteEventsResponse(

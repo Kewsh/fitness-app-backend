@@ -6,14 +6,54 @@ import android.util.Log
 import com.fitness.app.R
 import com.fitness.app.api.service.*
 import com.fitness.app.model.*
+import com.fitness.app.model.api.Club
 import com.fitness.app.model.api.request.diet.DiscoverDietsRequest
 import com.fitness.app.model.api.request.event.DiscoverEventsRequest
 import com.fitness.app.model.api.request.program.DiscoverProgramsRequest
 
 class AthleteHomeRepository() {
-    fun getClubPrograms(clubId: String,
-                      context: Context,
-                      callback: (ArrayList<DiscoverProgram>) -> Unit){
+    fun getClubById(
+        clubId: String,
+        context: Context,
+        callback: (Club) -> Unit
+    ) {
+        val clubService = ClubService(context)
+        clubService.getClubById(clubId) { response ->
+            if (response != null) {
+                val clubService = ClubService(context)
+                clubService.getClubCoverPicture(response.data.id.toString()) { clubPicture ->
+                    if (clubPicture != null) {
+                        callback(
+                            Club(
+                                clubPicture,
+                                response.data.id,
+                                response.data.name,
+                                response.data.manager,
+                                response.data.description,
+                                response.data.since,
+                                response.data.email,
+                                response.data.phoneNumber,
+                                response.data.website,
+                                response.data.address,
+                                response.data.updatedAt,
+                                response.data.createdAt,
+                                response.data.nAthletes,
+                                response.data.rating
+                            )
+                        )
+                    }
+
+                }
+
+            }
+        }
+    }
+
+    fun getClubPrograms(
+        clubId: String,
+        context: Context,
+        callback: (ArrayList<DiscoverProgram>) -> Unit
+    ) {
         val clubService = ClubService(context)
         val clubPrograms: ArrayList<DiscoverProgram> = ArrayList()
         clubService.getClubPrograms(clubId) { response ->
@@ -22,7 +62,13 @@ class AthleteHomeRepository() {
                     val programService = ProgramService(context)
                     programService.getProgramCoverPicture(response.data[i].id.toString()) { programPicture ->
                         if (programPicture != null) {
-                            clubPrograms.add(DiscoverProgram(programPicture, response.data[i].title,response.data[i].club.name))
+                            clubPrograms.add(
+                                DiscoverProgram(
+                                    programPicture,
+                                    response.data[i].title,
+                                    response.data[i].club.name
+                                )
+                            )
                         }
                         callback(clubPrograms)
                     }
@@ -31,9 +77,11 @@ class AthleteHomeRepository() {
         }
     }
 
-    fun getClubEvents(clubId: String,
-                      context: Context,
-                      callback: (ArrayList<YourEvent>) -> Unit){
+    fun getClubEvents(
+        clubId: String,
+        context: Context,
+        callback: (ArrayList<YourEvent>) -> Unit
+    ) {
         val clubService = ClubService(context)
         val clubEvents: ArrayList<YourEvent> = ArrayList()
         clubService.getClubEvents(clubId) { response ->
@@ -42,7 +90,13 @@ class AthleteHomeRepository() {
                     val eventService = EventService(context)
                     eventService.getEventCoverPicture(response.data[i].id.toString()) { eventPicture ->
                         if (eventPicture != null) {
-                            clubEvents.add(YourEvent(eventPicture, response.data[i].title,response.data[i].club.name))
+                            clubEvents.add(
+                                YourEvent(
+                                    eventPicture,
+                                    response.data[i].title,
+                                    response.data[i].club.name
+                                )
+                            )
                         }
                         callback(clubEvents)
                     }
@@ -169,7 +223,16 @@ class AthleteHomeRepository() {
                     val foodService = FoodService(context)
                     foodService.getFoodCoverPicture(response.data[i].id.toString()) { foodPicture ->
                         if (foodPicture != null) {
-                            dietFoods.add(Food(foodPicture, response.data[i].amountAndTitle,response.data[i].id,response.data[i].amount,response.data[i].title,response.data[i].day))
+                            dietFoods.add(
+                                Food(
+                                    foodPicture,
+                                    response.data[i].amountAndTitle,
+                                    response.data[i].id,
+                                    response.data[i].amount,
+                                    response.data[i].title,
+                                    response.data[i].day
+                                )
+                            )
                         }
                         callback(dietFoods)
                     }

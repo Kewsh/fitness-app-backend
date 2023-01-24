@@ -4,12 +4,19 @@ import android.content.Context
 import android.graphics.Bitmap
 import androidx.lifecycle.ViewModel
 import com.fitness.app.model.*
+import com.fitness.app.model.api.Club
 import com.fitness.app.model.api.request.diet.DiscoverDietsRequest
 import com.fitness.app.model.api.request.event.DiscoverEventsRequest
 import com.fitness.app.model.api.request.program.DiscoverProgramsRequest
 import com.fitness.app.repository.AthleteHomeRepository
 
 class AthleteHomeViewModel(private val athleteHomeRepository: AthleteHomeRepository) : ViewModel() {
+    fun getClubById(clubId:String,context: Context,callback:(Club)->Unit){
+        return athleteHomeRepository.getClubById(clubId,context){club->
+            callback(club)
+        }
+    }
+
     fun getClubPrograms(clubId:String,context: Context,callback:(ArrayList<DiscoverProgram>)->Unit){
         return athleteHomeRepository.getClubPrograms(clubId,context){clubPrograms->
             callback(clubPrograms)

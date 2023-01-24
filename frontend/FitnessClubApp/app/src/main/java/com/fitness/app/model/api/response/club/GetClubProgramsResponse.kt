@@ -1,6 +1,6 @@
 package com.fitness.app.model.api.response.club
 
-import com.fitness.app.model.api.response.event.Club
+import com.fitness.app.model.api.Club
 import com.google.gson.annotations.SerializedName
 
 data class GetClubProgramsResponse(
@@ -12,5 +12,5 @@ data class GetClubProgramsResponse(
 data class GetClubProgramsData(
     @SerializedName("id") val id:Int,
     @SerializedName("title") val title:String,
-    @SerializedName("club") val club:Club,
+    @SerializedName("club") val club: Club,
 )

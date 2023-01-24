@@ -1,6 +1,7 @@
 package com.fitness.app.views.fragments
 
 import android.content.Intent
+import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
@@ -36,10 +37,28 @@ class AthleteClubFragment : Fragment(R.layout.fragment_athlete_club) {
 
         clubId = intent.getIntExtra("clubId", -1)
 
+        setUpClubData()
         setUpClubPrograms()
         setUpClubEvents()
 
 
+    }
+
+    private fun setUpClubData() {
+        viewModel.getClubById(clubId = clubId.toString(), context = requireContext()){club->
+            binding.clubCoverPicture.background = BitmapDrawable(resources,club.image)
+            binding.clubName.text = club.name
+            binding.description.text = club.description
+            binding.manager.text = club.manager
+            binding.nAthletes.text = club.nAthletes.toString()
+            binding.rating.text = club.rating.rating
+            binding.nRates.text = club.rating.nRates.toString()
+            binding.since.text = club.since
+            binding.phoneNumber.text = club.phoneNumber
+            binding.email.text = club.email
+            binding.website.text = club.website
+            binding.address.text = club.address
+        }
     }
 
     private fun setUpClubPrograms(){
