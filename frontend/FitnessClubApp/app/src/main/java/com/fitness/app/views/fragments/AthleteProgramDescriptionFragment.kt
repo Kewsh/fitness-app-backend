@@ -3,23 +3,17 @@ package com.fitness.app.views.fragments
 import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.transaction
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.fitness.app.R
 import com.fitness.app.adapters.DayWorkoutAdapter
 import com.fitness.app.adapters.DiscoverProgramsAdapter
 import com.fitness.app.adapters.UserCommentAdapter
-import com.fitness.app.databinding.FragmentAthleteHomeBinding
 import com.fitness.app.databinding.FragmentAthleteProgramDescriptionBinding
 import com.fitness.app.viewmodel.AthleteHomeViewModel
 import com.fitness.app.views.activities.AthleteHomeActivity
-import com.google.android.material.textfield.TextInputLayout
 import java.util.concurrent.TimeUnit
 
 class AthleteProgramDescriptionFragment : Fragment(R.layout.fragment_athlete_program_description) {
@@ -30,6 +24,7 @@ class AthleteProgramDescriptionFragment : Fragment(R.layout.fragment_athlete_pro
     lateinit var programAdapter: DiscoverProgramsAdapter
 
     var programId: Int = -1
+    var clubId: Int = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,11 +39,12 @@ class AthleteProgramDescriptionFragment : Fragment(R.layout.fragment_athlete_pro
 
         val intent = activity.intent
         programId = intent.getIntExtra("programId", -1)
+        clubId = intent.getIntExtra("clubId", -1)
 
         setUpProgramData()
         setUpUserComments()
         setUpDayWorkouts()
-        setUpPrograms()
+        setUpClubPrograms()
 
         binding.backButton.setOnClickListener {
             (context as AppCompatActivity).supportFragmentManager.popBackStack()
@@ -105,22 +101,18 @@ class AthleteProgramDescriptionFragment : Fragment(R.layout.fragment_athlete_pro
         userCommentAdapter.submitList(viewModel.getAllUserCommentItems())
     }
 
-    private fun setUpPrograms(){
-        binding.programsRecyclerView.apply {
-            layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL)
-            setHasFixedSize(true)
-            programAdapter =
-                DiscoverProgramsAdapter(viewLifecycleOwner, context)
-//            dietAdapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
-            adapter = programAdapter
-            postponeEnterTransition(300, TimeUnit.MILLISECONDS)
-            viewTreeObserver.addOnPreDrawListener {
-                startPostponedEnterTransition()
-                true
-            }
+    private fun setUpClubPrograms(){
+        viewModel.getClubPrograms(clubId = clubId.toString(), context = requireContext() ){programs->
+            binding.programsRecyclerView.apply {
+                layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL)
+                setHasFixedSize(true)
+                programAdapter =
+                    DiscoverProgramsAdapter(viewLifecycleOwner, context)
+                adapter = programAdapter
 
+            }
+            programAdapter.submitList(programs)
         }
 
-//        programAdapter.submitList(viewModel.getAllDiscoverProgramsItems())
     }
 }
