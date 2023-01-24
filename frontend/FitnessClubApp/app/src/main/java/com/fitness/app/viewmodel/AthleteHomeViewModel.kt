@@ -12,6 +12,12 @@ import com.fitness.app.repository.AthleteHomeRepository
 
 class AthleteHomeViewModel(private val athleteHomeRepository: AthleteHomeRepository) : ViewModel() {
 
+    fun getWorkout(workoutId: String,context: Context,callback:(Workout)->Unit){
+        return athleteHomeRepository.getWorkout(workoutId,context){workout->
+            callback(workout)
+        }
+    }
+
     fun getEventComments(eventId:String,context: Context,callback:(ArrayList<Comment>)->Unit){
         return athleteHomeRepository.getEventComments(eventId,context){eventComments->
             callback(eventComments)

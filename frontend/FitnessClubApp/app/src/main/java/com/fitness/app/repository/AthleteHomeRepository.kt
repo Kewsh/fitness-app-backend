@@ -209,10 +209,16 @@ class AthleteHomeRepository() {
                                     response.data[i].id,
                                     response.data[i].setsAndReps,
                                     response.data[i].title,
+                                    response.data[i].description,
                                     response.data[i].sets,
                                     response.data[i].reps,
                                     response.data[i].setTimeInSeconds,
-                                    response.data[i].day
+                                    response.data[i].burntCalories,
+                                    response.data[i].day,
+                                    response.data[i].createdAt,
+                                    response.data[i].updatedAt,
+                                    response.data[i].programId,
+                                    response.data[i].program
                                 )
                             )
                         }
@@ -415,6 +421,38 @@ class AthleteHomeRepository() {
             }
         }
     }
+
+    fun getWorkout(workoutId: String, context: Context, callback: (Workout) -> Unit) {
+        val apiService = WorkoutService(context)
+        apiService.getWorkoutById(workoutId) { response ->
+            if (response != null) {
+                val workoutService = WorkoutService(context)
+                workoutService.getWorkoutCoverPicture(response.data.id.toString()) { workoutPicture ->
+                    if (workoutPicture != null) {
+                        callback(
+                            Workout(
+                                workoutPicture,
+                                response.data.id,
+                                response.data.setsAndReps,
+                                response.data.title,
+                                response.data.description,
+                                response.data.sets,
+                                response.data.reps,
+                                response.data.setTimeInSeconds,
+                                response.data.burntCalories,
+                                response.data.day,
+                                response.data.createdAt,
+                                response.data.updatedAt,
+                                response.data.programId,
+                                response.data.program
+                            )
+                        )
+                    }
+                }
+            }
+        }
+    }
+
 
     fun getEvent(eventId: String, context: Context, callback: (Event) -> Unit) {
         val apiService = EventService(context)
