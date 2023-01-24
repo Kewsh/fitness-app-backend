@@ -56,6 +56,19 @@ class AthleteProgramDescriptionFragment : Fragment(R.layout.fragment_athlete_pro
 
     }
 
+    private fun setUpDayWorkouts(){
+        viewModel.getAllDayProgramWorkoutItems(programId = programId.toString(), context = requireContext()){ dayWorkouts->
+            binding.dayWorkoutsRecyclerView.apply {
+                layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
+                setHasFixedSize(true)
+                dayWorkoutAdapter =
+                    DayWorkoutAdapter(viewLifecycleOwner, context)
+                adapter = dayWorkoutAdapter
+            }
+            dayWorkoutAdapter.submitList(dayWorkouts)
+        }
+    }
+
     private fun setUpProgramData() {
         viewModel.getProgram(programId = programId.toString(),context = requireContext()){program->
             binding.coverPicture.background = BitmapDrawable(resources,program.image)
@@ -90,25 +103,6 @@ class AthleteProgramDescriptionFragment : Fragment(R.layout.fragment_athlete_pro
         }
 
         userCommentAdapter.submitList(viewModel.getAllUserCommentItems())
-    }
-
-    private fun setUpDayWorkouts(){
-//        binding.dayWorkoutsRecyclerView.apply {
-//            layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
-//            setHasFixedSize(true)
-//            dayWorkoutAdapter =
-//                DayWorkoutAdapter(viewLifecycleOwner, context)
-////            dietAdapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
-//            adapter = dayWorkoutAdapter
-//            postponeEnterTransition(300, TimeUnit.MILLISECONDS)
-//            viewTreeObserver.addOnPreDrawListener {
-//                startPostponedEnterTransition()
-//                true
-//            }
-//
-//        }
-//
-//        dayWorkoutAdapter.submitList(viewModel.getAllDayWorkoutItems())
     }
 
     private fun setUpPrograms(){
