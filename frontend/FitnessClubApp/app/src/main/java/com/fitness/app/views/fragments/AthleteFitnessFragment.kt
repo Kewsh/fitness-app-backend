@@ -67,7 +67,7 @@ class AthleteFitnessFragment : Fragment(R.layout.fragment_athlete_fitness) {
         viewModel.getProgram(programId = programId.toString(), context = requireContext()){program->
             binding.programLayout.programImage.background = BitmapDrawable(resources,program.image)
             binding.programLayout.programTitle.text = program.title
-            binding.programLayout.programClubName.text = program.clubName
+            binding.programLayout.programClubName.text = program.club.name
             binding.programLayout.programDescription.text = program.description
         }
     }

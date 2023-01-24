@@ -289,9 +289,18 @@ class AthleteHomeRepository() {
                         callback(
                             Program(
                                 programPicture,
+                                response.data.id,
                                 response.data.title,
-                                response.data.club.name,
-                                response.data.description.toString()
+                                response.data.description,
+                                response.data.coachName,
+                                response.data.price,
+                                response.data.createdAt,
+                                response.data.updatedAt,
+                                response.data.clubId,
+                                response.data.duration,
+                                response.data.nAthletes,
+                                response.data.rating,
+                                response.data.club,
                             )
                         )
                     }

@@ -22,7 +22,7 @@
                 android:layout_height="wrap_content">
 
                 <ImageView
-                    android:id="@+id/image"
+                    android:id="@+id/coverPicture"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/temp_program_description_image" />
@@ -39,13 +39,13 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignBottom="@id/image"
+                    android:layout_alignBottom="@id/coverPicture"
                     android:layout_marginStart="15dp"
                     android:layout_marginBottom="10dp"
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/programTitle"
+                        android:id="@+id/title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Lose belly fat in 30 days"
@@ -54,7 +54,7 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/programDescription"
+                        android:id="@+id/clubName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="By Pulse Fitness Club"
@@ -99,6 +99,7 @@
                             android:text="Description" />
 
                         <TextView
+                            android:id="@+id/description"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
@@ -128,6 +129,7 @@ analyzed by our coaches and  ..."
                                 android:text="Duration" />
 
                             <TextView
+                                android:id="@+id/duration"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="5dp"
@@ -148,6 +150,7 @@ analyzed by our coaches and  ..."
                                 android:text="Athletes" />
 
                             <TextView
+                                android:id="@+id/nAthletes"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="5dp"
@@ -167,12 +170,29 @@ analyzed by our coaches and  ..."
                                 android:layout_height="wrap_content"
                                 android:text="Rating" />
 
-                            <TextView
-                                android:layout_width="match_parent"
+                            <LinearLayout
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="5dp"
-                                android:text="4.3"
-                                android:textColor="@color/black" />
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/rating"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="5dp"
+                                    android:text="4.3"
+                                    android:textColor="@color/black" />
+
+                                <TextView
+                                    android:id="@+id/nRates"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="10dp"
+                                    android:layout_marginTop="5dp"
+                                    android:text="4.3"
+                                    android:textColor="@color/black" />
+
+                            </LinearLayout>
 
                         </LinearLayout>
 
@@ -197,6 +217,7 @@ analyzed by our coaches and  ..."
                                 android:text="Coach" />
 
                             <TextView
+                                android:id="@+id/coachName"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="5dp"
@@ -217,6 +238,7 @@ analyzed by our coaches and  ..."
                                 android:text="Price" />
 
                             <TextView
+                                android:id="@+id/price"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="5dp"
@@ -463,7 +485,7 @@ analyzed by our coaches and  ..."
                             android:layout_height="wrap_content"
                             android:layout_marginStart="20dp"
                             android:layout_marginEnd="20dp"
-                            android:text="More by Pulse Fitness Club"/>
+                            android:text="More by Pulse Fitness Club" />
 
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/programsRecyclerView"

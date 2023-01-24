@@ -28,8 +28,7 @@
                 <ImageView
                     android:id="@+id/dietImage"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/temp_diet_big_image" />
+                    android:layout_height="wrap_content"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -50,7 +49,6 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
                         android:gravity="start"
-                        android:text="Meat lover’s healthy diet"
                         android:textAlignment="textStart"
                         android:textColor="@color/black"
                         android:textSize="14sp"
@@ -63,7 +61,6 @@
                         android:layout_gravity="start"
                         android:layout_marginTop="5dp"
                         android:gravity="start"
-                        android:text="by Dr. Ahmad Davoodi"
                         android:textAlignment="textStart"
                         android:textColor="@color/black_80"
                         android:textSize="12sp" />
@@ -75,9 +72,6 @@
                         android:layout_gravity="start"
                         android:layout_marginTop="15dp"
                         android:gravity="start"
-                        android:text="The purpose of this diet is to keep you energetic and
-healthy, while letting you enjoy all the meals you love.
-Much study has been done in ..."
                         android:textAlignment="textStart"
                         android:textColor="@color/black"
                         android:textSize="12sp" />

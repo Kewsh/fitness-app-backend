@@ -24,8 +24,7 @@
                 <ImageView
                     android:id="@+id/clubCoverPicture"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/temp_club_image" />
+                    android:layout_height="wrap_content"/>
 
                 <TextView
                     android:id="@+id/clubName"
@@ -59,7 +58,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:layout_marginTop="20dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -78,7 +78,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
-                            android:text="John Doe"
                             android:textColor="@color/black" />
 
                     </LinearLayout>
@@ -101,7 +100,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
-                            android:text="Gold's Gym International, Inc. is an American chain of international co-ed fitness centers originally started by Joe Gold in Venice Beach, California. Each gym offers a variety of cardio ..."
                             android:textColor="@color/black" />
 
                     </LinearLayout>
@@ -129,7 +127,6 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="5dp"
-                                android:text="16,788"
                                 android:textColor="@color/black" />
 
                         </LinearLayout>
@@ -154,7 +151,6 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="5dp"
-                                android:text="4.3"
                                 android:textColor="@color/black" />
 
                             <TextView
@@ -163,7 +159,6 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="10dp"
                                 android:layout_marginTop="5dp"
-                                android:text="4.3"
                                 android:textColor="@color/black" />
 
                             </LinearLayout>
@@ -186,7 +181,6 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="5dp"
-                                android:text="Jan 1, 2022"
                                 android:textColor="@color/black" />
 
                         </LinearLayout>
@@ -211,7 +205,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
-                            android:text="+9812334567889"
                             android:textColor="@color/black" />
 
                     </LinearLayout>
@@ -234,7 +227,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
-                            android:text="support@pulsefitnessclub.com"
                             android:textColor="@color/black" />
 
                     </LinearLayout>
@@ -257,7 +249,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
-                            android:text="www.pulsefitnessclub.com"
                             android:textColor="@color/black" />
 
                     </LinearLayout>
@@ -280,7 +271,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
-                            android:text="Robert Robertson, 1234 NW Bobcat Lane, St. Robert, MO 65584-5678"
                             android:textColor="@color/black" />
 
                     </LinearLayout>
