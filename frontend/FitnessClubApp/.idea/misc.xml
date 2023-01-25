@@ -22,10 +22,13 @@
         <entry key="..\:/Users/Administrator/StudioProjects/fitness-club-app/frontend/FitnessClubApp/app/src/main/res/layout/athlete_diet.xml" value="0.16087516087516088" />
         <entry key="..\:/Users/Administrator/StudioProjects/fitness-club-app/frontend/FitnessClubApp/app/src/main/res/layout/athlete_diet_more_item.xml" value="0.2734375" />
         <entry key="..\:/Users/Administrator/StudioProjects/fitness-club-app/frontend/FitnessClubApp/app/src/main/res/layout/athlete_diet_plan_item.xml" value="0.27447916666666666" />
+        <entry key="..\:/Users/Administrator/StudioProjects/fitness-club-app/frontend/FitnessClubApp/app/src/main/res/layout/athlete_discover_diet_item.xml" value="0.27447916666666666" />
+        <entry key="..\:/Users/Administrator/StudioProjects/fitness-club-app/frontend/FitnessClubApp/app/src/main/res/layout/athlete_discover_event_item.xml" value="0.27447916666666666" />
         <entry key="..\:/Users/Administrator/StudioProjects/fitness-club-app/frontend/FitnessClubApp/app/src/main/res/layout/athlete_discover_program_item.xml" value="0.2734375" />
         <entry key="..\:/Users/Administrator/StudioProjects/fitness-club-app/frontend/FitnessClubApp/app/src/main/res/layout/athlete_food_item.xml" value="0.1" />
         <entry key="..\:/Users/Administrator/StudioProjects/fitness-club-app/frontend/FitnessClubApp/app/src/main/res/layout/athlete_program.xml" value="0.27447916666666666" />
         <entry key="..\:/Users/Administrator/StudioProjects/fitness-club-app/frontend/FitnessClubApp/app/src/main/res/layout/athlete_program_item.xml" value="0.264" />
+        <entry key="..\:/Users/Administrator/StudioProjects/fitness-club-app/frontend/FitnessClubApp/app/src/main/res/layout/athlete_recipe_item.xml" value="0.27447916666666666" />
         <entry key="..\:/Users/Administrator/StudioProjects/fitness-club-app/frontend/FitnessClubApp/app/src/main/res/layout/athlete_today_diet_item.xml" value="0.1" />
         <entry key="..\:/Users/Administrator/StudioProjects/fitness-club-app/frontend/FitnessClubApp/app/src/main/res/layout/athlete_today_workout_item.xml" value="0.264" />
         <entry key="..\:/Users/Administrator/StudioProjects/fitness-club-app/frontend/FitnessClubApp/app/src/main/res/layout/athlete_your_events_item.xml" value="0.1" />
@@ -33,22 +36,24 @@
         <entry key="..\:/Users/Administrator/StudioProjects/fitness-club-app/frontend/FitnessClubApp/app/src/main/res/layout/f.xml" value="0.1" />
         <entry key="..\:/Users/Administrator/StudioProjects/fitness-club-app/frontend/FitnessClubApp/app/src/main/res/layout/fragment_athlete_club.xml" value="0.264" />
         <entry key="..\:/Users/Administrator/StudioProjects/fitness-club-app/frontend/FitnessClubApp/app/src/main/res/layout/fragment_athlete_diet.xml" value="0.264" />
-        <entry key="..\:/Users/Administrator/StudioProjects/fitness-club-app/frontend/FitnessClubApp/app/src/main/res/layout/fragment_athlete_diet_description.xml" value="0.264" />
+        <entry key="..\:/Users/Administrator/StudioProjects/fitness-club-app/frontend/FitnessClubApp/app/src/main/res/layout/fragment_athlete_diet_description.xml" value="0.2" />
+        <entry key="..\:/Users/Administrator/StudioProjects/fitness-club-app/frontend/FitnessClubApp/app/src/main/res/layout/fragment_athlete_diet_recipe_description.xml" value="0.1" />
         <entry key="..\:/Users/Administrator/StudioProjects/fitness-club-app/frontend/FitnessClubApp/app/src/main/res/layout/fragment_athlete_discover.xml" value="0.2" />
-        <entry key="..\:/Users/Administrator/StudioProjects/fitness-club-app/frontend/FitnessClubApp/app/src/main/res/layout/fragment_athlete_event_description.xml" value="0.264" />
+        <entry key="..\:/Users/Administrator/StudioProjects/fitness-club-app/frontend/FitnessClubApp/app/src/main/res/layout/fragment_athlete_event_description.xml" value="0.2" />
         <entry key="..\:/Users/Administrator/StudioProjects/fitness-club-app/frontend/FitnessClubApp/app/src/main/res/layout/fragment_athlete_fitness.xml" value="0.27447916666666666" />
         <entry key="..\:/Users/Administrator/StudioProjects/fitness-club-app/frontend/FitnessClubApp/app/src/main/res/layout/fragment_athlete_food_description.xml" value="0.2" />
         <entry key="..\:/Users/Administrator/StudioProjects/fitness-club-app/frontend/FitnessClubApp/app/src/main/res/layout/fragment_athlete_home.xml" value="0.264" />
-        <entry key="..\:/Users/Administrator/StudioProjects/fitness-club-app/frontend/FitnessClubApp/app/src/main/res/layout/fragment_athlete_program_description.xml" value="0.1" />
+        <entry key="..\:/Users/Administrator/StudioProjects/fitness-club-app/frontend/FitnessClubApp/app/src/main/res/layout/fragment_athlete_program_description.xml" value="0.264" />
         <entry key="..\:/Users/Administrator/StudioProjects/fitness-club-app/frontend/FitnessClubApp/app/src/main/res/layout/fragment_athlete_sign_up.xml" value="0.264" />
-        <entry key="..\:/Users/Administrator/StudioProjects/fitness-club-app/frontend/FitnessClubApp/app/src/main/res/layout/fragment_athlete_workout_description.xml" value="0.264" />
+        <entry key="..\:/Users/Administrator/StudioProjects/fitness-club-app/frontend/FitnessClubApp/app/src/main/res/layout/fragment_athlete_workout_description.xml" value="0.2" />
         <entry key="..\:/Users/Administrator/StudioProjects/fitness-club-app/frontend/FitnessClubApp/app/src/main/res/layout/fragment_club_sign_up.xml" value="0.1" />
         <entry key="..\:/Users/Administrator/StudioProjects/fitness-club-app/frontend/FitnessClubApp/app/src/main/res/layout/fragment_forgot_password.xml" value="0.264" />
         <entry key="..\:/Users/Administrator/StudioProjects/fitness-club-app/frontend/FitnessClubApp/app/src/main/res/layout/fragment_forgot_password_email_sent.xml" value="0.264" />
         <entry key="..\:/Users/Administrator/StudioProjects/fitness-club-app/frontend/FitnessClubApp/app/src/main/res/layout/fragment_login.xml" value="0.264" />
         <entry key="..\:/Users/Administrator/StudioProjects/fitness-club-app/frontend/FitnessClubApp/app/src/main/res/layout/fragment_reset_password.xml" value="0.27447916666666666" />
+        <entry key="..\:/Users/Administrator/StudioProjects/fitness-club-app/frontend/FitnessClubApp/app/src/main/res/layout/recipe_review_item.xml" value="0.2" />
         <entry key="..\:/Users/Administrator/StudioProjects/fitness-club-app/frontend/FitnessClubApp/app/src/main/res/layout/slider_item.xml" value="0.22435897435897437" />
-        <entry key="..\:/Users/Administrator/StudioProjects/fitness-club-app/frontend/FitnessClubApp/app/src/main/res/layout/user_comments_item.xml" value="0.4" />
+        <entry key="..\:/Users/Administrator/StudioProjects/fitness-club-app/frontend/FitnessClubApp/app/src/main/res/layout/user_comments_item.xml" value="0.264" />
         <entry key="..\:/Users/Administrator/StudioProjects/fitness-club-app/frontend/FitnessClubApp/app/src/main/res/layout/welcome_slider1.xml" value="0.2734375" />
         <entry key="..\:/Users/Administrator/StudioProjects/fitness-club-app/frontend/FitnessClubApp/app/src/main/res/layout/welcome_slider2.xml" value="0.2734375" />
         <entry key="..\:/Users/Administrator/StudioProjects/fitness-club-app/frontend/FitnessClubApp/app/src/main/res/layout/welcome_slider3.xml" value="0.22435897435897437" />

@@ -1,6 +1,7 @@
 package com.fitness.app.adapters
 
 import android.content.Context
+import android.graphics.drawable.BitmapDrawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -41,9 +42,9 @@ class DiscoverProgramsAdapter(
         holder.binding.lifecycleOwner = lifecycleOwner
         getItem(position).let { discoverProgram ->
             holder.apply {
-                image.setBackgroundResource(R.drawable.temp_program_image)
+                image.background = BitmapDrawable(context.resources, discoverProgram.image)
                 title.text = discoverProgram.title
-                subTitle.text = discoverProgram.subTitle
+                subTitle.text = discoverProgram.clubName
 
                 binding.program.setOnClickListener {
                     val programDescriptionFragment = AthleteProgramDescriptionFragment()

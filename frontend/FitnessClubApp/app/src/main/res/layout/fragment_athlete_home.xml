@@ -70,14 +70,32 @@
                                 android:layout_marginEnd="20dp"
                                 android:orientation="vertical">
 
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="20dp"
-                                    android:text="Good morning, Reza!"
+                                    android:text="Good morning,"
                                     android:textColor="@color/black"
                                     android:textSize="20sp"
+                                    android:layout_marginEnd="5dp"
                                     android:textStyle="bold" />
+
+                                    <TextView
+                                        android:id="@+id/userFirstName"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="20dp"
+                                        android:text=""
+                                        android:textColor="@color/black"
+                                        android:textSize="20sp"
+                                        android:textStyle="bold" />
+
+                                </LinearLayout>
 
                                 <TextView
                                     android:layout_width="wrap_content"
@@ -118,7 +136,7 @@
                                     android:textColor="@color/black" />
 
                                 <androidx.recyclerview.widget.RecyclerView
-                                    android:id="@+id/dietsRecyclerView"
+                                    android:id="@+id/foodsRecyclerView"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="10dp"
@@ -129,7 +147,7 @@
                                     android:paddingStart="20dp"
                                     android:paddingEnd="10dp"
                                     tools:itemCount="15"
-                                    tools:listitem="@layout/athlete_today_diet_item" />
+                                    tools:listitem="@layout/athlete_food_item" />
 
                                 <TextView
                                     android:layout_width="match_parent"
@@ -141,7 +159,7 @@
                                     android:textColor="@color/black" />
 
                                 <androidx.recyclerview.widget.RecyclerView
-                                    android:id="@+id/foodsRecyclerView"
+                                    android:id="@+id/recipesRecyclerView"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="10dp"
@@ -152,7 +170,7 @@
                                     android:paddingEnd="10dp"
                                     app:reverseLayout="true"
                                     tools:itemCount="15"
-                                    tools:listitem="@layout/athlete_food_item" />
+                                    tools:listitem="@layout/athlete_recipe_item" />
 
                                 <TextView
                                     android:layout_width="match_parent"
@@ -193,15 +211,25 @@
                                                     android:textColor="@color/black" />
 
                                                 <TextView
+                                                    android:id="@+id/targetWeightKG"
                                                     android:layout_width="wrap_content"
                                                     android:layout_height="wrap_content"
                                                     android:layout_marginStart="5dp"
-                                                    android:text="75kg"
                                                     android:textColor="@color/black" />
+
+                                                <ImageView
+                                                    android:id="@+id/targetWeightIsDoneImage"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_gravity="center"
+                                                    android:layout_marginStart="10dp"
+                                                    android:visibility="invisible"
+                                                    android:background="@drawable/ic_checked" />
 
                                             </LinearLayout>
 
                                             <com.google.android.material.progressindicator.LinearProgressIndicator
+                                                android:id="@+id/targetWeightProgress"
                                                 android:layout_width="match_parent"
                                                 android:layout_height="wrap_content"
                                                 android:layout_marginTop="10dp"
@@ -231,23 +259,25 @@
                                                     android:textColor="@color/black" />
 
                                                 <TextView
+                                                    android:id="@+id/targetWaistWidth"
                                                     android:layout_width="wrap_content"
                                                     android:layout_height="wrap_content"
                                                     android:layout_marginStart="5dp"
-                                                    android:text="90cm"
                                                     android:textColor="@color/black" />
 
                                                 <ImageView
-                                                    android:id="@+id/dayWorkoutIsCheckedImage"
+                                                    android:id="@+id/targetWaistIsDoneImage"
                                                     android:layout_width="wrap_content"
                                                     android:layout_height="wrap_content"
                                                     android:layout_gravity="center"
                                                     android:layout_marginStart="10dp"
+                                                    android:visibility="invisible"
                                                     android:background="@drawable/ic_checked" />
 
                                             </LinearLayout>
 
                                             <com.google.android.material.progressindicator.LinearProgressIndicator
+                                                android:id="@+id/targetWaistProgress"
                                                 android:layout_width="match_parent"
                                                 android:layout_height="wrap_content"
                                                 android:layout_marginTop="10dp"
@@ -276,15 +306,25 @@
                                                     android:textColor="@color/black" />
 
                                                 <TextView
+                                                    android:id="@+id/targetBicepSize"
                                                     android:layout_width="wrap_content"
                                                     android:layout_height="wrap_content"
                                                     android:layout_marginStart="5dp"
-                                                    android:text="38cm"
                                                     android:textColor="@color/black" />
+
+                                                <ImageView
+                                                    android:id="@+id/targetBicepIsDoneImage"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_gravity="center"
+                                                    android:layout_marginStart="10dp"
+                                                    android:visibility="invisible"
+                                                    android:background="@drawable/ic_checked" />
 
                                             </LinearLayout>
 
                                             <com.google.android.material.progressindicator.LinearProgressIndicator
+                                                android:id="@+id/targetBicepProgress"
                                                 android:layout_width="match_parent"
                                                 android:layout_height="wrap_content"
                                                 android:layout_marginTop="10dp"

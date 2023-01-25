@@ -1,18 +1,16 @@
 package com.fitness.app.views.fragments
 
+import android.content.Intent
+import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.fitness.app.R
 import com.fitness.app.adapters.DiscoverProgramsAdapter
 import com.fitness.app.adapters.YourEventsAdapter
 import com.fitness.app.databinding.FragmentAthleteClubBinding
-import com.fitness.app.databinding.FragmentAthleteDiscoverBinding
-import com.fitness.app.databinding.FragmentAthleteHomeBinding
 import com.fitness.app.viewmodel.AthleteHomeViewModel
 import com.fitness.app.views.activities.AthleteHomeActivity
 import java.util.concurrent.TimeUnit
@@ -22,6 +20,7 @@ class AthleteClubFragment : Fragment(R.layout.fragment_athlete_club) {
     lateinit var binding: FragmentAthleteClubBinding
     lateinit var eventsAdapter: YourEventsAdapter
     lateinit var programAdapter: DiscoverProgramsAdapter
+    var clubId: Int = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,46 +33,61 @@ class AthleteClubFragment : Fragment(R.layout.fragment_athlete_club) {
         binding = FragmentAthleteClubBinding.bind(view)
         val activity = activity as AthleteHomeActivity
 
-        setUpPrograms()
-        setUpEvents()
+        val intent: Intent = activity.intent
+
+        clubId = intent.getIntExtra("clubId", -1)
+
+        setUpClubData()
+        setUpClubPrograms()
+        setUpClubEvents()
+
 
     }
 
-    private fun setUpPrograms(){
-        binding.programsRecyclerView.apply {
-            layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL)
-            setHasFixedSize(true)
-            programAdapter =
-                DiscoverProgramsAdapter(viewLifecycleOwner, context)
-//            dietAdapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
-            adapter = programAdapter
-            postponeEnterTransition(300, TimeUnit.MILLISECONDS)
-            viewTreeObserver.addOnPreDrawListener {
-                startPostponedEnterTransition()
-                true
-            }
-
+    private fun setUpClubData() {
+        viewModel.getClubById(clubId = clubId.toString(), context = requireContext()){club->
+            binding.clubCoverPicture.background = BitmapDrawable(resources,club.image)
+            binding.clubName.text = club.name
+            binding.description.text = club.description
+            binding.manager.text = club.manager
+            binding.nAthletes.text = club.nAthletes.toString()
+            binding.rating.text = club.rating.rating
+            binding.nRates.text = club.rating.nRates.toString()
+            binding.since.text = club.since
+            binding.phoneNumber.text = club.phoneNumber
+            binding.email.text = club.email
+            binding.website.text = club.website
+            binding.address.text = club.address
         }
-
-        programAdapter.submitList(viewModel.getAllDiscoverProgramsItems())
     }
 
-    private fun setUpEvents(){
-        binding.eventsRecyclerView.apply {
-            layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL)
-            setHasFixedSize(true)
-            eventsAdapter = YourEventsAdapter(viewLifecycleOwner, context)
-//            dietAdapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
-            adapter = eventsAdapter
-            postponeEnterTransition(300, TimeUnit.MILLISECONDS)
-            viewTreeObserver.addOnPreDrawListener {
-                startPostponedEnterTransition()
-                true
+    private fun setUpClubPrograms(){
+        viewModel.getClubPrograms(clubId = clubId.toString(), context = requireContext()){clubPrograms->
+            binding.programsRecyclerView.apply {
+                layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL)
+                setHasFixedSize(true)
+                programAdapter =
+                    DiscoverProgramsAdapter(viewLifecycleOwner, context)
+                adapter = programAdapter
             }
-
+            programAdapter.submitList(clubPrograms)
         }
 
-        eventsAdapter.submitList(viewModel.getAllYourEventsItems())
+    }
+
+    private fun setUpClubEvents() {
+        viewModel.getClubEvents(
+            clubId = clubId.toString(),
+            context = requireContext()
+        ) { clubEvents ->
+            binding.eventsRecyclerView.apply {
+                layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL)
+                setHasFixedSize(true)
+                eventsAdapter = YourEventsAdapter(viewLifecycleOwner, context)
+                adapter = eventsAdapter
+            }
+            eventsAdapter.submitList(clubEvents)
+        }
     }
 
 }

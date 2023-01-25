@@ -22,15 +22,15 @@
                 android:layout_height="wrap_content">
 
                 <ImageView
-                    android:id="@+id/image"
+                    android:id="@+id/clubCoverPicture"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/temp_club_image" />
+                    android:layout_height="wrap_content" />
 
                 <TextView
+                    android:id="@+id/clubName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignBottom="@id/image"
+                    android:layout_alignBottom="@id/clubCoverPicture"
                     android:layout_marginStart="15dp"
                     android:layout_marginBottom="10dp"
                     android:text="Pulse Fitness Club"
@@ -58,6 +58,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginTop="20dp"
                     android:orientation="vertical">
 
                     <LinearLayout
@@ -73,10 +74,10 @@
                             android:text="Manager" />
 
                         <TextView
+                            android:id="@+id/manager"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
-                            android:text="John Doe"
                             android:textColor="@color/black" />
 
                     </LinearLayout>
@@ -95,10 +96,10 @@
                             android:text="Description" />
 
                         <TextView
+                            android:id="@+id/description"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
-                            android:text="Gold's Gym International, Inc. is an American chain of international co-ed fitness centers originally started by Joe Gold in Venice Beach, California. Each gym offers a variety of cardio ..."
                             android:textColor="@color/black" />
 
                     </LinearLayout>
@@ -122,10 +123,10 @@
                                 android:text="Athletes" />
 
                             <TextView
+                                android:id="@+id/nAthletes"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="5dp"
-                                android:text="16,788"
                                 android:textColor="@color/black" />
 
                         </LinearLayout>
@@ -137,16 +138,31 @@
                             android:orientation="vertical">
 
                             <TextView
-                                android:layout_width="match_parent"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Rating" />
 
-                            <TextView
-                                android:layout_width="match_parent"
+                            <LinearLayout
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="5dp"
-                                android:text="4.3"
-                                android:textColor="@color/black" />
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/rating"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="5dp"
+                                    android:textColor="@color/black" />
+
+                                <TextView
+                                    android:id="@+id/nRates"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="10dp"
+                                    android:layout_marginTop="5dp"
+                                    android:textColor="@color/black" />
+
+                            </LinearLayout>
 
                         </LinearLayout>
 
@@ -162,10 +178,10 @@
                                 android:text="Since" />
 
                             <TextView
+                                android:id="@+id/since"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="5dp"
-                                android:text="Jan 1, 2022"
                                 android:textColor="@color/black" />
 
                         </LinearLayout>
@@ -186,10 +202,10 @@
                             android:text="Phone Number" />
 
                         <TextView
+                            android:id="@+id/phoneNumber"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
-                            android:text="+9812334567889"
                             android:textColor="@color/black" />
 
                     </LinearLayout>
@@ -208,10 +224,10 @@
                             android:text="Email" />
 
                         <TextView
+                            android:id="@+id/email"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
-                            android:text="support@pulsefitnessclub.com"
                             android:textColor="@color/black" />
 
                     </LinearLayout>
@@ -230,10 +246,10 @@
                             android:text="Website" />
 
                         <TextView
+                            android:id="@+id/website"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
-                            android:text="www.pulsefitnessclub.com"
                             android:textColor="@color/black" />
 
                     </LinearLayout>
@@ -252,10 +268,10 @@
                             android:text="Address" />
 
                         <TextView
+                            android:id="@+id/address"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
-                            android:text="Robert Robertson, 1234 NW Bobcat Lane, St. Robert, MO 65584-5678"
                             android:textColor="@color/black" />
 
                     </LinearLayout>

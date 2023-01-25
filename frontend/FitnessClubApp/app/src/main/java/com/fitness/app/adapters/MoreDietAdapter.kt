@@ -26,8 +26,8 @@ class MoreDietAdapter (
 
     inner class MoreDietViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val binding: AthleteDietMoreItemBinding = AthleteDietMoreItemBinding.bind(itemView)
-        val image: ImageView = binding.dietImage
-        val title: TextView = binding.dietTitle
+        val image: ImageView = binding.foodImage
+        val title: TextView = binding.foodTitle
         var subTitle: TextView = binding.dietSubtitle
 
     }
@@ -46,7 +46,7 @@ class MoreDietAdapter (
                 title.text = diet.title
                 subTitle.text = diet.subTitle
 
-                binding.diet.setOnClickListener {
+                binding.food.setOnClickListener {
                     val athleteDietDescriptionFragment = AthleteDietDescriptionFragment()
                     val fragmentManager = (context as AppCompatActivity).supportFragmentManager.beginTransaction()
                     fragmentManager.replace(R.id.athleteHomeMainParentFragment, athleteDietDescriptionFragment)
