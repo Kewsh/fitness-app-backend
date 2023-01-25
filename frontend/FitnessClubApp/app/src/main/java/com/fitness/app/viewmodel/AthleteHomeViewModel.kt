@@ -12,6 +12,18 @@ import com.fitness.app.repository.AthleteHomeRepository
 
 class AthleteHomeViewModel(private val athleteHomeRepository: AthleteHomeRepository) : ViewModel() {
 
+    fun getRecipeReviews(recipeId:String,context: Context,callback:(ArrayList<RecipeReview>)->Unit){
+        return athleteHomeRepository.getRecipeReviews(recipeId,context){recipeReviews->
+            callback(recipeReviews)
+        }
+    }
+
+    fun getRecipe(recipeId: String,context: Context,callback:(Recipe)->Unit){
+        return athleteHomeRepository.getRecipe(recipeId,context){recipe->
+            callback(recipe)
+        }
+    }
+
     fun getWorkout(workoutId: String,context: Context,callback:(Workout)->Unit){
         return athleteHomeRepository.getWorkout(workoutId,context){workout->
             callback(workout)

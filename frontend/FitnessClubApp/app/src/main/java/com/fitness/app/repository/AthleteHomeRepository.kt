@@ -12,6 +12,41 @@ import com.fitness.app.model.api.request.event.DiscoverEventsRequest
 import com.fitness.app.model.api.request.program.DiscoverProgramsRequest
 
 class AthleteHomeRepository() {
+    fun getRecipeReviews(
+        recipeId: String,
+        context: Context,
+        callback: (ArrayList<RecipeReview>) -> Unit
+    ) {
+        Log.e("h2","h2")
+        val recipeService = RecipeService(context)
+        val recipeReviews: ArrayList<RecipeReview> = ArrayList()
+        recipeService.getRecipeReviews(recipeId) { response ->
+            Log.e("resp",response.toString())
+            if (response != null) {
+                for (i in 0 until response.data.size) {
+                    val recipeReviewService = RecipeReviewService(context)
+                    Log.e("id",response.data[i].comment.recipeReviewId.toString())
+                    recipeReviewService.getRecipeReviewPicture(response.data[i].id.toString()) { recipeReviewPicture ->
+                        if (recipeReviewPicture != null) {
+                            recipeReviews.add(
+                                RecipeReview(
+                                    recipeReviewPicture,
+                                    response.data[i].id,
+                                    response.data[i].createdAt,
+                                    response.data[i].updatedAt,
+                                    response.data[i].recipeId,
+                                    response.data[i].comment,
+                                )
+                            )
+                            Log.e("rec",recipeReviews.toString())
+                            callback(recipeReviews)
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     fun getEventComments(
         eventId: String,
         context: Context,
@@ -279,7 +314,24 @@ class AthleteHomeRepository() {
                     val recipeService = RecipeService(context)
                     recipeService.getRecipeCoverPicture(response.data[i].id.toString()) { recipePicture ->
                         if (recipePicture != null) {
-                            dietRecipes.add(Recipe(recipePicture, response.data[i].title))
+                            dietRecipes.add(
+                                Recipe(
+                                    recipePicture,
+                                    response.data[i].id,
+                                    response.data[i].title,
+                                    response.data[i].description,
+                                    response.data[i].origin,
+                                    response.data[i].prepTimeInMinutes,
+                                    response.data[i].servings,
+                                    response.data[i].price,
+                                    response.data[i].stepByStepGuide,
+                                    response.data[i].createdAt,
+                                    response.data[i].updatedAt,
+                                    response.data[i].dietId,
+                                    response.data[i].recipeIngredients,
+                                    response.data[i].diet,
+                                    response.data[i].rating)
+                            )
                         }
                         callback(dietRecipes)
                     }
@@ -384,6 +436,37 @@ class AthleteHomeRepository() {
                                 response.data.nAthletes,
                                 response.data.rating,
                                 response.data.nutritionist
+                            )
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    fun getRecipe(recipeId: String, context: Context, callback: (Recipe) -> Unit) {
+        val apiService = RecipeService(context)
+        apiService.getRecipeById(recipeId) { response ->
+            if (response != null) {
+                apiService.getRecipeCoverPicture(response.data.id.toString()) { recipePicture ->
+                    if (recipePicture != null) {
+                        callback(
+                            Recipe(
+                                recipePicture,
+                                response.data.id,
+                                response.data.title,
+                                response.data.description,
+                                response.data.origin,
+                                response.data.prepTimeInMinutes,
+                                response.data.servings,
+                                response.data.price,
+                                response.data.stepByStepGuide,
+                                response.data.createdAt,
+                                response.data.updatedAt,
+                                response.data.dietId,
+                                response.data.recipeIngredients,
+                                response.data.diet,
+                                response.data.rating
                             )
                         )
                     }

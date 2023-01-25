@@ -45,6 +45,7 @@ class RecipeService(val context: Context) {
         retrofit.getRecipeReviews(recipeId).enqueue(
             object : Callback<GetRecipeReviewsResponse> {
                 override fun onFailure(call: Call<GetRecipeReviewsResponse>, t: Throwable) {
+                    Log.e("t",t.message.toString())
                     onResult(null)
                 }
                 override fun onResponse(call: Call<GetRecipeReviewsResponse>, response: Response<GetRecipeReviewsResponse>) {
