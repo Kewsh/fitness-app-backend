@@ -8,9 +8,28 @@ import com.fitness.app.model.api.Club
 import com.fitness.app.model.api.request.diet.DiscoverDietsRequest
 import com.fitness.app.model.api.request.event.DiscoverEventsRequest
 import com.fitness.app.model.api.request.program.DiscoverProgramsRequest
+import com.fitness.app.model.api.response.diet.Nutritionist
 import com.fitness.app.repository.AthleteHomeRepository
 
 class AthleteHomeViewModel(private val athleteHomeRepository: AthleteHomeRepository) : ViewModel() {
+
+    fun getNutritionistDiets(nutritionistId: String,context: Context,callback:(ArrayList<DiscoverDiet>)->Unit){
+        return athleteHomeRepository.getNutritionistDiets(nutritionistId,context){nutritionistDiets->
+            callback(nutritionistDiets)
+        }
+    }
+
+    fun getNutritionistPicture(nutritionistId: String,context: Context,callback:(Bitmap)->Unit){
+        return athleteHomeRepository.getNutritionistPicture(nutritionistId,context){nutritionistPicture->
+            callback(nutritionistPicture)
+        }
+    }
+
+    fun getDietComments(dietId:String,context: Context,callback:(ArrayList<Comment>)->Unit){
+        return athleteHomeRepository.getDietComments(dietId,context){dietComments->
+            callback(dietComments)
+        }
+    }
 
     fun getRecipeReviews(recipeId:String,context: Context,callback:(ArrayList<RecipeReview>)->Unit){
         return athleteHomeRepository.getRecipeReviews(recipeId,context){recipeReviews->

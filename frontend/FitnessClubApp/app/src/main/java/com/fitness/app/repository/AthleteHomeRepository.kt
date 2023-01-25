@@ -10,8 +10,85 @@ import com.fitness.app.model.api.Club
 import com.fitness.app.model.api.request.diet.DiscoverDietsRequest
 import com.fitness.app.model.api.request.event.DiscoverEventsRequest
 import com.fitness.app.model.api.request.program.DiscoverProgramsRequest
+import com.fitness.app.model.api.response.diet.Nutritionist
 
 class AthleteHomeRepository() {
+
+    fun getNutritionistDiets(
+        nutritionistId: String,
+        context: Context,
+        callback: (ArrayList<DiscoverDiet>) -> Unit
+    ) {
+        val nutritionistDiets: ArrayList<DiscoverDiet> = ArrayList()
+        val apiService = NutritionistService(context)
+        apiService.getNutritionistDiets(nutritionistId) { response ->
+            if (response != null) {
+                for (i in 0 until response.data.size) {
+                    val dietService = DietService(context)
+                    dietService.getDietCoverPicture(response.data[i].id.toString()) { dietPicture ->
+                        if (dietPicture != null) {
+                            nutritionistDiets.add(
+                                DiscoverDiet(
+                                    dietPicture,
+                                    response.data[i].title,
+                                    response.data[i].nutritionist.fullName
+                                )
+                            )
+                        }
+                        callback(nutritionistDiets)
+                    }
+
+                }
+            }
+        }
+    }
+
+    fun getNutritionistPicture(nutritionistId: String,context: Context,callback: (Bitmap) -> Unit){
+        val nutritionistService = NutritionistService(context)
+        nutritionistService.getNutritionistPicture(nutritionistId) { nutritionistPicture ->
+            if (nutritionistPicture != null) {
+                callback(nutritionistPicture)
+            }
+        }
+    }
+
+    fun getDietComments(
+        dietId: String,
+        context: Context,
+        callback: (ArrayList<Comment>) -> Unit
+    ) {
+        val dietService = DietService(context)
+        val dietComments: ArrayList<Comment> = ArrayList()
+        dietService.getDietComments(dietId) { response ->
+            if (response != null) {
+                for (i in 0 until response.data.size) {
+                    val athleteService = AthleteService(context)
+                    athleteService.getAthleteProfilePicture(response.data[i].userId.toString()) { athleteProfilePicture ->
+                        if (athleteProfilePicture != null) {
+                            dietComments.add(
+                                Comment(
+                                    athleteProfilePicture,
+                                    response.data[i].id,
+                                    response.data[i].text,
+                                    response.data[i].rate,
+                                    response.data[i].programId,
+                                    response.data[i].eventId,
+                                    response.data[i].dietId,
+                                    response.data[i].recipeReviewId,
+                                    response.data[i].userId,
+                                    response.data[i].updatedAt,
+                                    response.data[i].createdAt,
+                                    response.data[i].user
+                                )
+                            )
+                            callback(dietComments)
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     fun getRecipeReviews(
         recipeId: String,
         context: Context,

@@ -50,6 +50,10 @@ class AthleteDietFragment : Fragment(R.layout.fragment_athlete_diet) {
 
         binding.dietLayout.diet.setOnClickListener {
             val athleteDietDescriptionFragment = AthleteDietDescriptionFragment()
+            val bundle = Bundle()
+            bundle.putString("dietId",dietId.toString())
+            bundle.putInt("userId",userId)
+            athleteDietDescriptionFragment.arguments = bundle
             val fragmentManager = (context as AppCompatActivity).supportFragmentManager.beginTransaction()
             fragmentManager.replace(R.id.athleteHomeMainParentFragment, athleteDietDescriptionFragment)
             fragmentManager.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)

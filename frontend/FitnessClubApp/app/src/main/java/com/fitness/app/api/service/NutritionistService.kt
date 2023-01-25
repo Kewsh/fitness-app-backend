@@ -6,7 +6,9 @@ import android.graphics.BitmapFactory
 import android.util.Log
 import com.fitness.app.api.ServiceBuilder
 import com.fitness.app.api.endpoint.NutritionistEndpoints
+import com.fitness.app.model.api.response.ErrorResponse
 import com.fitness.app.model.api.response.nutritionist.GetNutritionistDietsResponse
+import com.google.gson.Gson
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -40,13 +42,16 @@ class NutritionistService(val context: Context) {
     }
 
     fun getNutritionistDiets(nutritionistId: String, onResult: (GetNutritionistDietsResponse?) -> Unit){
+        Log.e("i",nutritionistId.toString())
         val retrofit = ServiceBuilder.buildService(NutritionistEndpoints::class.java)
         retrofit.getNutritionistDiets(nutritionistId).enqueue(
             object : Callback<GetNutritionistDietsResponse> {
                 override fun onFailure(call: Call<GetNutritionistDietsResponse>, t: Throwable) {
+                    Log.e("t",t.message.toString())
                     onResult(null)
                 }
                 override fun onResponse(call: Call<GetNutritionistDietsResponse>, response: Response<GetNutritionistDietsResponse>) {
+                    Log.e("resp",response.body().toString())
                     onResult(response.body())
                 }
             }
