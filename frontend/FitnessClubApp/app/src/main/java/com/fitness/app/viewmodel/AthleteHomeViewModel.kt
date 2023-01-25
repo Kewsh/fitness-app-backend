@@ -13,7 +13,7 @@ import com.fitness.app.repository.AthleteHomeRepository
 
 class AthleteHomeViewModel(private val athleteHomeRepository: AthleteHomeRepository) : ViewModel() {
 
-    fun getNutritionistDiets(nutritionistId: String,context: Context,callback:(ArrayList<DiscoverDiet>)->Unit){
+    fun getNutritionistDiets(nutritionistId: String,context: Context,callback:(ArrayList<Diet>)->Unit){
         return athleteHomeRepository.getNutritionistDiets(nutritionistId,context){nutritionistDiets->
             callback(nutritionistDiets)
         }
@@ -151,7 +151,7 @@ class AthleteHomeViewModel(private val athleteHomeRepository: AthleteHomeReposit
         }
     }
 
-    fun getAllDiscoverDietsItems(discoverDietsRequest: DiscoverDietsRequest,context: Context,callback:(ArrayList<DiscoverDiet>)->Unit) {
+    fun getAllDiscoverDietsItems(discoverDietsRequest: DiscoverDietsRequest,context: Context,callback:(ArrayList<Diet>)->Unit) {
         return athleteHomeRepository.getAllDiscoverDietsItems(discoverDietsRequest,context){discoverDiets->
             callback(discoverDiets)
         }

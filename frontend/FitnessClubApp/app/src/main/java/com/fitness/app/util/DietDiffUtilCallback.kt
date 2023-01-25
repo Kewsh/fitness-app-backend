@@ -1,14 +1,15 @@
 package com.fitness.app.util
 
 import androidx.recyclerview.widget.DiffUtil
+import com.fitness.app.model.Diet
 import com.fitness.app.model.Food
 
-class DietDiffUtilCallback : DiffUtil.ItemCallback<Food>() {
-    override fun areItemsTheSame(oldItem: Food, newItem: Food): Boolean {
-        return oldItem.image == newItem.image
+class DietDiffUtilCallback : DiffUtil.ItemCallback<Diet>() {
+    override fun areItemsTheSame(oldItem: Diet, newItem: Diet): Boolean {
+        return oldItem.id == newItem.id
     }
 
-    override fun areContentsTheSame(oldItem: Food, newItem: Food): Boolean {
-        return oldItem.image == newItem.image
+    override fun areContentsTheSame(oldItem: Diet, newItem: Diet): Boolean {
+        return oldItem.id == newItem.id
     }
 }

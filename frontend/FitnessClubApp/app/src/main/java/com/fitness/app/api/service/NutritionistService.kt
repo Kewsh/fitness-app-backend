@@ -42,7 +42,6 @@ class NutritionistService(val context: Context) {
     }
 
     fun getNutritionistDiets(nutritionistId: String, onResult: (GetNutritionistDietsResponse?) -> Unit){
-        Log.e("i",nutritionistId.toString())
         val retrofit = ServiceBuilder.buildService(NutritionistEndpoints::class.java)
         retrofit.getNutritionistDiets(nutritionistId).enqueue(
             object : Callback<GetNutritionistDietsResponse> {

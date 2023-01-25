@@ -64,8 +64,8 @@ class AthleteDietDescriptionFragment : Fragment(R.layout.fragment_athlete_diet_d
             binding.dietDescription.text = diet.description
             binding.dietDuration.text = diet.duration.toString()
             binding.dietNAthletes.text = diet.nAthletes.toString()
-            binding.dietRating.text = diet.rating.rating
-            binding.dietNRates.text = diet.rating.nRates.toString()
+            binding.dietRating.text = diet.rating?.rating ?: ""
+            binding.dietNRates.text = diet.rating?.nRates.toString()
             binding.dietPrice.text = diet.price.toString()
             nutritionistId = diet.nutritionist.id.toString()
 
@@ -110,7 +110,7 @@ class AthleteDietDescriptionFragment : Fragment(R.layout.fragment_athlete_diet_d
                 layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL)
                 setHasFixedSize(true)
                 moreDietAdapter =
-                    DiscoverDietsAdapter(viewLifecycleOwner, context)
+                    DiscoverDietsAdapter(viewLifecycleOwner, context,userId)
                 adapter = moreDietAdapter
 
             }

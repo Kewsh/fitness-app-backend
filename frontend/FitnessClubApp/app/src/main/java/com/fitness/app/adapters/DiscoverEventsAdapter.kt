@@ -2,6 +2,7 @@ package com.fitness.app.adapters
 
 import android.content.Context
 import android.graphics.drawable.BitmapDrawable
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +17,7 @@ import com.fitness.app.R
 import com.fitness.app.databinding.AthleteDiscoverEventItemBinding
 import com.fitness.app.model.Event
 import com.fitness.app.util.DiscoverEventDiffUtilCallback
+import com.fitness.app.views.fragments.AthleteEventDescriptionFragment
 import com.fitness.app.views.fragments.AthleteProgramDescriptionFragment
 
 class DiscoverEventsAdapter(
@@ -48,9 +50,12 @@ class DiscoverEventsAdapter(
                 subTitle.text = discoverEvent.club.name
 
                 binding.event.setOnClickListener {
-                    val programDescriptionFragment = AthleteProgramDescriptionFragment()
+                    val athleteEventDescriptionFragment = AthleteEventDescriptionFragment()
+                    val bundle = Bundle()
+                    bundle.putString("eventId",discoverEvent.id.toString())
+                    athleteEventDescriptionFragment.arguments = bundle
                     val fragmentManager = (context as AppCompatActivity).supportFragmentManager.beginTransaction()
-                    fragmentManager.replace(R.id.athleteHomeMainParentFragment, programDescriptionFragment)
+                    fragmentManager.replace(R.id.athleteHomeMainParentFragment, athleteEventDescriptionFragment)
                     fragmentManager.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                     fragmentManager.addToBackStack(null)
                     fragmentManager.commit()

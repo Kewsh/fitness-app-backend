@@ -16,13 +16,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.fitness.app.R
 import com.fitness.app.databinding.AthleteRecipeItemBinding
 import com.fitness.app.model.Recipe
-import com.fitness.app.util.FoodDiffUtilCallback
+import com.fitness.app.util.RecipeDiffUtilCallback
 import com.fitness.app.views.fragments.AthleteDietRecipeDescriptionFragment
 
 class RecipeAdapter(
     private val lifecycleOwner: LifecycleOwner,
     private val context: Context
-): ListAdapter<Recipe, RecipeAdapter.FoodViewHolder>(FoodDiffUtilCallback()) {
+): ListAdapter<Recipe, RecipeAdapter.FoodViewHolder>(RecipeDiffUtilCallback()) {
 
     inner class FoodViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val binding: AthleteRecipeItemBinding = AthleteRecipeItemBinding.bind(itemView)

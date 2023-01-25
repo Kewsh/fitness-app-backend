@@ -110,7 +110,7 @@ class AthleteDiscoverFragment : Fragment(R.layout.fragment_athlete_discover) {
                 layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
                 setHasFixedSize(true)
                 discoverDietAdapter =
-                    DiscoverDietsAdapter(viewLifecycleOwner, context)
+                    DiscoverDietsAdapter(viewLifecycleOwner, context,userId)
                 adapter = discoverDietAdapter
 
             }

@@ -17,9 +17,9 @@ class AthleteHomeRepository() {
     fun getNutritionistDiets(
         nutritionistId: String,
         context: Context,
-        callback: (ArrayList<DiscoverDiet>) -> Unit
+        callback: (ArrayList<Diet>) -> Unit
     ) {
-        val nutritionistDiets: ArrayList<DiscoverDiet> = ArrayList()
+        val nutritionistDiets: ArrayList<Diet> = ArrayList()
         val apiService = NutritionistService(context)
         apiService.getNutritionistDiets(nutritionistId) { response ->
             if (response != null) {
@@ -28,10 +28,19 @@ class AthleteHomeRepository() {
                     dietService.getDietCoverPicture(response.data[i].id.toString()) { dietPicture ->
                         if (dietPicture != null) {
                             nutritionistDiets.add(
-                                DiscoverDiet(
+                                Diet(
                                     dietPicture,
+                                    response.data[i].id,
                                     response.data[i].title,
-                                    response.data[i].nutritionist.fullName
+                                    response.data[i].description,
+                                    response.data[i].price,
+                                    response.data[i].createdAt,
+                                    response.data[i].updatedAt,
+                                    response.data[i].nutritionistId,
+                                    response.data[i].duration,
+                                    response.data[i].nAthletes,
+                                    response.data[i].rating,
+                                    response.data[i].nutritionist
                                 )
                             )
                         }
@@ -751,9 +760,9 @@ class AthleteHomeRepository() {
     fun getAllDiscoverDietsItems(
         discoverDietsRequest: DiscoverDietsRequest,
         context: Context,
-        callback: (ArrayList<DiscoverDiet>) -> Unit
+        callback: (ArrayList<Diet>) -> Unit
     ) {
-        val discoverDiets: ArrayList<DiscoverDiet> = ArrayList()
+        val discoverDiets: ArrayList<Diet> = ArrayList()
         val apiService = DietService(context)
         apiService.discoverDiets(discoverDietsRequest) { response ->
             if (response != null) {
@@ -761,10 +770,19 @@ class AthleteHomeRepository() {
                     apiService.getDietCoverPicture(response.data[i].id.toString()) { dietPicture ->
                         if (dietPicture != null) {
                             discoverDiets.add(
-                                DiscoverDiet(
+                                Diet(
                                     dietPicture,
+                                    response.data[i].id,
                                     response.data[i].title,
-                                    response.data[i].nutritionist.fullName
+                                    response.data[i].description,
+                                    response.data[i].price,
+                                    response.data[i].createdAt,
+                                    response.data[i].updatedAt,
+                                    response.data[i].nutritionistId,
+                                    response.data[i].duration,
+                                    response.data[i].nAthletes,
+                                    response.data[i].rating,
+                                    response.data[i].nutritionist
                                 )
                             )
                         }
