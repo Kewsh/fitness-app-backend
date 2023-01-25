@@ -43,15 +43,6 @@ class FoodAdapter(
             holder.apply {
                 image.background = BitmapDrawable(context.resources, food.image)
                 title.text = food.title
-
-                binding.food.setOnClickListener {
-                    val athleteDietDescriptionFragment = AthleteDietDescriptionFragment()
-                    val fragmentManager = (context as AppCompatActivity).supportFragmentManager.beginTransaction()
-                    fragmentManager.replace(R.id.athleteHomeMainParentFragment, athleteDietDescriptionFragment)
-                    fragmentManager.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                    fragmentManager.addToBackStack(null)
-                    fragmentManager.commit()
-                }
             }
 
         }
