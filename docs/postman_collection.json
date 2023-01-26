@@ -1,0 +1,1780 @@
+{
+	"info": {
+		"_postman_id": "10767166-081c-48d5-b2b7-2b029b0ac437",
+		"name": "fitness v1",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24733599"
+	},
+	"item": [
+		{
+			"name": "club",
+			"item": [
+				{
+					"name": "signup club",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"pulse fitness club\",\n    \"manager\": \"davood khodadoost\",\n    \"description\": \"fitness club for body builders\",\n    \"email\": \"pulsefitness@gmail.com\",\n    \"password\": \"123456789\",\n    \"phoneNumber\": \"+981231231231\",\n    \"website\": \"pulsefitness.com\",\n    \"address\": \"eram square, azadi st\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/club/signup",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"club",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get club by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/club/1",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"club",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update a club",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"pulse fitness club new\",\n    \"manager\": \"davood khodadoost\",\n    \"description\": \"fitness club for body builders\",\n    \"email\": \"mod@pulsefitness.com\",\n    \"password\": \"123456789\",\n    \"phoneNumber\": \"+981231231231\",\n    \"website\": \"pulsefitness.com\",\n    \"address\": \"eram square, azadi st\",\n    \"since\": \"2022-01-17\",\n    \"socialMedia\": [\n        {\n            \"type\": \"FACEBOOK\",\n            \"url\": \"facebook.com/pulsefitness\"\n        },\n        {\n            \"type\": \"TWITTER\",\n            \"url\": \"twitter.com/pulsefitness\"\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/club/1",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"club",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get club's programs",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/club/3/programs?offset=2&limit=4&order=price&sort=desc&exclude=1",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"club",
+								"3",
+								"programs"
+							],
+							"query": [
+								{
+									"key": "offset",
+									"value": "2"
+								},
+								{
+									"key": "limit",
+									"value": "4"
+								},
+								{
+									"key": "order",
+									"value": "price",
+									"description": "options: nAthletes, duration, price, rating"
+								},
+								{
+									"key": "sort",
+									"value": "desc",
+									"description": "options: only desc, else treated as asc"
+								},
+								{
+									"key": "exclude",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get club's events",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/club/1/events?offset=1&limit=2&order=price&sort=desc",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"club",
+								"1",
+								"events"
+							],
+							"query": [
+								{
+									"key": "offset",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "2"
+								},
+								{
+									"key": "order",
+									"value": "price",
+									"description": "options: nAttendees, price, startDate, endDate, rating"
+								},
+								{
+									"key": "sort",
+									"value": "desc",
+									"description": "options: only desc, else treated as asc"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get club's members",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/club/1/members?offset=2&limit=2&programId=1",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"club",
+								"1",
+								"members"
+							],
+							"query": [
+								{
+									"key": "offset",
+									"value": "2"
+								},
+								{
+									"key": "limit",
+									"value": "2"
+								},
+								{
+									"key": "programId",
+									"value": "1",
+									"description": "filter by program"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get club's cover picture",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/club/1/cover",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"club",
+								"1",
+								"cover"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "set club's cover picture",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "picture",
+									"type": "file",
+									"src": "/home/fig/Downloads/Group 181.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3000/club/1/cover",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"club",
+								"1",
+								"cover"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete club's cover picture",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/club/1/cover",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"club",
+								"1",
+								"cover"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get club's logo",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/club/1/logo",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"club",
+								"1",
+								"logo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "set club's logo",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "picture",
+									"type": "file",
+									"src": "/home/fig/Documents/se_prj/Gold's_Gym_logo.svg.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3000/club/1/logo",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"club",
+								"1",
+								"logo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete club's logo",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/club/1/logo",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"club",
+								"1",
+								"logo"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "comment",
+			"item": [
+				{
+					"name": "create comment",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"text\": \"comment text default\",\n    \"rate\": 43,\n    \"programId\": 1,\n    \"userId\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/comment",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"comment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update a comment",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"text\": \"updated comment text\",\n    \"rate\": 38\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/comment/1",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"comment",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete a comment",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/comment/1",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"comment",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "diet",
+			"item": [
+				{
+					"name": "discover diets",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userId\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/diet/discover?offset=2&limit=2",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"diet",
+								"discover"
+							],
+							"query": [
+								{
+									"key": "offset",
+									"value": "2"
+								},
+								{
+									"key": "limit",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get a diet by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/diet/1",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"diet",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get a diet's cover picture",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/diet/1/cover",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"diet",
+								"1",
+								"cover"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get a diet's foods",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/diet/1/foods?offset=2&limit=2&day=1&day=2",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"diet",
+								"1",
+								"foods"
+							],
+							"query": [
+								{
+									"key": "offset",
+									"value": "2"
+								},
+								{
+									"key": "limit",
+									"value": "2"
+								},
+								{
+									"key": "day",
+									"value": "1"
+								},
+								{
+									"key": "day",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get a diet's recipes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/diet/1/recipes?offset=2&limit=2",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"diet",
+								"1",
+								"recipes"
+							],
+							"query": [
+								{
+									"key": "offset",
+									"value": "2"
+								},
+								{
+									"key": "limit",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get a diet's comments",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/diet/1/comments?offset=2&limit=2",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"diet",
+								"1",
+								"comments"
+							],
+							"query": [
+								{
+									"key": "offset",
+									"value": "2"
+								},
+								{
+									"key": "limit",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "pick a diet",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userId\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/diet/1/pick",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"diet",
+								"1",
+								"pick"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "event",
+			"item": [
+				{
+					"name": "create an event",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"10km Marathon\",\n    \"description\": \"This is a marathon event\",\n    \"price\": 1149,\n    \"maxAttendees\": 250,\n    \"startDate\": \"2022-01-17T04:33:12.000Z\",\n    \"endDate\": \"2022-01-17T04:33:12.000Z\",\n    \"clubId\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/event",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"event"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update an event",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"10km Marathon\",\n    \"description\": \"This is a marathon event\",\n    \"price\": 1149,\n    \"maxAttendees\": 250,\n    \"startDate\": \"2022-01-17T04:33:12.000Z\",\n    \"endDate\": \"2022-01-17T04:33:12.000Z\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/event/1",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"event",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "discover events",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userId\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/event/discover?offset=2&limit=2",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"event",
+								"discover"
+							],
+							"query": [
+								{
+									"key": "offset",
+									"value": "2"
+								},
+								{
+									"key": "limit",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get an event by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/event/1",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"event",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get an event's comments",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/event/1/comments?offset=2&limit=2",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"event",
+								"1",
+								"comments"
+							],
+							"query": [
+								{
+									"key": "offset",
+									"value": "2"
+								},
+								{
+									"key": "limit",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get an event's cover picture",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/event/1/cover",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"event",
+								"1",
+								"cover"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "set an event's cover picture",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "picture",
+									"type": "file",
+									"src": "/home/fig/Downloads/screen.PNG"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3000/event/1/cover",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"event",
+								"1",
+								"cover"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete an event's cover picture",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/event/1/cover",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"event",
+								"1",
+								"cover"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "participate in an event",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userId\": \"1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/event/1/participate",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"event",
+								"1",
+								"participate"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "food",
+			"item": [
+				{
+					"name": "get a food's cover picture",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/food/1/cover",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"food",
+								"1",
+								"cover"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "login",
+			"item": [
+				{
+					"name": "login a user or club",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"pulsefitness@gmail.com\",\n    \"password\": \"123456789\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/login",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "nutritionist",
+			"item": [
+				{
+					"name": "get a nutritionist's picture",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/nutritionist/1/picture",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"nutritionist",
+								"1",
+								"picture"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get a nutritionist's diets",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/nutritionist/1/diets?offset=2&limit=2&exclude=1",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"nutritionist",
+								"1",
+								"diets"
+							],
+							"query": [
+								{
+									"key": "offset",
+									"value": "2"
+								},
+								{
+									"key": "limit",
+									"value": "2"
+								},
+								{
+									"key": "exclude",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "program",
+			"item": [
+				{
+					"name": "create a program",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Lose belly fat in 30 days\",\n    \"description\": \"This program is for fat people\",\n    \"coachName\": \"David Cameron\",\n    \"price\": 488,\n    \"clubId\": 1,\n    \"workouts\": [\n        {\n            \"title\": \"Arm cross\",\n            \"description\": \"This workout targets the arm muscle\",\n            \"sets\": 14,\n            \"reps\": 50,\n            \"burntCalories\": 1700,\n            \"day\": 1\n        },\n        {\n            \"title\": \"Cardio\",\n            \"description\": \"This workout boosts your lungs\",\n            \"sets\": 10,\n            \"setTimeInSeconds\": 600,\n            \"burntCalories\": 4000,\n            \"day\": 2\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/program",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"program"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update a program",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Updated program title\",\n    \"description\": \"Updated program description\",\n    \"coachName\": \"Updated coach name\",\n    \"price\": 9332,\n    \"workouts\": [\n        {\n            \"title\": \"Bench press\",\n            \"description\": \"This workout targets the chest muscle\",\n            \"sets\": 5,\n            \"reps\": 8,\n            \"burntCalories\": 330,\n            \"day\": 5\n        },\n        {\n            \"title\": \"Lunges\",\n            \"description\": \"This workout targets breathing\",\n            \"sets\": 2,\n            \"reps\": 25,\n            \"burntCalories\": 220,\n            \"day\": 5\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/program/1",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"program",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "discover programs",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userId\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/program/discover?offset=2&limit=2",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"program",
+								"discover"
+							],
+							"query": [
+								{
+									"key": "offset",
+									"value": "2"
+								},
+								{
+									"key": "limit",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get a program by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/program/1",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"program",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get a program's workouts",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/program/1/workouts",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"program",
+								"1",
+								"workouts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get a program's comments",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/program/1/comments?offset=2&limit=2",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"program",
+								"1",
+								"comments"
+							],
+							"query": [
+								{
+									"key": "offset",
+									"value": "2"
+								},
+								{
+									"key": "limit",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get a program's cover picture",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/program/1/cover",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"program",
+								"1",
+								"cover"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "set a program's picture",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "picture",
+									"type": "file",
+									"src": "/home/fig/Downloads/wf-onboarding-last.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3000/program/1/cover",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"program",
+								"1",
+								"cover"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete a program's cover picture",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/program/1/cover",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"program",
+								"1",
+								"cover"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "enroll in a program",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userId\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/program/1/enroll",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"program",
+								"1",
+								"enroll"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "recipe review",
+			"item": [
+				{
+					"name": "create a recipe review",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"text\": \"recipe review comment text\",\n    \"rate\": 18,\n    \"recipeId\": 1,\n    \"userId\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/recipe-review",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"recipe-review"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update a recipe review",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"rate\": 8\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/recipe-review/1",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"recipe-review",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete a recipe review",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/recipe-review/2",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"recipe-review",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get a recipe review's picture",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/recipe-review/3/picture",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"recipe-review",
+								"3",
+								"picture"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "set a recipe review's picture",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "picture",
+									"type": "file",
+									"src": "/home/fig/Downloads/pie-chart.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3000/recipe-review/3/picture",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"recipe-review",
+								"3",
+								"picture"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete a recipe review's picture",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/recipe-review/3/picture",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"recipe-review",
+								"3",
+								"picture"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "recipe",
+			"item": [
+				{
+					"name": "get a recipe by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/recipe/1",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"recipe",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get a recipe's cover picture",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/recipe/1/cover",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"recipe",
+								"1",
+								"cover"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get a recipe's reviews",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/recipe/1/reviews?offset=2&limit=2",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"recipe",
+								"1",
+								"reviews"
+							],
+							"query": [
+								{
+									"key": "offset",
+									"value": "2"
+								},
+								{
+									"key": "limit",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "user",
+			"item": [
+				{
+					"name": "signup user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"Morteza\",\n    \"lastName\": \"PourAli Ganji\",\n    \"email\": \"mpaganji@gmail.com\",\n    \"password\": \"mpa123456mpa\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/user/signup",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"user",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update a user",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"Koosha\",\n    \"lastName\": \"Kazemi\",\n    \"sex\": \"MALE\",\n    \"birthday\": \"2022-01-17\",\n    \"height\": 185,\n    \"phoneNumber\": \"+9812334567788\",\n    \"password\": \"123456789\",\n    \"email\": \"kooshakazemi@gmail.com\",\n    \"measurements\": [\n        {\n            \"type\": \"WEIGHT\",\n            \"current\": 430,\n            \"start\": 430,\n            \"target\": 700\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/user/1",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"user",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get user's events",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/user/1/events",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"user",
+								"1",
+								"events"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get a user's profile picture",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/user/1/profile-picture",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"user",
+								"1",
+								"profile-picture"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "set a user's profile picture",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "picture",
+									"type": "file",
+									"src": "/home/fig/Downloads/screen.PNG"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3000/user/1/profile-picture",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"user",
+								"1",
+								"profile-picture"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete a user's profile picture",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/user/1/profile-picture",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"user",
+								"1",
+								"profile-picture"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "workout",
+			"item": [
+				{
+					"name": "get a workout by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/workout/1",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"workout",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update a workout",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"updated workout title\",\n    \"description\": \"updated workout description\",\n    \"sets\": 11,\n    \"reps\": 32,\n    \"setTimeInSeconds\": 30,\n    \"burntCalories\": 880,\n    \"day\": 11\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/workout/1",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"workout",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete a workout",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/workout/1",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"workout",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get a workout's cover picture",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/workout/1/cover",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"workout",
+								"1",
+								"cover"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "set a workout's cover picture",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "picture",
+									"type": "file",
+									"src": "/home/fig/Downloads/Untitled (2).png"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3000/workout/2/cover",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"workout",
+								"2",
+								"cover"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete a workout's cover picture",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/workout/1/cover",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"workout",
+								"1",
+								"cover"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
