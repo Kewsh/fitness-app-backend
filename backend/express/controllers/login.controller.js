@@ -55,7 +55,7 @@ const validateUser = async (user, pass) => {
     }
 
     // exclude password from response object
-    const { password, response } = user.dataValues;
+    const { password, ...response } = user.dataValues;
 
     return response;
 }
