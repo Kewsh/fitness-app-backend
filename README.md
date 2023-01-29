@@ -1,1 +1,1 @@
-# fitness-club-app
+# fitness-app-backend
