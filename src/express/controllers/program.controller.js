@@ -132,6 +132,9 @@ module.exports.findOneById = async (req, res) => {
             attributes: { exclude: ['coverPicPath'] },
         });
 
+        if (!program) {
+            return res.error(404, 'No program found with this id');
+        }
         // this can't be done in include, since hooks don't run on
         // included models
         program.dataValues.club = await program.getClub({
@@ -145,9 +148,6 @@ module.exports.findOneById = async (req, res) => {
             ]},
         });
 
-        if (!program) {
-            return res.error(404, 'No program found with this id');
-        }
         return res.success(200, program);
     } catch (error) {
         return res.error(500, error.message);
