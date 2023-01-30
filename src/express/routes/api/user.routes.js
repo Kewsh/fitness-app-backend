@@ -1,14 +1,11 @@
 const router = require('express').Router();
 const {
-    createOne,
     updateOne,
     getEvents,
     getProfilePicture,
     setProfilePicture,
     deleteProfilePicture,
 } = require('../../controllers/user.controller');
-
-router.post('/signup', createOne);
 
 router.patch('/:id', updateOne);
 

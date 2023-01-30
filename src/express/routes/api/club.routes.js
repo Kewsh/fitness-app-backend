@@ -1,6 +1,5 @@
 const router = require('express').Router();
 const {
-    createOne,
     findOneById,
     updateOne,
     getPrograms,
@@ -13,8 +12,6 @@ const {
     setLogo,
     deleteLogo,
 } = require('../../controllers/club.controller');
-
-router.post('/signup', createOne);
 
 router.get('/:id', findOneById);
 

@@ -7,36 +7,6 @@ const {
     email: emailModel,
 } = require('../../sequelize').models;
 
-module.exports.createOne = async (req, res) => {
-    try {
-        const user = await userModel.create({
-            firstName: req.body.firstName,
-            lastName: req.body.lastName,
-            password: req.body.password,
-            measurements: [
-                { type: 'WEIGHT' },
-                { type: 'BICEP' },
-                { type: 'WAIST' },
-            ],
-            email: {
-                email: req.body.email
-            }
-        }, {
-            include: [
-                measurementModel,
-                emailModel,
-            ]
-        });
-
-        // exclude some fields from response object
-        const { password, profilePicPath, ...userResponse } = user.dataValues;
-
-        return res.success(201, userResponse);
-    } catch (error) {
-        return res.error(500, error.message);
-    }
-}
-
 module.exports.updateOne = async (req, res) => {
     try {
         const user = await userModel.findByPk(req.params.id, {
