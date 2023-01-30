@@ -1,72 +1,47 @@
-const {
-    email: emailModel,
-    user: userModel,
-    club: clubModel,
-    measurement: measurementModel,
-} = require('../../sequelize').models;
+const jwt = require('jsonwebtoken');
+const passport = require('../auth');
 
-module.exports.findOne = async (req, res) => {
-    try {
-        if (!req.body.email || !req.body.password) {
-            return res.error(400, 'Missing fields in request body');
-        }
-        const email = await emailModel.findOne({
-            where: { email: req.body.email },
-            include: [
-                {
-                    model: userModel,
-                    include: measurementModel,
-                    attributes: {
-                        exclude: ['profilePicPath']
+
+module.exports.loginByPassword = (req, res) => {
+    passport.authenticate(
+        'local',
+        (err, response, info) => {
+            try {
+                if (err || !response) {
+                    //TODO: 'Missing credentials' ends up with code 500 but should be 400
+                    const errorCode = (info && info.code) || 500;
+                    const errorMsg = (info && info.message) || err.message;
+                    
+                    return res.error(errorCode, errorMsg);
+                }
+
+                req.login(
+                    response,
+                    { session: false },
+                    (error) => {
+                        if (error) {
+                            return res.error(500, error.message);
+                        }
+
+                        // generate jwt for client to use for upcoming requests
+                        const payload = { id: response.id, isUser: !response.name };
+                        const token = generateJWT(payload);
+
+                        return res.success(200, { token, response });
                     }
-                },
-                {
-                    model: clubModel,
-                    attributes: {
-                        exclude: ['coverPicPath', 'logoPath'],
-                    },
-                },
-            ],
-        });
+                )
 
-        if (!email) {
-            return res.error(404, 'No user or club found with this email');
+            } catch (error) {
+                return res.error(500, error.message);
+            }
         }
-
-        const user = email.user;
-        const club = email.club;
-
-        const response = user ? await validateUser(user, req.body.password):
-                                await validateClub(club, req.body.password);
-
-        if (!response) {
-            return res.error(401, 'Invalid password');
-        }
-        return res.success(200, response);
-    } catch (error) {
-        return res.error(500, error.message);
-    }
+    )(req, res);
 }
 
-
-const validateUser = async (user, pass) => {
-    if (!(await user.isPasswordValid(pass, user.password))) {
-        return null;
-    }
-
-    // exclude password from response object
-    const { password, ...response } = user.dataValues;
-
-    return response;
-}
-
-const validateClub = async (club, pass) => {
-    if (!(await club.isPasswordValid(pass, club.password))) {
-        return null;
-    }
-
-    // exclude password from response object
-    const { password, ...response } = club.dataValues;
-
-    return response;
+const generateJWT = (payload) => {
+    return jwt.sign(
+        payload,
+        'SECRET',
+        { expiresIn: '1h' },
+    );
 }
