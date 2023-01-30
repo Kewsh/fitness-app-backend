@@ -1,6 +1,6 @@
 const router = require('express').Router();
-const { findOne } = require('../../controllers/login.controller');
+const { loginByPassword } = require('../../controllers/login.controller');
 
-router.post('/', findOne);
+router.post('/password', loginByPassword);
 
 module.exports = router;
