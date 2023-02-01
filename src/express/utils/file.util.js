@@ -1,6 +1,6 @@
 const { join } = require('path');
 const { unlink } = require('fs');
-const { uploadsDirectory } = require('./consts');
+const { uploadsDirectory } = require('../consts');
 
 module.exports.getUploadedFilePath = fileName => {
     return join(process.cwd(), uploadsDirectory, fileName);

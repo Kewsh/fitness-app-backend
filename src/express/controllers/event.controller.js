@@ -1,5 +1,6 @@
 const { Op } = require('sequelize');
-const { getUploadedFilePath, deleteFile } = require('../file-utils');
+const { getUploadedFilePath, deleteFile } = require('../utils/file.util');
+const { getUserId, getClubId } = require('../utils/auth.util');
 const upload = require('../multer');
 const {
     event: eventModel,
@@ -10,6 +11,7 @@ const {
 
 module.exports.createOne = async (req, res) => {
     try {
+        const clubId = getClubId(req.user);
         const event = await eventModel.create({
             title: req.body.title,
             description: req.body.description,
@@ -17,7 +19,7 @@ module.exports.createOne = async (req, res) => {
             maxAttendees: req.body.maxAttendees,
             startDate: req.body.startDate,
             endDate: req.body.endDate,
-            clubId: req.body.clubId,
+            clubId,
         });
 
         // can't do this in include
@@ -47,6 +49,8 @@ module.exports.updateOne = async (req, res) => {
         ) {
             return res.error(400, 'Missing fields in request body');
         }
+
+        const clubId = getClubId(req.user);
         const [ affectedRows ] = await eventModel.update({
             title: req.body.title,
             description: req.body.description,
@@ -55,7 +59,10 @@ module.exports.updateOne = async (req, res) => {
             startDate: req.body.startDate,
             endDate: req.body.endDate,
         }, {
-            where: { id: req.params.id }
+            where: {
+                id: req.params.id,
+                clubId,
+            }
         });
 
         if (!affectedRows) {
@@ -70,7 +77,8 @@ module.exports.updateOne = async (req, res) => {
 
 module.exports.discover = async (req, res) => {
     try {
-        const user = await userModel.findByPk(req.body.userId, {
+        const userId = getUserId(req.user);
+        const user = await userModel.findByPk(userId, {
             attributes: ['id'],
             include: {
                 model: eventModel,
@@ -168,10 +176,14 @@ module.exports.setCoverPicture = async (req, res) => {
             return res.error(500, error.message);
         }
         try {
-            const event = await eventModel.findByPk(
-                req.params.id,
-                { attributes: ['id', 'coverPicPath'] },
-            );
+            const clubId = getClubId(req.user);
+            const event = await eventModel.findOne({
+                where: {
+                    id: req.params.id,
+                    clubId,
+                },
+                attributes: ['id', 'coverPicPath'],
+            });
 
             if (!event) {
                 deleteFile(getUploadedFilePath(req.file.filename));
@@ -198,10 +210,14 @@ module.exports.setCoverPicture = async (req, res) => {
 
 module.exports.deleteCoverPicture = async (req, res) => {
     try {
-        const event = await eventModel.findByPk(
-            req.params.id,
-            { attributes: ['id', 'coverPicPath'] }
-        );
+        const clubId = getClubId(req.user);
+        const event = await eventModel.findOne({
+            where: {
+                id: req.params.id,
+                clubId,
+            },
+            attributes: ['id', 'coverPicPath'],
+        });
     
         if (!event || !event.coverPicPath) {
             return res.error(404, 'No cover picture found');
@@ -221,16 +237,14 @@ module.exports.deleteCoverPicture = async (req, res) => {
 
 module.exports.participate = async (req, res) => {
     try {
-        if (!req.body.userId) {
-            return res.error(400, 'Missing field "userId" in request body');
-        }
         // can we do this all in one query?
         const event = await eventModel.findByPk(req.params.id);
         if (!event) {
             return res.error(404, 'No event found with this id');
         }
 
-        const user = await userModel.findByPk(req.body.userId);
+        const userId = getUserId(req.user);
+        const user = await userModel.findByPk(userId);
         if (!user) {
             return res.error(404, 'No user found with this id');
         }

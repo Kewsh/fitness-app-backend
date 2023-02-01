@@ -1,4 +1,5 @@
-const { getUploadedFilePath, deleteFile } = require('../file-utils');
+const { getUploadedFilePath, deleteFile } = require('../utils/file.util');
+const { getUserId } = require('../utils/auth.util');
 const upload = require('../multer');
 const {
     recipeReview: recipeReviewModel,
@@ -7,12 +8,13 @@ const {
 
 module.exports.createOne = async (req, res) => {
     try {
+        const userId = getUserId(req.user);
         const recipeReview = await recipeReviewModel.create({
             recipeId: req.body.recipeId,
             comment: {
                 text: req.body.text,
                 rate: req.body.rate,
-                userId: req.body.userId,
+                userId,
             },
         }, {
             include: commentModel,
@@ -35,11 +37,16 @@ module.exports.updateOne = async (req, res) => {
         if (!req.body.text && !req.body.rate) {
             return res.error(400, 'Missing fields in request body');
         }
+
+        const userId = getUserId(req.user);
         const [ affectedRows ] = await commentModel.update({
             text: req.body.text,
             rate: req.body.rate,
         }, {
-            where: { recipeReviewId: req.params.id },
+            where: {
+                recipeReviewId: req.params.id,
+                userId,
+            },
         });
 
         if (!affectedRows) {
@@ -54,13 +61,26 @@ module.exports.updateOne = async (req, res) => {
 
 module.exports.deleteOne = async (req, res) => {
     try {
-        const destroyedRows = await recipeReviewModel.destroy({
-            where: { id: req.params.id }
+        // sequelize doesn't support including on the destroy method, so we
+        // need to first find the instance, then delete it separately
+        const userId = getUserId(req.user);
+        const recipeReview = await recipeReviewModel.findOne({
+            where: {
+                id: req.params.id,
+            },
+            include: {
+                model: commentModel,
+                where: { userId },
+            },
         });
 
-        if (!destroyedRows) {
+        if (!recipeReview) {
             return res.error(404, 'No recipe review found with this id');
         }
+
+        //TODO: this obviously needs a transaction
+        await recipeReview.comment.destroy();
+        await recipeReview.destroy();
 
         return res.success(200, {});
     } catch (error) {
@@ -94,10 +114,17 @@ module.exports.setPicture = async (req, res) => {
             return res.error(500, error.message);
         }
         try {
-            const recipeReview = await recipeReviewModel.findByPk(
-                req.params.id,
-                { attributes: ['id', 'reviewPicPath'] },
-            );
+            const userId = getUserId(req.user);
+            const recipeReview = await recipeReviewModel.findOne({
+                where: {
+                    id: req.params.id,
+                },
+                include: {
+                    model: commentModel,
+                    where: { userId },
+                },
+                attributes: ['id', 'reviewPicPath'],
+            });
 
             if (!recipeReview) {
                 //TODO: find a better way to abort the upload
@@ -125,10 +152,17 @@ module.exports.setPicture = async (req, res) => {
 
 module.exports.deletePicture = async (req, res) => {
     try {
-        const recipeReview = await recipeReviewModel.findByPk(
-            req.params.id,
-            { attributes: ['id', 'reviewPicPath'] }
-        );
+        const userId = getUserId(req.user);
+        const recipeReview = await recipeReviewModel.findOne({
+            where: {
+                id: req.params.id,
+            },
+            include: {
+                model: commentModel,
+                where: { userId },
+            },
+            attributes: ['id', 'reviewPicPath'],
+        });
     
         if (!recipeReview || !recipeReview.reviewPicPath) {
             return res.error(404, 'No review picture found');

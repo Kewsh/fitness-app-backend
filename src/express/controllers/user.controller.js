@@ -1,4 +1,5 @@
-const { getUploadedFilePath, deleteFile } = require('../file-utils');
+const { getUploadedFilePath, deleteFile } = require('../utils/file.util');
+const { getUserId } = require('../utils/auth.util');
 const upload = require('../multer');
 const {
     user: userModel,
@@ -9,7 +10,8 @@ const {
 
 module.exports.updateOne = async (req, res) => {
     try {
-        const user = await userModel.findByPk(req.params.id, {
+        const userId = getUserId(req.user);
+        const user = await userModel.findByPk(userId, {
             include: [emailModel, measurementModel]
         });
 
@@ -64,8 +66,10 @@ module.exports.updateOne = async (req, res) => {
 }
 
 module.exports.getEvents = async (req, res) => {
-    try {   
-        const user = await userModel.findByPk(req.params.id);
+    try {
+        const userId = getUserId(req.user);
+        const user = await userModel.findByPk(userId);
+
         if (!user) {
             return res.error(404, 'No user found with this id');
         }
@@ -115,8 +119,9 @@ module.exports.setProfilePicture = async (req, res) => {
             return res.error(500, error.message);
         }
         try {
+            const userId = getUserId(req.user);
             const user = await userModel.findByPk(
-                req.params.id,
+                userId,
                 { attributes: ['id', 'profilePicPath'] },
             );
 
@@ -145,8 +150,9 @@ module.exports.setProfilePicture = async (req, res) => {
 
 module.exports.deleteProfilePicture = async (req, res) => {
     try {
+        const userId = getUserId(req.user);
         const user = await userModel.findByPk(
-            req.params.id,
+            userId,
             { attributes: ['id', 'profilePicPath'] }
         );
 

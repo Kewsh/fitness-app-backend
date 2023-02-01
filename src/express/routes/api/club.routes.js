@@ -13,26 +13,26 @@ const {
     deleteLogo,
 } = require('../../controllers/club.controller');
 
-router.get('/:id', findOneById);
+router.patch('/', updateOne);
 
-router.patch('/:id', updateOne);
+router.get('/members', getMembers);
+
+router.put('/cover', setCoverPicture);
+
+router.delete('/cover', deleteCoverPicture);
+
+router.put('/logo', setLogo);
+
+router.delete('/logo', deleteLogo);
+
+router.get('/:id', findOneById);
 
 router.get('/:id/programs', getPrograms);
 
 router.get('/:id/events', getEvents);
 
-router.get('/:id/members', getMembers);
-
 router.get('/:id/cover', getCoverPicture);
 
-router.put('/:id/cover', setCoverPicture);
-
-router.delete('/:id/cover', deleteCoverPicture);
-
 router.get('/:id/logo', getLogo);
-
-router.put('/:id/logo', setLogo);
-
-router.delete('/:id/logo', deleteLogo);
 
 module.exports = router;

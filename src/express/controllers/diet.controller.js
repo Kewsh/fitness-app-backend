@@ -1,5 +1,6 @@
 const { Op } = require('sequelize');
-const { getUploadedFilePath } = require('../file-utils');
+const { getUploadedFilePath } = require('../utils/file.util');
+const { getUserId } = require('../utils/auth.util');
 const {
     diet: dietModel,
     food: foodModel,
@@ -11,7 +12,8 @@ const {
 
 module.exports.discover = async (req, res) => {
     try {
-        const user = await userModel.findByPk(req.body.userId, {
+        const userId = getUserId(req.user);
+        const user = await userModel.findByPk(userId, {
             attributes: ['id', 'dietId'],
         });
 
@@ -139,14 +141,12 @@ module.exports.getComments = async (req, res) => {
 
 module.exports.pick = async (req, res) => {
     try {
-        if (!req.body.userId) {
-            return res.error(400, 'Missing field "userId" in request body');
-        }
+        const userId = getUserId(req.user);
         const [ affectedRows ] = await userModel.update({
             dietId: req.params.id,
             dietPickDate: new Date(),
         }, {
-            where: { id: req.body.userId },
+            where: { id: userId },
             individualHooks: true,
         });
         if (!affectedRows) {
