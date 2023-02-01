@@ -44,13 +44,9 @@ module.exports = new localStrategy(
                 );
             }
 
-            const user = foundEmail.user;
-            const club = foundEmail.club;
-    
-            const response = user ? await validateUser(user, password):
-                                    await validateClub(club, password);
-    
-            if (!response) {
+            const account = await getAssociatedAccount(foundEmail, password);
+
+            if (!account.user && !account.club) {
                 return cb(
                     null,
                     false,
@@ -60,13 +56,25 @@ module.exports = new localStrategy(
                     },
                 );
             }
-            return cb(null, response);
+            return cb(null, account);
 
         } catch (error) {
             return cb(error);
         }
     }
 );
+
+const getAssociatedAccount = async (email, password) => {
+    const account = {};
+    const user = email.user;
+    if (user) {
+        account.user = await validateUser(user, password);
+        return account;
+    }
+    const club = email.club;
+    account.club = await validateClub(club, password);
+    return account;
+}
 
 const validateUser = async (user, pass) => {
     if (!(await user.isPasswordValid(pass, user.password))) {
