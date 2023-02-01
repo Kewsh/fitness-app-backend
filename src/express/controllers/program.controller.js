@@ -1,5 +1,6 @@
 const { Op } = require('sequelize');
-const { getUploadedFilePath, deleteFile } = require('../file-utils');
+const { getUploadedFilePath, deleteFile } = require('../utils/file.util');
+const { getUserId, getClubId } = require('../utils/auth.util');
 const upload = require('../multer');
 const {
     program: programModel,
@@ -315,14 +316,4 @@ module.exports.enroll = async (req, res) => {
     } catch (error) {
         return res.error(500, error.message);
     }
-}
-
-const getClubId = (user) => {
-    // <null> can be used for query methods, while <false> cannot
-    return !user.isUser ? user.id : null;
-}
-
-const getUserId = (user) => {
-    // <null> can be used for query methods, while <false> cannot
-    return user.isUser ? user.id : null;
 }

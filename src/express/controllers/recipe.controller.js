@@ -1,4 +1,4 @@
-const { getUploadedFilePath } = require('../file-utils');
+const { getUploadedFilePath } = require('../utils/file.util');
 const {
     recipe: recipeModel,
     diet: dietModel,

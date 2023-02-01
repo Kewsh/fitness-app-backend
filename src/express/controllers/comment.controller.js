@@ -1,4 +1,5 @@
 const { Op } = require('sequelize');
+const { getUserId } = require('../utils/auth.util');
 const {
     user: userModel,
     comment: commentModel
@@ -95,11 +96,6 @@ module.exports.deleteOne = async (req, res) => {
     } catch (error) {
         return res.error(500, error.message);
     }
-}
-
-const getUserId = (user) => {
-    // <null> can be used for query methods, while <false> cannot
-    return user.isUser ? user.id : null;
 }
 
 const canCommentOnProgram = (user, programId) => {

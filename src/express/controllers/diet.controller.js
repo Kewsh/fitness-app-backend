@@ -1,5 +1,6 @@
 const { Op } = require('sequelize');
-const { getUploadedFilePath } = require('../file-utils');
+const { getUploadedFilePath } = require('../utils/file.util');
+const { getUserId } = require('../utils/auth.util');
 const {
     diet: dietModel,
     food: foodModel,
@@ -156,9 +157,4 @@ module.exports.pick = async (req, res) => {
     } catch (error) {
         return res.error(500, error.message);
     }
-}
-
-const getUserId = (user) => {
-    // <null> can be used for query methods, while <false> cannot
-    return user.isUser ? user.id : null;
 }

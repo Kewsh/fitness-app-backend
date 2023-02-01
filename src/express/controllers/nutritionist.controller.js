@@ -1,5 +1,5 @@
 const { Op } = require('sequelize');
-const { getUploadedFilePath } = require('../file-utils');
+const { getUploadedFilePath } = require('../utils/file.util');
 const {
     diet: dietModel,
     nutritionist: nutritionistModel,

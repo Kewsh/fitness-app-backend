@@ -1,4 +1,5 @@
-const { getUploadedFilePath, deleteFile } = require('../file-utils');
+const { getUploadedFilePath, deleteFile } = require('../utils/file.util');
+const { getUserId } = require('../utils/auth.util');
 const upload = require('../multer');
 const {
     recipeReview: recipeReviewModel,
@@ -177,9 +178,4 @@ module.exports.deletePicture = async (req, res) => {
     } catch (error) {
         return res.error(500, error.message);
     }
-}
-
-const getUserId = (user) => {
-    // <null> can be used for query methods, while <false> cannot
-    return user.isUser ? user.id : null;
 }

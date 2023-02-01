@@ -1,4 +1,5 @@
-const { getUploadedFilePath, deleteFile } = require('../file-utils');
+const { getUploadedFilePath, deleteFile } = require('../utils/file.util');
+const { getClubId } = require('../utils/auth.util');
 const upload = require('../multer');
 const {
     workout: workoutModel,
@@ -178,11 +179,6 @@ module.exports.deleteCoverPicture = async (req, res) => {
     } catch (error) {
         return res.error(500, error.message);
     }
-}
-
-const getClubId = (user) => {
-    // <null> can be used for query methods, while <false> cannot
-    return !user.isUser ? user.id : null;
 }
 
 const getProgramIds = async (clubId) => {

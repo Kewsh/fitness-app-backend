@@ -1,4 +1,4 @@
-const { getUploadedFilePath } = require('../file-utils');
+const { getUploadedFilePath } = require('../utils/file.util');
 const { food: foodModel } = require('../../sequelize').models;
 
 module.exports.getCoverPicture = async (req, res) => {
