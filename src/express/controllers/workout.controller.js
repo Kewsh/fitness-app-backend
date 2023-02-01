@@ -39,6 +39,10 @@ module.exports.updateOne = async (req, res) => {
             return res.error(400, 'Missing fields in request body');
         }
 
+        // workout must belong to one of your programs
+        const clubId = getClubId(req.user);
+        const programIds = await getProgramIds(clubId);
+
         const [ affectedRows ] = await workoutModel.update({
             title: req.body.title,
             description: req.body.description,
@@ -48,7 +52,10 @@ module.exports.updateOne = async (req, res) => {
             burntCalories: req.body.burntCalories,
             day: req.body.day,
         }, {
-            where: { id: req.params.id },
+            where: {
+                id: req.params.id,
+                programId: programIds,
+            },
             individualHooks: true,
         });
 
@@ -63,9 +70,15 @@ module.exports.updateOne = async (req, res) => {
 }
 
 module.exports.deleteOne = async (req, res) => {
-    try {
+    try {``
+        const clubId = getClubId(req.user);
+        const programIds = await getProgramIds(clubId);
+
         const destroyedRows = await workoutModel.destroy({
-            where: { id: req.params.id }
+            where: {
+                id: req.params.id,
+                programId: programIds,
+            }
         });
 
         if (!destroyedRows) {
@@ -104,10 +117,16 @@ module.exports.setCoverPicture = async (req, res) => {
             return res.error(500, error.message);
         }
         try {
-            const workout = await workoutModel.findByPk(
-                req.params.id,
-                { attributes: ['id', 'coverPicPath'] },
-            );
+            const clubId = getClubId(req.user);
+            const programIds = await getProgramIds(clubId);
+
+            const workout = await workoutModel.findOne({
+                where: {
+                    id: req.params.id,
+                    programId: programIds,
+                },
+                attributes: ['id', 'coverPicPath'],
+            });
 
             if (!workout) {
                 deleteFile(getUploadedFilePath(req.file.filename));
@@ -134,10 +153,16 @@ module.exports.setCoverPicture = async (req, res) => {
 
 module.exports.deleteCoverPicture = async (req, res) => {
     try {
-        const workout = await workoutModel.findByPk(
-            req.params.id,
-            { attributes: ['id', 'coverPicPath'] }
-        );
+        const clubId = getClubId(req.user);
+        const programIds = await getProgramIds(clubId);
+
+        const workout = await workoutModel.findOne({
+            where: {
+                id: req.params.id,
+                programId: programIds,
+            },
+            attributes: ['id', 'coverPicPath'],
+        });
     
         if (!workout || !workout.coverPicPath) {
             return res.error(404, 'No cover picture found');
@@ -153,4 +178,19 @@ module.exports.deleteCoverPicture = async (req, res) => {
     } catch (error) {
         return res.error(500, error.message);
     }
+}
+
+const getClubId = (user) => {
+    // <null> can be used for query methods, while <false> cannot
+    return !user.isUser ? user.id : null;
+}
+
+const getProgramIds = async (clubId) => {
+    const programIds = (await programModel.findAll({
+        where: { clubId },
+        attributes: ['id'],
+        hooks: false,
+    })).map(program => program.dataValues.id);
+
+    return programIds;
 }

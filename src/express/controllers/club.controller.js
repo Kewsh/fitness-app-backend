@@ -29,7 +29,8 @@ module.exports.findOneById = async(req, res) => {
 
 module.exports.updateOne = async (req, res) => {
     try {
-        const club = await clubModel.findByPk(req.params.id, {
+        const clubId = getClubId(req.user);
+        const club = await clubModel.findByPk(clubId, {
             include: [emailModel, socialMediaModel]
         });
 
@@ -153,24 +154,28 @@ module.exports.getEvents = async (req, res) => {
 
 module.exports.getMembers = async (req, res) => {
     try {
-        // if no programId is supplied, get all users of the club
-        let programIds;
+        const clubId = getClubId(req.user);
+        let programIds = (await programModel.findAll({
+            where: { clubId: clubId },
+            attributes: ['id'],
+            hooks: false,
+        })).map(program => program.dataValues.id);
 
-        if (!req.query.programId) {
-            // we can't query on clubId since it's a virtual field.
-            // get this club's programs
-            programIds = (await programModel.findAll({
-                where: {
-                    clubId: req.params.id,
-                },
-                attributes: ['id'],
-                hooks: false,
-            })).map(program => program.dataValues.id);
+        const filterProgramId = Number(req.query.programId);
+        if (filterProgramId) {
+            if (programIds.includes(filterProgramId)) {
+                // discard other programIds and keep only the filtered id
+                programIds = [filterProgramId];
+            }
+            else {
+                //TODO: should we return 404 or is this OK?
+                programIds = [];
+            }
         }
 
         // get all users with req.body.programId or programIds
         const members = await userModel.findAndCountAll({
-            where: { programId: req.query.programId || programIds },
+            where: { programId: programIds },
             limit: req.query.limit,
             offset: req.query.offset,
             attributes: [
@@ -214,8 +219,9 @@ module.exports.setCoverPicture = async (req, res) => {
             return res.error(500, error.message);
         }
         try {
+            const clubId = getClubId(req.user);
             const club = await clubModel.findByPk(
-                req.params.id,
+                clubId,
                 { attributes: ['id', 'coverPicPath'] },
             );
 
@@ -244,8 +250,9 @@ module.exports.setCoverPicture = async (req, res) => {
 
 module.exports.deleteCoverPicture = async (req, res) => {
     try {
+        const clubId = getClubId(req.user);
         const club = await clubModel.findByPk(
-            req.params.id,
+            clubId,
             { attributes: ['id', 'coverPicPath'] }
         );
 
@@ -291,8 +298,9 @@ module.exports.setLogo = async (req, res) => {
             return res.error(500, error.message);
         }
         try {
+            const clubId = getClubId(req.user);
             const club = await clubModel.findByPk(
-                req.params.id,
+                clubId,
                 { attributes: ['id', 'logoPath'] },
             );
 
@@ -321,6 +329,7 @@ module.exports.setLogo = async (req, res) => {
 
 module.exports.deleteLogo = async (req, res) => {
     try {
+        const clubId = getClubId(req.user);
         const club = await clubModel.findByPk(
             req.params.id,
             { attributes: ['id', 'logoPath'] }
@@ -351,4 +360,9 @@ const orderBy = (list, desc, path) => {
             return desc ? bField - aField : aField - bField;
         }
     );
+}
+
+const getClubId = (user) => {
+    // <null> can be used for query methods, while <false> cannot
+    return !user.isUser ? user.id : null;
 }

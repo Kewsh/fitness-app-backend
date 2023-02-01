@@ -11,7 +11,8 @@ const {
 
 module.exports.discover = async (req, res) => {
     try {
-        const user = await userModel.findByPk(req.body.userId, {
+        const userId = getUserId(req.user);
+        const user = await userModel.findByPk(userId, {
             attributes: ['id', 'dietId'],
         });
 
@@ -139,14 +140,12 @@ module.exports.getComments = async (req, res) => {
 
 module.exports.pick = async (req, res) => {
     try {
-        if (!req.body.userId) {
-            return res.error(400, 'Missing field "userId" in request body');
-        }
+        const userId = getUserId(req.user);
         const [ affectedRows ] = await userModel.update({
             dietId: req.params.id,
             dietPickDate: new Date(),
         }, {
-            where: { id: req.body.userId },
+            where: { id: userId },
             individualHooks: true,
         });
         if (!affectedRows) {
@@ -157,4 +156,9 @@ module.exports.pick = async (req, res) => {
     } catch (error) {
         return res.error(500, error.message);
     }
+}
+
+const getUserId = (user) => {
+    // <null> can be used for query methods, while <false> cannot
+    return user.isUser ? user.id : null;
 }

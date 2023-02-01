@@ -7,14 +7,14 @@ const {
     deleteProfilePicture,
 } = require('../../controllers/user.controller');
 
-router.patch('/:id', updateOne);
+router.patch('/', updateOne);
 
-router.get('/:id/events', getEvents);
+router.get('/events', getEvents);
+
+router.put('/profile-picture', setProfilePicture);
+
+router.delete('/profile-picture', deleteProfilePicture);
 
 router.get('/:id/profile-picture', getProfilePicture);
-
-router.put('/:id/profile-picture', setProfilePicture);
-
-router.delete('/:id/profile-picture', deleteProfilePicture);
 
 module.exports = router;
