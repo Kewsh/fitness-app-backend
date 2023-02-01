@@ -8,6 +8,7 @@ module.exports = (sequelize) => {
             unique: true,
             validate: {
                 isEmail: true,
+                isLowercase: true,
             },
         },
     }, {
