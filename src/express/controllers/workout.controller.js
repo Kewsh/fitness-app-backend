@@ -71,7 +71,7 @@ module.exports.updateOne = async (req, res) => {
 }
 
 module.exports.deleteOne = async (req, res) => {
-    try {``
+    try {
         const clubId = getClubId(req.user);
         const programIds = await getProgramIds(clubId);
 

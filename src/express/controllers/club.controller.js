@@ -3,6 +3,7 @@ const { Op } = require('sequelize');
 const { getUploadedFilePath, deleteFile } = require('../utils/file.util');
 const { getClubId } = require('../utils/auth.util');
 const upload = require('../multer');
+const sequelize = require('../../sequelize');
 const {
     club: clubModel,
     socialMedia: socialMediaModel,
@@ -10,7 +11,7 @@ const {
     event: eventModel,
     user: userModel,
     email: emailModel,
-} = require('../../sequelize').models;
+} = sequelize.models;
 
 module.exports.findOneById = async(req, res) => {
     try {
@@ -29,6 +30,8 @@ module.exports.findOneById = async(req, res) => {
 }
 
 module.exports.updateOne = async (req, res) => {
+    const transaction = await sequelize.transaction();
+
     try {
         const clubId = getClubId(req.user);
         const club = await clubModel.findByPk(clubId, {
@@ -41,7 +44,7 @@ module.exports.updateOne = async (req, res) => {
 
         if (req.body.email) {
             club.email.email = req.body.email;
-            await club.email.save();
+            await club.email.save({ transaction });
         }
 
         if (Array.isArray(req.body.socialMedia)) {
@@ -53,6 +56,7 @@ module.exports.updateOne = async (req, res) => {
                         clubId: club.id,
                         type,
                     },
+                    transaction,
                 });
             }
         }
@@ -76,10 +80,14 @@ module.exports.updateOne = async (req, res) => {
             phoneNumber: req.body.phoneNumber,
             website: req.body.website,
             address: req.body.address,
-        });
+        },
+            transaction,
+        );
 
+        await transaction.commit();
         return res.success(200, {});
     } catch (error) {
+        await transaction.rollback();
         return res.error(500, error.message);
     }
 }

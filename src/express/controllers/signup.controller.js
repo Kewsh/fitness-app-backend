@@ -1,13 +1,16 @@
+const sequelize = require('../../sequelize');
 const {
     club: clubModel,
     socialMedia: socialMediaModel,
     user: userModel,
     measurement: measurementModel,
     email: emailModel,
-} = require('../../sequelize').models;
+} = sequelize.models;
 
 
 module.exports.signUpUser = async (req, res) => {
+    const transaction = await sequelize.transaction();
+
     try {
         const user = await userModel.create({
             firstName: req.body.firstName,
@@ -25,19 +28,24 @@ module.exports.signUpUser = async (req, res) => {
             include: [
                 measurementModel,
                 emailModel,
-            ]
+            ],
+            transaction,
         });
 
         // exclude some fields from response object
         const { password, profilePicPath, ...response } = user.dataValues;
 
+        await transaction.commit();
         return res.success(201, response);
     } catch (error) {
+        await transaction.rollback();
         return res.error(500, error.message);
     }
 }
 
 module.exports.signUpClub = async (req, res) => {
+    const transaction = await sequelize.transaction();
+
     try {
         const club = await clubModel.create({
             name: req.body.name,
@@ -63,6 +71,7 @@ module.exports.signUpClub = async (req, res) => {
                 socialMediaModel,
                 emailModel,
             ],
+            transaction,
         });
 
         // exclude some fields from response
@@ -73,8 +82,10 @@ module.exports.signUpClub = async (req, res) => {
             ...response
         } = club.dataValues;
 
+        await transaction.commit();
         return res.success(201, response);
     } catch (error) {
+        await transaction.rollback();
         return res.error(500, error.message);
     }
 }
