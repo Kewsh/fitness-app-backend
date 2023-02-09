@@ -1,12 +1,15 @@
 const { getUploadedFilePath, deleteFile } = require('../utils/file.util');
 const { getUserId } = require('../utils/auth.util');
 const upload = require('../multer');
+const sequelize = require('../../sequelize');
 const {
     recipeReview: recipeReviewModel,
     comment: commentModel,
-} = require('../../sequelize').models;
+} = sequelize.models;
 
 module.exports.createOne = async (req, res) => {
+    const transaction = await sequelize.transaction();
+
     try {
         const userId = getUserId(req.user);
         const recipeReview = await recipeReviewModel.create({
@@ -18,6 +21,7 @@ module.exports.createOne = async (req, res) => {
             },
         }, {
             include: commentModel,
+            transaction,
         });
 
         // get author's fullname
@@ -26,8 +30,10 @@ module.exports.createOne = async (req, res) => {
             fullName: (await recipeReview.comment.getUser()).fullName
         }
 
+        await transaction.commit();
         return res.success(201, recipeReview);
     } catch (error) {
+        await transaction.rollback();
         return res.error(500, error.message);
     }
 }
@@ -60,6 +66,8 @@ module.exports.updateOne = async (req, res) => {
 }
 
 module.exports.deleteOne = async (req, res) => {
+    const transaction = await sequelize.transaction();
+
     try {
         // sequelize doesn't support including on the destroy method, so we
         // need to first find the instance, then delete it separately
@@ -78,12 +86,13 @@ module.exports.deleteOne = async (req, res) => {
             return res.error(404, 'No recipe review found with this id');
         }
 
-        //TODO: this obviously needs a transaction
-        await recipeReview.comment.destroy();
-        await recipeReview.destroy();
+        await recipeReview.comment.destroy({ transaction });
+        await recipeReview.destroy({ transaction });
 
+        await transaction.commit();
         return res.success(200, {});
     } catch (error) {
+        await transaction.rollback();
         return res.error(500, error.message);
     }
 }

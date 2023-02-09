@@ -1,14 +1,17 @@
 const { getUploadedFilePath, deleteFile } = require('../utils/file.util');
 const { getUserId } = require('../utils/auth.util');
 const upload = require('../multer');
+const sequelize = require('../../sequelize');
 const {
     user: userModel,
     measurement: measurementModel,
     club: clubModel,
     email: emailModel,
-} = require('../../sequelize').models;
+} = sequelize.models;
 
 module.exports.updateOne = async (req, res) => {
+    const transaction = await sequelize.transaction();
+
     try {
         const userId = getUserId(req.user);
         const user = await userModel.findByPk(userId, {
@@ -21,7 +24,7 @@ module.exports.updateOne = async (req, res) => {
 
         if (req.body.email) {
             user.email.email = req.body.email;
-            await user.email.save();
+            await user.email.save({ transaction });
         }
 
         if (Array.isArray(req.body.measurements)) {
@@ -35,6 +38,7 @@ module.exports.updateOne = async (req, res) => {
                         userId: user.id,
                         type,
                     },
+                    transaction,
                 });
             }
         }
@@ -57,10 +61,14 @@ module.exports.updateOne = async (req, res) => {
             height: req.body.height,
             phoneNumber: req.body.phoneNumber,
             password: updatedPassword,
-        })
+        },
+            transaction,
+        );
 
+        await transaction.commit();
         return res.success(200, {});
     } catch (error) {
+        await transaction.rollback();
         return res.error(500, error.message);
     }
 }

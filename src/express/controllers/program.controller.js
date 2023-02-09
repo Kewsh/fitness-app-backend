@@ -2,15 +2,18 @@ const { Op } = require('sequelize');
 const { getUploadedFilePath, deleteFile } = require('../utils/file.util');
 const { getUserId, getClubId } = require('../utils/auth.util');
 const upload = require('../multer');
+const sequelize = require('../../sequelize');
 const {
     program: programModel,
     workout: workoutModel,
     comment: commentModel,
     user: userModel,
     club: clubModel,
-} = require('../../sequelize').models;
+} = sequelize.models;
 
 module.exports.createOne = async (req, res) => {
+    const transaction = await sequelize.transaction();
+
     try {
         const clubId = getClubId(req.user);
         const program = await programModel.create({
@@ -30,6 +33,7 @@ module.exports.createOne = async (req, res) => {
             })),
         }, {
             include: workoutModel,
+            transaction,
         });
 
         // this can't be done in include, since hooks don't run on
@@ -45,13 +49,17 @@ module.exports.createOne = async (req, res) => {
             ]},
         });
 
+        await transaction.commit();
         return res.success(201, program);
     } catch (error) {
+        await transaction.rollback();
         return res.error(500, error.message);
     }
 }
 
 module.exports.updateOne = async (req, res) => {
+    const transaction = await sequelize.transaction();
+
     try {
         if (
             !req.body.title &&
@@ -89,6 +97,7 @@ module.exports.updateOne = async (req, res) => {
             }),
         ), {
             individualHooks: true,
+            transaction,
         });
 
         await program.update({
@@ -96,10 +105,14 @@ module.exports.updateOne = async (req, res) => {
             description: req.body.description,
             coachName: req.body.coachName,
             price: req.body.price,
-        });
+        },
+            transaction,
+        );
 
+        await transaction.commit();
         return res.success(200, {});
     } catch (error) {
+        await transaction.rollback();
         return res.error(500, error.message);
     }
 }
